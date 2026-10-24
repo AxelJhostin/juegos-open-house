@@ -106,6 +106,14 @@ export class FruitGame extends Phaser.Scene {
     this.cameraPointers = [null, null];
   }
 
+  abortRound(): void {
+    this.playing = false;
+    this.fruits = [];
+    this.cutMarks = [];
+    this.cameraPointers = [null, null];
+    this.graphics?.clear();
+  }
+
   setCameraPoints(points: Point[], at = performance.now()): void {
     if (!this.playing || this.mode !== 'camera') return;
     const assigned = assignHandSlots(this.cameraPointers, points);

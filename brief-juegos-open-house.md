@@ -15,10 +15,11 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 
 ## Juegos acordados
 
-1. **Nave espacial: esquivar y recoger**
+1. **Nave espacial: supervivencia**
    - Mover la nave de lado a lado.
-   - Evitar meteoritos y recoger energía para sumar puntos y mantener una racha.
-   - Aumentar gradualmente el desafío durante la partida.
+   - Esquivar meteoritos hasta el primer choque; el tiempo sobrevivido es la puntuación.
+   - Aumentar gradualmente la velocidad y la frecuencia de los meteoritos.
+   - Guardar en este navegador los tres mejores tiempos con un nombre o apodo corto, como en una tabla arcade.
 
 2. **Plataformas inspirado en Mario**
    - Juego original de desplazamiento lateral: correr y saltar sobre huecos y obstáculos.
@@ -34,12 +35,13 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 ## Experiencia y controles
 
 - Una pantalla de inicio permite escoger el juego y explica los controles.
-- Cada partida dura alrededor de 45–60 segundos, muestra el puntaje y permite volver a jugar rápidamente.
+- Fruta y Plataformas duran alrededor de 45 segundos. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** seguir una mano como control principal; preparar el seguimiento para permitir hasta dos manos. La segunda mano puede habilitarse si las pruebas muestran que aporta sin complicar el uso.
 - **Nave:** la posición horizontal de la mano dirige la nave.
 - **Plataformas:** movimiento horizontal con la mano y un gesto corto para saltar. El gesto exacto se elegirá tras probar la cámara.
 - **Fruta:** una trayectoria rápida del dedo dibuja el corte; el segmento entre posiciones consecutivas del dedo debe poder cortar frutas aunque la mano se mueva entre fotogramas.
 - **Alternativas:** flechas o A/D para moverse; espacio para saltar; arrastrar con el mouse para rebanar.
+- Los tres mejores resultados de cada juego muestran un nombre o apodo corto, introducido al entrar en la tabla. Todo se guarda solo en este navegador.
 - Mostrar una guía breve de colocación de la mano y una indicación visible de que el seguimiento está activo.
 - Procesar la cámara localmente; no guardar ni transmitir imágenes.
 

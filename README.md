@@ -7,7 +7,7 @@ Proyecto de una colección pequeña de juegos web originales controlados con mov
 - [Alcance y fases](alcance-y-fases.md): límites, etapas y criterios para decidir cuándo avanzar.
 - [Instrucciones para Codex](AGENTS.md): reglas de trabajo para mantener el proyecto acotado.
 
-La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fases 0, 1 y 2 están completas**. La fase 3 comenzará cuando el usuario la pida.
+La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fases 0, 1 y 2 están completas**. La fase 3 está en curso: ya hay menú y versiones jugables de los tres juegos; quedan pruebas de los controles por cámara de Nave y Plataformas en Chrome.
 
 ## Decisiones de la fase 0
 
@@ -24,6 +24,8 @@ La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fa
 
 `npm run build` verifica TypeScript y prepara una versión local en `dist/`.
 
+La página abre en el menú principal. Elige **Rebanar fruta**, **Nave espacial** o **Plataformas**; en la pantalla de cada juego selecciona el control y pulsa **Empezar partida**. El botón **Menú principal** permite salir de una ronda sin guardarla. Cada juego conserva sus resultados por separado en el navegador.
+
 ## Prototipo de rebanar fruta
 
 - Elige **Mouse**, **Teclado** o **Cámara** y pulsa **Empezar partida**. Cada ronda dura 45 segundos; cada fruta cortada suma 10 puntos. Al terminar puedes repetir.
@@ -32,10 +34,27 @@ La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fa
 - La cámara se solicita solo al elegir ese control. Si se detiene durante la ronda, el teclado toma el control. También se apaga al cambiar de pestaña o cerrar la página.
 - Al activar la cámara, el tablero toma la proporción real del video. La fruta aparece con su centro en la línea inferior, sube casi hasta la línea superior y vuelve a bajar. Cada índice tiene su propio cursor y trayectoria; las coordenadas se convierten usando las posiciones reales del video y del canvas en pantalla.
 - La ronda empieza en nivel 1 y pasa automáticamente a nivel 2 después de 20 segundos: las frutas se mueven más rápido y aparecen con más frecuencia.
-- Al terminar se guarda el número de partidas y las tres mejores puntuaciones en el almacenamiento local de este navegador. No se guardan nombres, imágenes ni video.
+- Al terminar se guarda el número de partidas y las tres mejores puntuaciones en el almacenamiento local de este navegador. Si una puntuación entra en la tabla, se pide un nombre o apodo corto. Los récords previos sin nombre aparecen como **ANÓNIMO**. No se guardan imágenes ni video.
 
 El video y las posiciones se procesan solo en memoria del navegador. No se guardan ni se transmiten. El modelo y los archivos WebAssembly se sirven desde `public/mediapipe/`.
 
 **Resultado de la fase 1 en Chrome:** el usuario confirmó que el seguimiento se ve bien con movimientos lentos y reportó entre 52 y 60 detecciones por segundo, con 17 a 27 ms por imagen. En movimientos muy rápidos puede perderse momentáneamente; el prototipo evita unir posiciones a través de una pérdida de seguimiento.
 
 **Fase 2 en Chrome:** el usuario confirmó que el juego funciona como esperaba con dos índices, que el nivel 2 se activa y que los récords locales se conservan tras jugar.
+
+## Nave espacial — fase 3
+
+- Elige **Nave** y **Teclado** o **Cámara**. Con teclado mueve la nave con A/D o flechas; con cámara mueve una mano horizontalmente.
+- Esquiva los meteoritos: el primer choque termina la partida. El tiempo sobrevivido es la puntuación; los meteoritos caen más rápido y con mayor frecuencia a medida que sobrevives.
+- Los tres mejores tiempos aparecen con nombre o apodo corto en una tabla local de estilo arcade. Si un tiempo entra en la tabla, puedes escribir hasta 10 caracteres. No se requiere cuenta y nada se envía a un servidor.
+- La tabla de tiempos empieza desde cero porque los puntos de la versión anterior no se pueden comparar con segundos. Las figuras siguen siendo provisionales.
+
+**Comprobado en el navegador local:** Nave inicia, muestra el tiempo, termina en el primer choque, pide un nombre para un tiempo destacado y conserva la tabla al recargar. El control por cámara de Nave queda pendiente de prueba con la cámara real en Chrome.
+
+## Plataformas — fase 3
+
+- Un recorrido lineal provisional incluye huecos, obstáculos y meta. Se avanza con A/D o flechas; se salta con Espacio, W o flecha arriba. El puntaje representa la distancia máxima recorrida y se muestra el número de caídas.
+- El modo cámara usa la posición horizontal del índice para correr y un movimiento rápido hacia arriba para saltar. Es un gesto inicial que aún debe probarse y ajustarse con la cámara real en Chrome.
+- La ronda termina al llegar a la meta o después de 45 segundos. Las tres mejores puntuaciones de Plataformas se guardan con nombre o apodo, por separado.
+
+**Comprobado en el navegador local:** el menú abre las tres pantallas; Plataformas inicia, responde al movimiento con teclado y actualiza el puntaje. El botón de regreso devuelve al menú y no guarda la ronda interrumpida.
