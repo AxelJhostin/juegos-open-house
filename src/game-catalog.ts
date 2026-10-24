@@ -4,6 +4,7 @@ import type { RecordStorage } from './records';
 export type GameDefinition = {
   title: string;
   symbol: string;
+  menuTag: string;
   summary: string;
   callToAction: string;
   controls: Partial<Record<ControlMode, string>>;
@@ -31,6 +32,7 @@ export function formatSurvivalTime(timeMs: number): string {
 export const GAMES = {
   fruit: {
     title: 'Rebanar fruta', symbol: '✦',
+    menuTag: 'PRECISIÓN',
     summary: 'Corta frutas con uno o dos índices. Suma puntos antes de que termine el tiempo.',
     callToAction: 'Jugar fruta →',
     controls: {
@@ -51,6 +53,7 @@ export const GAMES = {
   },
   ship: {
     title: 'Nave espacial', symbol: '◆',
+    menuTag: 'SUPERVIVENCIA',
     summary: 'Esquiva meteoritos. Cada segundo que sobrevives cuenta.',
     callToAction: 'Jugar nave →',
     controls: {
@@ -70,6 +73,7 @@ export const GAMES = {
   },
   platform: {
     title: 'Plataformas', symbol: '▣',
+    menuTag: 'RITMO',
     summary: 'Avanza automáticamente. Salta huecos y obstáculos sin chocar.',
     callToAction: 'Jugar plataformas →',
     controls: {

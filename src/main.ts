@@ -10,6 +10,8 @@ import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, saveRecords, type Records } from './records';
 import './style.css';
 import './game-themes.css';
+import './home.css';
+import './game-shell.css';
 
 const WIDTH = 960;
 const HEIGHT = 540;

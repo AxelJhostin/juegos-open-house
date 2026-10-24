@@ -5,40 +5,24 @@
   --palette-4: #3E8FD6;
   --palette-5: #1E5A9C;
   --theme-ink: var(--palette-5);
+  --theme-page: var(--palette-2);
   --theme-accent: var(--palette-3);
   --theme-surface: var(--palette-1);
   --theme-stage: var(--palette-1);
   --theme-overlay: #eaf6ffde;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--theme-font);
   color: var(--palette-5);
   background: var(--palette-2);
   font-synthesis: none;
 }
+
 * { box-sizing: border-box; }
 body { margin: 0; }
-button { font: inherit; }
-#app { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
-.home { width: min(100%, 1000px); }
-.home[hidden], .panel[hidden] { display: none; }
-.home-intro { max-width: 44rem; margin: 12px 0 0; font-size: 18px; line-height: 1.5; }
-.game-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
-.game-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 260px; padding: 22px; text-align: left; gap: 14px; white-space: normal; }
-.game-card:hover, .game-card:focus-visible { transform: translateY(-3px); box-shadow: 5px 5px 0 var(--theme-ink); }
-.game-card strong { font-size: 23px; text-transform: uppercase; }
-.game-card span:not(.card-symbol) { font-size: 15px; line-height: 1.5; font-weight: normal; }
-.game-card em { margin-top: auto; font-size: 14px; font-style: normal; text-transform: uppercase; }
-.card-symbol { display: grid; place-items: center; width: 52px; height: 52px; border: 2px solid var(--theme-ink); background: var(--theme-accent); font-size: 30px; }
-.panel { width: min(100%, 840px); color: var(--theme-ink); }
-.header, .status-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.header { margin-bottom: 12px; }
-.eyebrow { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .13em; }
-h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); text-transform: uppercase; }
-.hud { display: flex; gap: 20px; font-size: 17px; white-space: nowrap; }
-.hud strong { font-size: 28px; }
-.hud span[hidden] { display: none; }
-.controls { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.help, .privacy { margin: 10px 0; font-size: 14px; line-height: 1.5; }
-.privacy { text-align: center; }
+button { font: inherit; cursor: pointer; }
+#app { min-height: 100vh; display: grid; place-items: center; padding: 20px; background: var(--theme-page); color: var(--theme-ink); font-family: var(--theme-font); }
+.home[hidden], .panel[hidden], button[hidden] { display: none; }
+
 button, select {
   flex: 0 0 auto;
   padding: 9px 12px;
@@ -48,19 +32,15 @@ button, select {
   color: var(--theme-ink);
   font-weight: bold;
 }
-button {
-  cursor: pointer;
-}
 button:hover, button:focus-visible { background: var(--theme-accent); }
 button:disabled { cursor: default; opacity: .55; }
-button[hidden] { display: none; }
+
 .stage {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--theme-stage);
-  outline: 4px solid var(--theme-ink);
 }
 .stage video, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .stage video { display: none; object-fit: contain; opacity: .7; transform: scaleX(-1); }
@@ -68,15 +48,15 @@ button[hidden] { display: none; }
 .stage canvas { z-index: 1; }
 .play-guides { display: none; position: absolute; left: 10%; right: 10%; z-index: 2; pointer-events: none; border: 2px dashed var(--theme-ink); }
 .panel[data-game="fruit"] .stage.playing .play-guides { display: block; }
-.play-guides span { position: absolute; left: 8px; padding: 2px 5px; background: #EAF6FFcc; color: var(--theme-ink); font-size: 12px; font-weight: bold; }
+.play-guides span { position: absolute; left: 8px; padding: 2px 5px; background: #EAF6FFcc; color: var(--palette-5); font-size: 12px; font-weight: bold; }
 .guide-top { top: 0; }
 .guide-bottom { bottom: 0; }
+
 .overlay {
   position: absolute;
   z-index: 2;
   inset: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
@@ -84,20 +64,8 @@ button[hidden] { display: none; }
   text-align: center;
   pointer-events: none;
 }
-.overlay[hidden] { display: none; }
-.overlay h2 { margin: 0 0 12px; font-size: clamp(24px, 4vw, 42px); text-transform: uppercase; }
-.overlay p { max-width: 32rem; margin: 0; line-height: 1.5; }
-.name-entry { display: grid; gap: 9px; width: min(100%, 26rem); margin-top: 20px; font-size: 14px; font-weight: bold; pointer-events: auto; }
-.name-entry[hidden] { display: none; }
+.overlay[hidden], .name-entry[hidden] { display: none; }
+.name-entry { display: grid; gap: 9px; width: 100%; margin-top: 18px; font-size: 13px; font-weight: bold; pointer-events: auto; }
 .name-entry div { display: flex; gap: 8px; }
 .name-entry input { width: 100%; min-width: 0; padding: 9px 12px; border: 2px solid var(--theme-ink); background: var(--theme-surface); color: var(--theme-ink); font: inherit; text-transform: uppercase; }
 .name-entry button { white-space: nowrap; }
-.status-row { min-height: 36px; font-size: 14px; font-weight: bold; }
-.status-row p { margin: 8px 0 0; }
-.records { margin: 8px 0 0; font-size: 14px; font-weight: bold; white-space: pre-wrap; line-height: 1.5; }
-@media (max-width: 650px) {
-  .game-cards { grid-template-columns: 1fr; }
-  .game-card { min-height: 190px; }
-  .header, .status-row, .controls { align-items: flex-start; flex-direction: column; }
-  .status-row { gap: 0; }
-}

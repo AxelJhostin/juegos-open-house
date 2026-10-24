@@ -19,6 +19,7 @@ function required<T extends Element>(root: ParentNode, selector: string): T {
 export class AppShell {
   readonly stage: HTMLElement;
   readonly video: HTMLVideoElement;
+  private readonly root: HTMLElement;
   private readonly home: HTMLElement;
   private readonly panel: HTMLElement;
   private readonly modeSelect: HTMLSelectElement;
@@ -43,48 +44,89 @@ export class AppShell {
   private readonly extraValue: HTMLElement;
   private readonly title: HTMLElement;
   private readonly eyebrow: HTMLElement;
+  private readonly gameNumber: HTMLElement;
+  private readonly gameSymbol: HTMLElement;
   private readonly recordsText: HTMLElement;
   private currentGame: GameDefinition = GAMES.fruit;
 
   constructor(root: HTMLElement, events: ShellEvents) {
-    const cards = GAME_ORDER.map((id) => {
+    this.root = root;
+    root.classList.add('home-screen');
+    const cards = GAME_ORDER.map((id, index) => {
       const game = GAMES[id];
-      return `<button class="game-card" type="button" data-game="${id}"><span class="card-symbol">${game.symbol}</span><strong>${game.title}</strong><span>${game.summary}</span><em>${game.callToAction}</em></button>`;
+      return `<button class="game-card" type="button" data-game="${id}">
+        <span class="card-head"><span class="card-number">${String(index + 1).padStart(2, '0')} / ${String(GAME_ORDER.length).padStart(2, '0')}</span><span class="card-kind">${game.menuTag}</span></span>
+        <span class="card-preview" aria-hidden="true"><span class="preview-grid"></span><span class="preview-object preview-one"></span><span class="preview-object preview-two"></span><span class="preview-object preview-three"></span><span class="preview-symbol">${game.symbol}</span></span>
+        <span class="card-copy"><strong>${game.title}</strong><span>${game.summary}</span></span>
+        <span class="card-action"><span>${game.callToAction}</span><span class="card-action-arrow" aria-hidden="true">↗</span></span>
+      </button>`;
     }).join('');
     root.innerHTML = `
       <section id="home" class="home" aria-labelledby="home-title">
-        <p class="eyebrow">Open House · ${GAME_ORDER.length} minijuegos</p>
-        <h1 id="home-title">Pulso Pixel</h1>
-        <p class="home-intro">Elige un juego y juega con cámara o teclado.</p>
-        <div class="game-cards">${cards}</div>
-      </section>
-      <section id="game-panel" class="panel" aria-labelledby="title" hidden>
-        <header class="header">
-          <div><p id="eyebrow" class="eyebrow"></p><h1 id="title"></h1></div>
-          <div class="hud"><span><span id="score-label"></span> <strong id="score"></strong><span id="score-unit" hidden></span></span><span id="countdown-stat">Tiempo <strong id="time"></strong>s</span><span id="extra-stat"><span id="extra-label"></span> <strong id="extra-value"></strong></span></div>
-        </header>
-        <div class="controls">
-          <button id="menu-button" type="button">← Menú principal</button>
-          <label for="control-mode">Control</label>
-          <select id="control-mode"><option value="mouse">Mouse</option><option value="keyboard">Teclado</option><option value="camera">Cámara</option></select>
-          <button id="play-button" type="button">Empezar partida</button>
-          <button id="stop-camera" type="button" hidden>Detener cámara</button>
-        </div>
-        <p id="help" class="help"></p>
-        <div id="stage" class="stage">
-          <video id="camera-video" autoplay playsinline muted aria-label="Vista local de la cámara"></video>
-          <div class="play-guides" aria-hidden="true"><span class="guide-top">LÍMITE SUPERIOR</span><span class="guide-bottom">SALIDA DE FRUTAS</span></div>
-          <div id="round-overlay" class="overlay">
-            <h2 id="overlay-title"></h2><p id="overlay-text"></p>
-            <form id="name-entry" class="name-entry" hidden>
-              <label for="player-name">Nuevo récord · escribe tu nombre o apodo (máx. 10 caracteres)</label>
-              <div><input id="player-name" name="player-name" type="text" maxlength="10" autocomplete="off" autocapitalize="characters" required placeholder="TU NOMBRE"><button type="submit">Guardar nombre</button></div>
-            </form>
+        <div class="home-topbar"><span class="home-brand"><span class="brand-mark" aria-hidden="true">✦</span> P / P</span><span class="home-topline">OPEN HOUSE // ARCADE INTERACTIVO</span><span class="home-ready"><span aria-hidden="true"></span> LISTO PARA JUGAR</span></div>
+        <div class="home-hero">
+          <div class="hero-copy">
+            <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
+            <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
+            <p class="home-intro">Tres retos rápidos para jugar con cámara o teclado. Elige tu desafío.</p>
+            <div class="hero-facts"><span><b>03</b> MINIJUEGOS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+          </div>
+          <div class="hero-display" aria-hidden="true">
+            <div class="display-top"><span>PP // SEÑAL ACTIVA</span><span>● ● ●</span></div>
+            <div class="display-reticle"><span class="reticle-ring ring-outer"></span><span class="reticle-ring ring-inner"></span><span class="reticle-core">✦</span><span class="reticle-cursor"></span></div>
+            <div class="display-bottom"><span>ENTRADA / MOVIMIENTO</span><span>READY_</span></div>
           </div>
         </div>
-        <div class="status-row"><p id="camera-status" role="status" aria-live="polite">Cámara apagada</p><p id="tracking-stats">Detección: —</p></div>
-        <div id="records" class="records" aria-live="polite"></div>
-        <p class="privacy">La cámara solo se activa al elegirla. El video se procesa aquí; no se guarda ni se transmite.</p>
+        <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—03</p><h2>ELIGE TU JUEGO</h2></div><p>Una pantalla. Tres formas de jugar.</p></div>
+        <div class="game-cards">${cards}</div>
+        <div class="home-footer"><span>✦ PULSO PIXEL · OPEN HOUSE</span><span>La cámara se activa solo cuando eliges jugar con ella.</span></div>
+      </section>
+      <section id="game-panel" class="panel" aria-labelledby="title" hidden>
+        <div class="game-topbar">
+          <button id="menu-button" class="menu-button" type="button">← Menú principal</button>
+          <span class="game-brand">P / P <span>OPEN HOUSE // ARCADE INTERACTIVO</span></span>
+          <span id="game-number" class="game-number"></span>
+        </div>
+        <header class="game-header">
+          <div class="game-titleblock"><p id="eyebrow" class="eyebrow"></p><h1 id="title"></h1></div>
+          <div class="hud">
+            <div class="hud-stat"><span id="score-label"></span><strong id="score"></strong><span id="score-unit" hidden></span></div>
+            <div id="countdown-stat" class="hud-stat"><span>Tiempo</span><strong id="time"></strong><span>s</span></div>
+            <div id="extra-stat" class="hud-stat"><span id="extra-label"></span><strong id="extra-value"></strong></div>
+          </div>
+        </header>
+        <div class="game-layout">
+          <div class="game-board">
+            <div class="board-topline"><span><i id="game-symbol" aria-hidden="true"></i> CAMPO DE JUEGO</span><span>PP // EN VIVO</span></div>
+            <div id="stage" class="stage">
+              <video id="camera-video" autoplay playsinline muted aria-label="Vista local de la cámara"></video>
+              <div class="play-guides" aria-hidden="true"><span class="guide-top">LÍMITE SUPERIOR</span><span class="guide-bottom">SALIDA DE FRUTAS</span></div>
+              <div id="round-overlay" class="overlay">
+                <div class="overlay-card">
+                  <span class="overlay-kicker">PULSO PIXEL // ARCADE</span>
+                  <h2 id="overlay-title"></h2><p id="overlay-text"></p>
+                  <form id="name-entry" class="name-entry" hidden>
+                    <label for="player-name">Nuevo récord · escribe tu nombre o apodo (máx. 10 caracteres)</label>
+                    <div><input id="player-name" name="player-name" type="text" maxlength="10" autocomplete="off" autocapitalize="characters" required placeholder="TU NOMBRE"><button type="submit">Guardar nombre</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="status-row"><p id="camera-status" role="status" aria-live="polite">Cámara apagada</p><p id="tracking-stats">Detección: —</p></div>
+          </div>
+          <aside class="game-sidebar" aria-label="Controles y récords">
+            <div class="side-panel controls">
+              <p class="side-kicker">01 / PREPARAR PARTIDA</p>
+              <label for="control-mode">Control</label>
+              <select id="control-mode"><option value="mouse">Mouse</option><option value="keyboard">Teclado</option><option value="camera">Cámara</option></select>
+              <button id="play-button" type="button">Empezar partida</button>
+              <button id="stop-camera" type="button" hidden>Detener cámara</button>
+              <div class="how-to"><span>CÓMO JUGAR</span><p id="help" class="help"></p></div>
+            </div>
+            <div class="records-panel"><p class="side-kicker">02 / SALÓN DE RÉCORDS</p><div id="records" class="records" aria-live="polite"></div></div>
+            <p class="privacy">La cámara se procesa aquí. No se guarda ni se transmite video.</p>
+          </aside>
+        </div>
       </section>
     `;
 
@@ -114,6 +156,8 @@ export class AppShell {
     this.extraValue = required(root, '#extra-value');
     this.title = required(root, '#title');
     this.eyebrow = required(root, '#eyebrow');
+    this.gameNumber = required(root, '#game-number');
+    this.gameSymbol = required(root, '#game-symbol');
     this.recordsText = required(root, '#records');
 
     for (const card of root.querySelectorAll<HTMLButtonElement>('.game-card')) {
@@ -142,12 +186,17 @@ export class AppShell {
   selectGame(id: GameId, records: Records): void {
     const game: GameDefinition = GAMES[id];
     this.currentGame = game;
+    this.root.dataset.game = id;
+    this.root.classList.remove('home-screen');
     this.panel.dataset.game = id;
     this.mouseOption.hidden = !game.controls.mouse;
     this.mouseOption.disabled = !game.controls.mouse;
     if (!game.controls[this.controlMode]) this.modeSelect.value = 'keyboard';
     this.title.textContent = game.title;
-    this.eyebrow.textContent = `Pulso Pixel · Juego ${GAME_ORDER.indexOf(id) + 1} de ${GAME_ORDER.length}`;
+    const number = String(GAME_ORDER.indexOf(id) + 1).padStart(2, '0');
+    this.eyebrow.textContent = `${number} / ${game.menuTag}`;
+    this.gameNumber.textContent = `JUEGO ${number} / ${String(GAME_ORDER.length).padStart(2, '0')}`;
+    this.gameSymbol.textContent = game.symbol;
     this.scoreLabel.textContent = game.hud.label;
     this.scoreUnit.textContent = game.hud.unit;
     this.scoreUnit.hidden = !game.hud.unit;
@@ -169,6 +218,8 @@ export class AppShell {
   }
 
   showHome(): void {
+    delete this.root.dataset.game;
+    this.root.classList.add('home-screen');
     this.stage.classList.remove('playing');
     this.nameEntry.hidden = true;
     this.modeSelect.disabled = false;
@@ -183,10 +234,34 @@ export class AppShell {
   }
 
   renderRecords(records: Records): void {
-    const board = records.best.length
-      ? records.best.map((entry, index) => `${index + 1}. ${entry.name.padEnd(10, ' ')}  ${this.currentGame.formatRecord(entry.value)}`).join('\n')
-      : '—';
-    this.recordsText.textContent = `Partidas jugadas: ${records.played} · ${this.currentGame.recordsTitle}\n${board}`;
+    const played = document.createElement('p');
+    played.className = 'records-played';
+    played.textContent = `Partidas jugadas  ${records.played}`;
+    const title = document.createElement('h2');
+    title.textContent = this.currentGame.recordsTitle;
+    const list = document.createElement('ol');
+    list.className = 'record-list';
+    if (records.best.length === 0) {
+      const empty = document.createElement('li');
+      empty.className = 'record-empty';
+      empty.textContent = 'Todavía no hay marcas';
+      list.append(empty);
+    } else {
+      records.best.forEach((entry, index) => {
+        const row = document.createElement('li');
+        const rank = document.createElement('span');
+        rank.className = 'record-rank';
+        rank.textContent = String(index + 1).padStart(2, '0');
+        const name = document.createElement('span');
+        name.className = 'record-name';
+        name.textContent = entry.name;
+        const value = document.createElement('strong');
+        value.textContent = this.currentGame.formatRecord(entry.value);
+        row.append(rank, name, value);
+        list.append(row);
+      });
+    }
+    this.recordsText.replaceChildren(played, title, list);
   }
 
   showResult(value: number, won: boolean, rank: number | null, saved: boolean): void {

@@ -1,25 +1,58 @@
-/* Cada selector controla únicamente el menú de ese juego y su marco exterior.
-   El canvas y sus dibujos permanecen en la escena Phaser correspondiente. */
-.game-card[data-game="fruit"], .panel[data-game="fruit"] {
+/* El tema de #app cubre toda la pantalla exterior. Cada tarjeta hereda su propio
+   tema en el menú. Ninguna regla cambia los dibujos del canvas de Phaser. */
+#app[data-game="fruit"], .game-card[data-game="fruit"] {
   --theme-ink: var(--palette-5);
+  --theme-page: var(--palette-2);
   --theme-accent: var(--palette-3);
   --theme-surface: var(--palette-1);
   --theme-stage: var(--palette-1);
   --theme-overlay: #eaf6ffde;
+  --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shell-card: var(--palette-1);
+  --shell-line: var(--palette-5);
+  --shell-soft: var(--palette-3);
+  --shell-cta: var(--palette-5);
+  --shell-cta-ink: var(--palette-1);
+  --card-surface: var(--palette-1);
+  --card-ink: var(--palette-5);
+  --card-preview: var(--palette-2);
+  --card-art: var(--palette-4);
 }
 
-.game-card[data-game="ship"], .panel[data-game="ship"] {
-  --theme-ink: var(--palette-5);
+#app[data-game="ship"], .game-card[data-game="ship"] {
+  --theme-ink: var(--palette-1);
+  --theme-page: var(--palette-5);
   --theme-accent: var(--palette-3);
-  --theme-surface: var(--palette-1);
-  --theme-stage: var(--palette-1);
-  --theme-overlay: #eaf6ffde;
+  --theme-surface: var(--palette-5);
+  --theme-stage: var(--palette-5);
+  --theme-overlay: #1e5a9cdd;
+  --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shell-card: var(--palette-5);
+  --shell-line: var(--palette-3);
+  --shell-soft: var(--palette-4);
+  --shell-cta: var(--palette-1);
+  --shell-cta-ink: var(--palette-5);
+  --card-surface: var(--palette-5);
+  --card-ink: var(--palette-1);
+  --card-preview: var(--palette-4);
+  --card-art: var(--palette-3);
 }
 
-.game-card[data-game="platform"], .panel[data-game="platform"] {
+#app[data-game="platform"], .game-card[data-game="platform"] {
   --theme-ink: var(--palette-5);
+  --theme-page: var(--palette-1);
   --theme-accent: var(--palette-3);
   --theme-surface: var(--palette-1);
   --theme-stage: var(--palette-1);
   --theme-overlay: #eaf6ffde;
+  --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shell-card: var(--palette-2);
+  --shell-line: var(--palette-5);
+  --shell-soft: var(--palette-3);
+  --shell-cta: var(--palette-5);
+  --shell-cta-ink: var(--palette-1);
+  --card-surface: var(--palette-1);
+  --card-ink: var(--palette-5);
+  --card-preview: var(--palette-2);
+  --card-art: var(--palette-4);
 }
