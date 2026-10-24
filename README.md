@@ -31,9 +31,11 @@ La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fa
 - La colisión comprueba todo el segmento entre dos posiciones consecutivas. Si el seguimiento pierde la mano, se reinicia ese segmento para evitar un corte falso al reaparecer.
 - La cámara se solicita solo al elegir ese control. Si se detiene durante la ronda, el teclado toma el control. También se apaga al cambiar de pestaña o cerrar la página.
 - Al activar la cámara, el tablero toma la proporción real del video. La fruta aparece con su centro en la línea inferior, sube casi hasta la línea superior y vuelve a bajar. Cada índice tiene su propio cursor y trayectoria; las coordenadas se convierten usando las posiciones reales del video y del canvas en pantalla.
+- La ronda empieza en nivel 1 y pasa automáticamente a nivel 2 después de 20 segundos: las frutas se mueven más rápido y aparecen con más frecuencia.
+- Al terminar se guarda el número de partidas y las tres mejores puntuaciones en el almacenamiento local de este navegador. No se guardan nombres, imágenes ni video.
 
 El video y las posiciones se procesan solo en memoria del navegador. No se guardan ni se transmiten. El modelo y los archivos WebAssembly se sirven desde `public/mediapipe/`.
 
 **Resultado de la fase 1 en Chrome:** el usuario confirmó que el seguimiento se ve bien con movimientos lentos y reportó entre 52 y 60 detecciones por segundo, con 17 a 27 ms por imagen. En movimientos muy rápidos puede perderse momentáneamente; el prototipo evita unir posiciones a través de una pérdida de seguimiento.
 
-**Fase 2 en Chrome:** la primera ronda funcionó, pero pruebas posteriores revelaron una desalineación al ajustar el formato del tablero. La corrección de coordenadas y las guías están pendientes de una nueva comprobación con la cámara real.
+**Fase 2 en Chrome:** tras ajustar las coordenadas, las guías y el uso de dos índices, el usuario confirmó que el juego funciona como esperaba. El nivel 2 y los récords locales aún requieren una partida de comprobación.

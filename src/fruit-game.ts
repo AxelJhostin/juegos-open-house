@@ -7,14 +7,16 @@ export type ControlMode = 'mouse' | 'keyboard' | 'camera';
 const WIDTH = 960;
 const DEFAULT_HEIGHT = 540;
 const ROUND_SECONDS = 45;
-const GRAVITY = 1000;
+const LEVEL_TWO_AT = 20;
+const GRAVITY = [1000, 1500] as const;
+const SPAWN_INTERVAL = [0.82, 0.55] as const;
 export const PLAY_TOP = 0.12;
 export const PLAY_BOTTOM = 0.86;
 const FRUIT_COLORS = [0x7fc4f2, 0x3e8fd6, 0xbfe3fa];
 
-type Fruit = Point & { vx: number; vy: number; radius: number; color: number };
+type Fruit = Point & { vx: number; vy: number; gravity: number; radius: number; color: number };
 type CutMark = { from: Point; to: Point; until: number };
-type GameCallbacks = { onHud(score: number, seconds: number): void; onEnd(score: number): void };
+type GameCallbacks = { onHud(score: number, seconds: number, level: number): void; onEnd(score: number): void };
 
 export class FruitGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -29,6 +31,7 @@ export class FruitGame extends Phaser.Scene {
   private playing = false;
   private mode: ControlMode = 'mouse';
   private score = 0;
+  private level: 1 | 2 = 1;
   private secondsLeft = ROUND_SECONDS;
   private roundEndsAt = 0;
   private spawnClock = 0;
@@ -88,12 +91,13 @@ export class FruitGame extends Phaser.Scene {
     this.lastMouse = null;
     this.mouseHeld = false;
     this.score = 0;
+    this.level = 1;
     this.secondsLeft = ROUND_SECONDS;
     this.roundEndsAt = performance.now() + ROUND_SECONDS * 1000;
     this.shownSeconds = ROUND_SECONDS;
     this.spawnClock = 0.75;
     this.playing = true;
-    this.callbacks.onHud(0, ROUND_SECONDS);
+    this.callbacks.onHud(0, ROUND_SECONDS, 1);
   }
 
   switchToKeyboard(): void {
@@ -123,23 +127,26 @@ export class FruitGame extends Phaser.Scene {
     if (this.playing) {
       this.secondsLeft = Math.max(0, (this.roundEndsAt - performance.now()) / 1000);
       const seconds = Math.ceil(this.secondsLeft);
-      if (seconds !== this.shownSeconds) {
+      const nextLevel = ROUND_SECONDS - this.secondsLeft >= LEVEL_TWO_AT ? 2 : 1;
+      if (seconds !== this.shownSeconds || nextLevel !== this.level) {
+        this.level = nextLevel;
         this.shownSeconds = seconds;
-        this.callbacks.onHud(this.score, seconds);
+        this.callbacks.onHud(this.score, seconds, this.level);
       }
       if (this.secondsLeft === 0) this.endRound();
       else {
         this.moveKeyboard(dt);
         for (const fruit of this.fruits) {
-          fruit.vy += GRAVITY * dt;
+          fruit.vy += fruit.gravity * dt;
           fruit.x += fruit.vx * dt;
           fruit.y += fruit.vy * dt;
         }
         const lowerLimit = this.fieldHeight * PLAY_BOTTOM;
         this.fruits = this.fruits.filter((fruit) => (fruit.vy < 0 || fruit.y < lowerLimit + fruit.radius) && fruit.x > -fruit.radius && fruit.x < WIDTH + fruit.radius);
         this.spawnClock += dt;
-        if (this.spawnClock >= 0.82) {
-          this.spawnClock -= 0.82;
+        const interval = SPAWN_INTERVAL[this.level - 1];
+        if (this.spawnClock >= interval) {
+          this.spawnClock -= interval;
           this.spawnFruit();
         }
       }
@@ -164,9 +171,10 @@ export class FruitGame extends Phaser.Scene {
   private spawnFruit(): void {
     const launchY = this.fieldHeight * PLAY_BOTTOM;
     const apexY = this.fieldHeight * Phaser.Math.FloatBetween(PLAY_TOP + 0.07, PLAY_TOP + 0.15);
+    const gravity = GRAVITY[this.level - 1];
     this.fruits.push({
       x: Phaser.Math.Between(180, WIDTH - 180), y: launchY,
-      vx: Phaser.Math.Between(-35, 35), vy: -Math.sqrt(2 * GRAVITY * (launchY - apexY)),
+      vx: Phaser.Math.Between(-35, 35), vy: -Math.sqrt(2 * gravity * (launchY - apexY)), gravity,
       radius: Phaser.Math.Between(25, 34),
       color: FRUIT_COLORS[Phaser.Math.Between(0, FRUIT_COLORS.length - 1)],
     });
@@ -181,7 +189,7 @@ export class FruitGame extends Phaser.Scene {
       if (segmentHitsCircle(from, to, fruit, fruit.radius + 5)) this.score += 10;
       else remaining.push(fruit);
     }
-    if (remaining.length !== this.fruits.length) this.callbacks.onHud(this.score, this.shownSeconds);
+    if (remaining.length !== this.fruits.length) this.callbacks.onHud(this.score, this.shownSeconds, this.level);
     this.fruits = remaining;
   }
 

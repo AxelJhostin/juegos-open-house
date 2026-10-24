@@ -83,6 +83,8 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 
 **Salida:** una persona puede empezar y terminar una partida; los cortes se reconocen de forma comprensible y repetible.
 
+**Ajuste acordado después de probar la fase 2:** en rebanar fruta, una ronda pasa automáticamente del nivel de dificultad 1 al 2 a los 20 segundos. Se guardan localmente el número de partidas y las tres mejores puntuaciones, sin cuentas ni datos personales. Esto no añade niveles o progresión fuera de la ronda.
+
 ### Fase 3 — Completar los otros dos minijuegos
 
 - Añadir nave y plataformas reutilizando pantalla, puntaje, pausa/fin y controles existentes.

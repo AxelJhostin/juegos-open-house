@@ -3,6 +3,7 @@ import { FruitGame, PLAY_TOP, PLAY_BOTTOM, type ControlMode } from './fruit-game
 import { HandTracker, type HandSample } from './tracking';
 import type { Point } from './geometry';
 import { cameraPointOnCanvas } from './camera-coordinates';
+import { addResult, loadRecords, saveRecords } from './records';
 import './style.css';
 
 const WIDTH = 960;
@@ -14,7 +15,7 @@ app.innerHTML = `
   <section class="panel" aria-labelledby="title">
     <header class="header">
       <div><p class="eyebrow">Pulso Pixel · Prototipo 1 de 3</p><h1 id="title">Rebanar fruta</h1></div>
-      <div class="hud"><span>Puntos <strong id="score">0</strong></span><span>Tiempo <strong id="time">45</strong>s</span></div>
+      <div class="hud"><span>Puntos <strong id="score">0</strong></span><span>Tiempo <strong id="time">45</strong>s</span><span>Nivel <strong id="level">1</strong></span></div>
     </header>
     <div class="controls">
       <label for="control-mode">Control</label>
@@ -32,10 +33,11 @@ app.innerHTML = `
       <div class="play-guides" aria-hidden="true"><span class="guide-top">LÍMITE SUPERIOR</span><span class="guide-bottom">SALIDA DE FRUTAS</span></div>
       <div id="round-overlay" class="overlay">
         <h2 id="overlay-title">Corta las frutas</h2>
-        <p id="overlay-text">Tienes 45 segundos. Cada fruta cortada suma 10 puntos.</p>
+        <p id="overlay-text">Tienes 45 segundos. Cada fruta suma 10 puntos. Tras 20 segundos empieza el nivel 2.</p>
       </div>
     </div>
     <div class="status-row"><p id="camera-status" role="status" aria-live="polite">Cámara apagada</p><p id="tracking-stats">Detección: —</p></div>
+    <p id="records" class="records"></p>
     <p class="privacy">La cámara solo se activa al elegirla. El video se procesa aquí; no se guarda ni se transmite.</p>
   </section>
 `;
@@ -56,6 +58,14 @@ const status = document.querySelector<HTMLElement>('#camera-status')!;
 const stats = document.querySelector<HTMLElement>('#tracking-stats')!;
 const scoreText = document.querySelector<HTMLElement>('#score')!;
 const timeText = document.querySelector<HTMLElement>('#time')!;
+const levelText = document.querySelector<HTMLElement>('#level')!;
+const recordsText = document.querySelector<HTMLElement>('#records')!;
+let records = loadRecords();
+
+function renderRecords(): void {
+  recordsText.textContent = `Partidas jugadas: ${records.played} · Mejores puntuaciones: ${records.best.length ? records.best.map((score, index) => `${index + 1}. ${score}`).join(' · ') : '—'}`;
+}
+renderRecords();
 
 const instructions: Record<ControlMode, string> = {
   mouse: 'Arrastra el mouse a través de las frutas para cortarlas.',
@@ -64,15 +74,19 @@ const instructions: Record<ControlMode, string> = {
 };
 
 const gameScene = new FruitGame({
-  onHud(score, seconds): void {
+  onHud(score, seconds, level): void {
     scoreText.textContent = String(score);
     timeText.textContent = String(seconds);
+    levelText.textContent = String(level);
   },
   onEnd(score): void {
     tracker.stop();
+    records = addResult(records, score);
+    const saved = saveRecords(records);
+    renderRecords();
     stage.classList.remove('playing');
     overlayTitle.textContent = 'Partida terminada';
-    overlayText.textContent = `Conseguiste ${score} puntos. ¿Otra ronda?`;
+    overlayText.textContent = `Conseguiste ${score} puntos. ${saved ? '' : 'No se pudo guardar el récord en este navegador. '}¿Otra ronda?`;
     overlay.hidden = false;
     select.disabled = false;
     playButton.disabled = false;

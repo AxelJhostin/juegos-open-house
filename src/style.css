@@ -68,6 +68,7 @@ button[hidden] { display: none; }
 .overlay p { max-width: 32rem; margin: 0; line-height: 1.5; }
 .status-row { min-height: 36px; font-size: 14px; font-weight: bold; }
 .status-row p { margin: 8px 0 0; }
+.records { margin: 8px 0 0; font-size: 14px; font-weight: bold; }
 @media (max-width: 650px) {
   .header, .status-row, .controls { align-items: flex-start; flex-direction: column; }
   .status-row { gap: 0; }
