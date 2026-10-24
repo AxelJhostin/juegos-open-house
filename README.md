@@ -38,4 +38,4 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 
 **Resultado de la fase 1 en Chrome:** el usuario confirmó que el seguimiento se ve bien con movimientos lentos y reportó entre 52 y 60 detecciones por segundo, con 17 a 27 ms por imagen. En movimientos muy rápidos puede perderse momentáneamente; el prototipo evita unir posiciones a través de una pérdida de seguimiento.
 
-**Fase 2 en Chrome:** tras ajustar las coordenadas, las guías y el uso de dos índices, el usuario confirmó que el juego funciona como esperaba. El nivel 2 y los récords locales aún requieren una partida de comprobación.
+**Fase 2 en Chrome:** el usuario confirmó que el juego funciona como esperaba con dos índices, que el nivel 2 se activa y que los récords locales se conservan tras jugar.
