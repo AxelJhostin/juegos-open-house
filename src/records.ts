@@ -3,7 +3,7 @@ export type Records = { played: number; best: ScoreEntry[] };
 
 const FRUIT_KEY = 'pulso-pixel-fruta-records-v1';
 const SHIP_KEY = 'pulso-pixel-nave-records-v1'; // Datos antiguos de puntos; la tabla nueva de tiempos usa otra clave.
-const PLATFORM_KEY = 'pulso-pixel-plataformas-records-v1';
+const PLATFORM_KEY = 'pulso-pixel-plataformas-records-v2'; // Recorrido y puntaje nuevos; conserva intacta la tabla anterior.
 export type RecordGame = 'fruit' | 'ship' | 'platform';
 
 function keyFor(game: RecordGame): string {

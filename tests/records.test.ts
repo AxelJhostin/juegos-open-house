@@ -36,6 +36,22 @@ test('conserva récords numéricos antiguos como ANÓNIMO y guarda nombres nuevo
   assert.deepEqual(loadRecords('platform'), { played: 0, best: [] });
   assert.equal(saveRecords({ played: 1, best: [{ name: 'LIA', score: 75 }] }, 'platform'), true);
   assert.deepEqual(loadRecords('platform'), { played: 1, best: [{ name: 'LIA', score: 75 }] });
-  values.set('pulso-pixel-plataformas-records-v1', JSON.stringify({ played: 2, best: [75, 0] }));
+  values.set('pulso-pixel-plataformas-records-v2', JSON.stringify({ played: 2, best: [75, 0] }));
   assert.deepEqual(loadRecords('platform'), { played: 2, best: [{ name: 'ANÓNIMO', score: 75 }] });
+});
+
+test('la tabla de progreso usa una clave nueva sin borrar las partidas anteriores', () => {
+  const values = new Map<string, string>();
+  Object.defineProperty(globalThis, 'localStorage', {
+    configurable: true,
+    value: {
+      getItem: (key: string) => values.get(key) ?? null,
+      setItem: (key: string, value: string) => { values.set(key, value); },
+    },
+  });
+  values.set('pulso-pixel-plataformas-records-v1', JSON.stringify({ played: 3, best: [250] }));
+  assert.deepEqual(loadRecords('platform'), { played: 0, best: [] });
+  assert.equal(saveRecords({ played: 1, best: [{ name: 'ANA', score: 40 }] }, 'platform'), true);
+  assert.equal(values.has('pulso-pixel-plataformas-records-v1'), true);
+  assert.deepEqual(loadRecords('platform').best, [{ name: 'ANA', score: 40 }]);
 });

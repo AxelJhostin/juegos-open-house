@@ -3,7 +3,6 @@ import { FruitGame, PLAY_TOP, PLAY_BOTTOM, type ControlMode } from './fruit-game
 import { ShipGame } from './ship-game';
 import { PlatformGame } from './platform-game';
 import { HandTracker, type HandSample } from './tracking';
-import type { Point } from './geometry';
 import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, normalizePlayerName, saveRecords, type RecordGame } from './records';
 import { addShipResult, formatSurvivalTime, loadShipRecords, nameShipResult, saveShipRecords } from './ship-records';
@@ -22,7 +21,7 @@ app.innerHTML = `
     <div class="game-cards">
       <button class="game-card" type="button" data-game="fruit"><span class="card-symbol">✦</span><strong>Rebanar fruta</strong><span>Corta frutas con uno o dos índices. Suma puntos antes de que termine el tiempo.</span><em>Jugar fruta →</em></button>
       <button class="game-card" type="button" data-game="ship"><span class="card-symbol">◆</span><strong>Nave espacial</strong><span>Esquiva meteoritos. Cada segundo que sobrevives cuenta.</span><em>Jugar nave →</em></button>
-      <button class="game-card" type="button" data-game="platform"><span class="card-symbol">▣</span><strong>Plataformas</strong><span>Corre, salta huecos y supera obstáculos hasta llegar a la meta.</span><em>Jugar plataformas →</em></button>
+      <button class="game-card" type="button" data-game="platform"><span class="card-symbol">▣</span><strong>Plataformas</strong><span>Avanza automáticamente. Salta huecos y obstáculos sin chocar.</span><em>Jugar plataformas →</em></button>
     </div>
   </section>
   <section id="game-panel" class="panel" aria-labelledby="title" hidden>
@@ -97,6 +96,7 @@ let shipRecords = loadShipRecords();
 let pendingShipRank: number | null = null;
 let pendingScoreRank: number | null = null;
 let launchId = 0;
+let detectedHands = 0;
 
 function renderRecords(): void {
   if (selectedGame === 'ship') {
@@ -106,10 +106,11 @@ function renderRecords(): void {
     recordsText.textContent = `Partidas jugadas: ${shipRecords.played} · Mejores tiempos\n${board}`;
     return;
   }
+  const unit = selectedGame === 'platform' ? '%' : ' puntos';
   const board = records.best.length
-    ? records.best.map((entry, index) => `${index + 1}. ${entry.name.padEnd(10, ' ')}  ${entry.score} puntos`).join('\n')
+    ? records.best.map((entry, index) => `${index + 1}. ${entry.name.padEnd(10, ' ')}  ${entry.score}${unit}`).join('\n')
     : '—';
-  recordsText.textContent = `Partidas jugadas: ${records.played} · Mejores puntuaciones\n${board}`;
+  recordsText.textContent = `Partidas jugadas: ${records.played} · ${selectedGame === 'platform' ? 'Mejores recorridos' : 'Mejores puntuaciones'}\n${board}`;
 }
 renderRecords();
 
@@ -125,9 +126,9 @@ const instructions: Record<RecordGame, Record<ControlMode, string>> = {
     camera: 'Mueve una mano de izquierda a derecha para esquivar meteoritos. El primer choque termina la partida.',
   },
   platform: {
-    mouse: 'Usa el teclado o la cámara para correr y saltar.',
-    keyboard: 'Corre con A/D o flechas y salta con Espacio, W o flecha arriba.',
-    camera: 'Mueve la mano a los lados para correr; levanta el índice rápido para saltar. Espacio también funciona.',
+    mouse: 'Usa el teclado o la cámara para saltar.',
+    keyboard: 'El personaje avanza solo. Pulsa Espacio, W o flecha arriba para saltar.',
+    camera: 'El personaje avanza solo. Separa pulgar e índice; júntalos para saltar. Ábrelos antes del siguiente salto. Espacio también funciona.',
   },
 };
 
@@ -141,7 +142,12 @@ function updateShipHud(elapsedMs: number): void {
   scoreText.textContent = formatSurvivalTime(elapsedMs);
 }
 
-function finishRound(kind: RecordGame, score: number): void {
+function updatePlatformHud(progress: number): void {
+  scoreText.textContent = String(progress);
+}
+
+function finishRound(kind: RecordGame, score: number, won = false): void {
+  setGameplayKeyboardEnabled(false);
   tracker.stop();
   const result = addResult(records, score);
   records = result.records;
@@ -149,8 +155,10 @@ function finishRound(kind: RecordGame, score: number): void {
   const saved = saveRecords(records, kind);
   renderRecords();
   stage.classList.remove('playing', 'fruit-round');
-  overlayTitle.textContent = 'Partida terminada';
-  overlayText.textContent = `Conseguiste ${score} puntos. ${saved ? '' : 'No se pudo guardar el récord en este navegador. '}${result.rank === null ? '¿Otra ronda?' : '¡Entraste en las mejores puntuaciones!'}`;
+  overlayTitle.textContent = kind === 'platform' ? won ? '¡Meta!' : '¡Choque!' : 'Partida terminada';
+  const resultText = kind === 'platform' ? `Llegaste al ${score}% del recorrido.` : `Conseguiste ${score} puntos.`;
+  const rankText = kind === 'platform' ? '¡Entraste en los mejores recorridos!' : '¡Entraste en las mejores puntuaciones!';
+  overlayText.textContent = `${resultText} ${saved ? '' : 'No se pudo guardar el récord en este navegador. '}${result.rank === null ? '¿Otra ronda?' : rankText}`;
   overlay.hidden = false;
   nameEntry.hidden = result.rank === null;
   select.disabled = false;
@@ -163,6 +171,7 @@ function finishRound(kind: RecordGame, score: number): void {
 }
 
 function finishShipRound(elapsedMs: number): void {
+  setGameplayKeyboardEnabled(false);
   tracker.stop();
   const result = addShipResult(shipRecords, elapsedMs);
   shipRecords = result.records;
@@ -185,7 +194,7 @@ function finishShipRound(elapsedMs: number): void {
 
 const fruitScene = new FruitGame({ onHud: updateHud, onEnd: (score) => finishRound('fruit', score) });
 const shipScene = new ShipGame({ onHud: updateShipHud, onEnd: finishShipRound });
-const platformScene = new PlatformGame({ onHud: updateHud, onEnd: (score) => finishRound('platform', score) });
+const platformScene = new PlatformGame({ onHud: updatePlatformHud, onEnd: (score, won) => finishRound('platform', score, won) });
 let activeScene: FruitGame | ShipGame | PlatformGame = fruitScene;
 
 const game = new Phaser.Game({
@@ -198,14 +207,20 @@ const game = new Phaser.Game({
   scene: [fruitScene, shipScene, platformScene],
 });
 
-function toStagePoint(sample: HandSample): Point {
-  return cameraPointOnCanvas(
+function setGameplayKeyboardEnabled(enabled: boolean): void {
+  if (game.input.keyboard) game.input.keyboard.enabled = enabled;
+  for (const scene of [fruitScene, shipScene, platformScene]) scene.input.keyboard?.resetKeys();
+}
+
+function toStageSample(sample: HandSample): HandSample {
+  const point = cameraPointOnCanvas(
     sample,
     { width: video.videoWidth, height: video.videoHeight },
     video.getBoundingClientRect(),
     game.canvas.getBoundingClientRect(),
     { width: game.scale.width, height: game.scale.height },
   );
+  return { ...point, pinchRatio: sample.pinchRatio };
 }
 
 function setStageHeight(height: number): void {
@@ -218,7 +233,12 @@ function setStageHeight(height: number): void {
 
 const tracker = new HandTracker(video, {
   onState(message, active): void {
-    if (status.textContent !== message) status.textContent = message;
+    const gesture = active && selectedGame === 'platform' && platformScene.isPlaying &&
+      platformScene.controlMode === 'camera' && detectedHands > 0
+      ? platformScene.gestureReady ? ' · pinza lista' : ' · separa los dedos'
+      : '';
+    const statusText = message + gesture;
+    if (status.textContent !== statusText) status.textContent = statusText;
     stage.classList.toggle('camera-active', active);
     stopCameraButton.hidden = !active;
     if (!active) {
@@ -232,7 +252,8 @@ const tracker = new HandTracker(video, {
     }
   },
   onPoints(samples): void {
-    activeScene.setCameraPoints(video.videoWidth ? samples.map(toStagePoint) : []);
+    detectedHands = samples.length;
+    activeScene.setCameraPoints(video.videoWidth ? samples.map(toStageSample) : []);
   },
   onStats(fps, duration): void {
     stats.textContent = `Detección: ${fps} fps · ${duration.toFixed(0)} ms por imagen`;
@@ -240,6 +261,7 @@ const tracker = new HandTracker(video, {
 });
 
 function renderSelection(kind: RecordGame): void {
+  setGameplayKeyboardEnabled(false);
   launchId++;
   pendingShipRank = null;
   pendingScoreRank = null;
@@ -250,20 +272,22 @@ function renderSelection(kind: RecordGame): void {
   if (kind !== 'fruit' && select.value === 'mouse') select.value = 'keyboard';
   title.textContent = kind === 'fruit' ? 'Rebanar fruta' : kind === 'ship' ? 'Nave espacial' : 'Plataformas';
   eyebrow.textContent = `Pulso Pixel · Juego ${kind === 'fruit' ? 1 : kind === 'ship' ? 2 : 3} de 3`;
-  scoreLabel.textContent = kind === 'ship' ? 'Tiempo' : 'Puntos';
-  scoreUnit.hidden = kind !== 'ship';
-  countdownStat.hidden = kind === 'ship';
-  extraStat.hidden = kind === 'ship';
-  extraLabel.textContent = kind === 'fruit' ? 'Nivel' : 'Caídas';
+  scoreLabel.textContent = kind === 'ship' ? 'Tiempo' : kind === 'platform' ? 'Progreso' : 'Puntos';
+  countdownStat.hidden = kind !== 'fruit';
+  extraStat.hidden = kind !== 'fruit';
+  scoreUnit.textContent = kind === 'platform' ? '%' : 's';
+  scoreUnit.hidden = kind === 'fruit';
+  extraLabel.textContent = 'Nivel';
   if (kind === 'ship') updateShipHud(0);
-  else updateHud(0, 45, kind === 'fruit' ? 1 : 0);
+  else if (kind === 'fruit') updateHud(0, 45, 1);
+  else updatePlatformHud(0);
   help.textContent = instructions[selectedGame][select.value as ControlMode];
-  overlayTitle.textContent = kind === 'fruit' ? 'Corta las frutas' : kind === 'ship' ? 'Sobrevive' : 'Corre y salta';
+  overlayTitle.textContent = kind === 'fruit' ? 'Corta las frutas' : kind === 'ship' ? 'Sobrevive' : 'Salta a tiempo';
   overlayText.textContent = kind === 'fruit'
     ? 'Tienes 45 segundos. Cada fruta suma 10 puntos. Tras 20 segundos empieza el nivel 2.'
     : kind === 'ship'
       ? 'Esquiva meteoritos hasta el primer choque. Cada vez caen más y más rápido; tu tiempo es la puntuación.'
-      : 'Cruza los huecos y obstáculos hasta la meta antes de que termine el tiempo. No hay objetos que recoger.';
+      : 'El personaje corre solo. Salta obstáculos y huecos; el primer choque termina el intento. La puntuación es el porcentaje recorrido.';
   if (kind === 'ship') shipRecords = loadShipRecords();
   else records = loadRecords(selectedGame);
   renderRecords();
@@ -278,6 +302,7 @@ for (const card of document.querySelectorAll<HTMLButtonElement>('.game-card')) {
   card.addEventListener('click', () => renderSelection(card.dataset.game as RecordGame));
 }
 menuButton.addEventListener('click', () => {
+  setGameplayKeyboardEnabled(false);
   launchId++;
   pendingShipRank = null;
   pendingScoreRank = null;
@@ -309,7 +334,8 @@ nameEntry.addEventListener('submit', (event) => {
     records = nameResult(records, pendingScoreRank!, name);
     saved = saveRecords(records, selectedGame);
     pendingScoreRank = null;
-    overlayText.textContent = `Puntuación registrada: ${scoreText.textContent} puntos. ${saved ? '' : 'No se pudo guardar el nombre en este navegador. '}¿Otra ronda?`;
+    const resultText = selectedGame === 'platform' ? `${scoreText.textContent}% recorrido` : `${scoreText.textContent} puntos`;
+    overlayText.textContent = `Puntuación registrada: ${resultText}. ${saved ? '' : 'No se pudo guardar el nombre en este navegador. '}¿Otra ronda?`;
   }
   nameEntry.hidden = true;
   renderRecords();
@@ -336,6 +362,7 @@ playButton.addEventListener('click', async () => {
   } else tracker.stop();
 
   activeScene.startRound(mode);
+  setGameplayKeyboardEnabled(true);
   stage.classList.add('playing');
   stage.classList.toggle('fruit-round', selectedGame === 'fruit');
   overlay.hidden = true;

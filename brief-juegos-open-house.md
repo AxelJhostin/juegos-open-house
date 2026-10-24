@@ -21,8 +21,9 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
    - Aumentar gradualmente la velocidad y la frecuencia de los meteoritos.
    - Guardar en este navegador los tres mejores tiempos con un nombre o apodo corto, como en una tabla arcade.
 
-2. **Plataformas inspirado en Mario**
-   - Juego original de desplazamiento lateral: correr y saltar sobre huecos y obstáculos.
+2. **Plataformas de avance automático**
+   - Juego original de desplazamiento lateral: el personaje corre solo y el jugador decide cuándo saltar huecos y obstáculos.
+   - El primer choque o caída termina el intento; el porcentaje recorrido es la puntuación y llegar a la meta da 100 %.
    - No recogerá objetos.
    - Usará personaje, escenarios y gráficos originales, con una sensación de plataformas clásica.
 
@@ -35,12 +36,12 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 ## Experiencia y controles
 
 - Una pantalla de inicio permite escoger el juego y explica los controles.
-- Fruta y Plataformas duran alrededor de 45 segundos. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
+- Fruta dura alrededor de 45 segundos. Plataformas tiene intentos cortos que terminan al chocar, caer o llegar a la meta. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** seguir una mano como control principal; preparar el seguimiento para permitir hasta dos manos. La segunda mano puede habilitarse si las pruebas muestran que aporta sin complicar el uso.
 - **Nave:** la posición horizontal de la mano dirige la nave.
-- **Plataformas:** movimiento horizontal con la mano y un gesto corto para saltar. El gesto exacto se elegirá tras probar la cámara.
+- **Plataformas:** avance automático y una pinza de pulgar e índice para saltar; hay que separar los dedos antes de repetir el salto.
 - **Fruta:** una trayectoria rápida del dedo dibuja el corte; el segmento entre posiciones consecutivas del dedo debe poder cortar frutas aunque la mano se mueva entre fotogramas.
-- **Alternativas:** flechas o A/D para moverse; espacio para saltar; arrastrar con el mouse para rebanar.
+- **Alternativas:** flechas o A/D para mover la nave; espacio, W o flecha arriba para saltar en Plataformas; arrastrar con el mouse para rebanar.
 - Los tres mejores resultados de cada juego muestran un nombre o apodo corto, introducido al entrar en la tabla. Todo se guarda solo en este navegador.
 - Mostrar una guía breve de colocación de la mano y una indicación visible de que el seguimiento está activo.
 - Procesar la cámara localmente; no guardar ni transmitir imágenes.
@@ -73,7 +74,7 @@ La extensión no forma parte de la demo inicial. El navegador restringe el contr
 
 - Definir el nombre general de la experiencia y el estilo visual; añadir identidad de la universidad si comparten colores o recursos oficiales.
 - Probar si la experiencia queda mejor con una mano por defecto y dos opcionalmente, o con ambas disponibles desde el inicio.
-- Ajustar el gesto de salto y los rangos de movimiento con la cámara real.
+- Ajustar el umbral de la pinza con la cámara real.
 - Afinar dificultad, puntajes, efectos y duración mientras se juega.
 
 ## Orden de trabajo sugerido

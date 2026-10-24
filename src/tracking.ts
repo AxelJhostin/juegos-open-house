@@ -1,6 +1,7 @@
 import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision';
+import { handPinchRatio } from './pinch-jump';
 
-export type HandSample = { x: number; y: number };
+export type HandSample = { x: number; y: number; pinchRatio: number | null };
 
 type Callbacks = {
   onState(message: string, active: boolean): void;
@@ -102,7 +103,7 @@ export class HandTracker {
         const duration = performance.now() - started;
         const points = result.landmarks.flatMap((hand) => {
           const tip = hand[8]; // Punto 8: punta del índice de cada mano.
-          return tip ? [{ x: tip.x, y: tip.y }] : [];
+          return tip ? [{ x: tip.x, y: tip.y, pinchRatio: handPinchRatio(hand, this.video.videoWidth, this.video.videoHeight) }] : [];
         });
         this.callbacks.onPoints(points);
         this.callbacks.onState(points.length ? `Cámara activa · ${points.length} ${points.length === 1 ? 'mano detectada' : 'manos detectadas'}` : 'Cámara activa · sin mano visible', true);

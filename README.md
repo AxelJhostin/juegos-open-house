@@ -49,12 +49,12 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - Los tres mejores tiempos aparecen con nombre o apodo corto en una tabla local de estilo arcade. Si un tiempo entra en la tabla, puedes escribir hasta 10 caracteres. No se requiere cuenta y nada se envía a un servidor.
 - La tabla de tiempos empieza desde cero porque los puntos de la versión anterior no se pueden comparar con segundos. Las figuras siguen siendo provisionales.
 
-**Comprobado en el navegador local:** Nave inicia, muestra el tiempo, termina en el primer choque, pide un nombre para un tiempo destacado y conserva la tabla al recargar. El control por cámara de Nave queda pendiente de prueba con la cámara real en Chrome.
+**Comprobado en el navegador local:** Nave inicia, muestra el tiempo, termina en el primer choque, pide un nombre para un tiempo destacado y conserva la tabla al recargar. Al aparecer el formulario, el juego libera el teclado y se pueden escribir A, D y W en el nombre. El control por cámara de Nave queda pendiente de prueba con la cámara real en Chrome.
 
 ## Plataformas — fase 3
 
-- Un recorrido lineal provisional incluye huecos, obstáculos y meta. Se avanza con A/D o flechas; se salta con Espacio, W o flecha arriba. El puntaje representa la distancia máxima recorrida y se muestra el número de caídas.
-- El modo cámara usa la posición horizontal del índice para correr y un movimiento rápido hacia arriba para saltar. Es un gesto inicial que aún debe probarse y ajustarse con la cámara real en Chrome.
-- La ronda termina al llegar a la meta o después de 45 segundos. Las tres mejores puntuaciones de Plataformas se guardan con nombre o apodo, por separado.
+- El personaje corre automáticamente por un recorrido provisional de huecos, obstáculos y meta. Con teclado se salta con Espacio, W o flecha arriba. Con cámara se juntan pulgar e índice para saltar y se separan antes de repetir.
+- El primer choque o caída termina el intento. La puntuación es el porcentaje recorrido; llegar a la meta da 100 %. Se guardan las tres mejores marcas con nombre o apodo.
+- Los puntajes del prototipo anterior permanecen en el navegador bajo otra clave. La tabla de porcentaje empieza desde cero porque ambas puntuaciones no son comparables.
 
-**Comprobado en el navegador local:** el menú abre las tres pantallas; Plataformas inicia, responde al movimiento con teclado y actualiza el puntaje. El botón de regreso devuelve al menú y no guarda la ronda interrumpida.
+**Comprobado en el navegador local:** el personaje avanza solo, un choque termina el intento y el recorrido completo puede superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. Queda pendiente probar el umbral de la pinza y la dificultad con la cámara real en Chrome.

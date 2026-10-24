@@ -14,7 +14,7 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 
 - Una aplicación web, en TypeScript y Phaser, con MediaPipe Tasks Vision para seguir las manos.
 - Una pantalla inicial sencilla con título, selección de juego, instrucciones y elección de teclado/cámara.
-- Tres partidas con puntaje o tiempo, fin de partida y opción de repetir. Fruta y Plataformas duran unos 45 segundos; Nave termina al primer choque.
+- Tres partidas con puntaje o tiempo, fin de partida y opción de repetir. Fruta dura unos 45 segundos; Plataformas y Nave tienen intentos cortos que terminan al chocar o caer.
 - Diseño prioritario para laptop y pantalla grande en orientación horizontal. No requiere diseño para celular.
 - Carga local del código, los modelos y los recursos necesarios para que la demo no dependa de internet una vez preparada.
 - La cámara se activa solo al elegir el modo cámara. El video se procesa localmente; no se graba ni se envía a ningún servidor.
@@ -22,13 +22,13 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 ### Juegos
 
 1. **Nave:** movimiento lateral para esquivar meteoritos, hasta el primer choque; el tiempo sobrevivido es la puntuación. Los meteoritos aumentan en velocidad y frecuencia.
-2. **Plataformas:** un recorrido lineal corto con saltos, huecos y obstáculos. Inspiración de plataformas clásicas; personaje y escenario originales. Sin objetos recolectables, jefes ni mundos adicionales.
+2. **Plataformas:** avance automático por un recorrido lineal corto; una pinza o tecla activa el salto. El primer choque o caída termina el intento y se registra el porcentaje recorrido. Personaje y escenario originales. Sin objetos recolectables, jefes ni mundos adicionales.
 3. **Rebanar fruta:** ronda de tiempo limitado; la trayectoria del dedo corta frutas, suma puntos y puede crear combos. Se puede añadir una bomba como peligro. Sin niveles, tienda, desbloqueos ni campaña.
 
 ### Controles
 
-- Teclado: flechas o A/D para movimiento; espacio para saltar; instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
-- Cámara: seguir inicialmente una mano. Nave y plataformas usan movimiento horizontal; el plataformas usa un gesto sencillo de salto; rebanar fruta usa la trayectoria del dedo.
+- Teclado: flechas o A/D para mover Nave; Espacio, W o flecha arriba para saltar en Plataformas; instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
+- Cámara: seguir inicialmente una mano. Nave usa movimiento horizontal; Plataformas salta al juntar pulgar e índice y exige separarlos antes del siguiente salto; Rebanar fruta usa la trayectoria del dedo.
 - Mouse: arrastrar para rebanar fruta.
 - Preparar el programa para detectar dos manos, pero entregar primero una experiencia completa con una mano. El uso de dos manos queda como mejora opcional si funciona estable y no retrasa el alcance obligatorio.
 - Mantener los controles alternativos aunque el modo cámara funcione.
@@ -91,6 +91,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Mantener una sola mecánica central por juego y partidas cortas.
 - No añadir modos nuevos ni funciones ajenas al brief.
 - **Ajuste acordado después de probar Nave:** sustituir la energía y los puntos por supervivencia. Guardar localmente los tres mejores tiempos con nombre o apodo corto; los puntos de la versión anterior no se mezclan con estos tiempos. Mostrar también nombre o apodo en los tres mejores puntajes de Fruta y Plataformas; los puntajes anteriores sin nombre se conservan como ANÓNIMO.
+- **Ajuste acordado después de probar Plataformas:** convertirlo en un juego original de avance automático y salto único por pinza. Choque o caída termina el intento; la nueva tabla guarda porcentaje recorrido por separado de los puntajes del prototipo anterior, que permanecen en el navegador.
 
 **Salida:** los tres juegos se pueden jugar, terminar y volver a iniciar con teclado; cada uno ofrece control de cámara.
 
