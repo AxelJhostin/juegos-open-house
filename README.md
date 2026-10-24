@@ -7,7 +7,7 @@ Proyecto de una colección pequeña de juegos web originales controlados con mov
 - [Alcance y fases](alcance-y-fases.md): límites, etapas y criterios para decidir cuándo avanzar.
 - [Instrucciones para Codex](AGENTS.md): reglas de trabajo para mantener el proyecto acotado.
 
-La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fases 0, 1 y 2 están completas**. La fase 3 está en curso: ya hay menú y versiones jugables de los tres juegos; quedan pruebas de los controles por cámara de Nave y Plataformas en Chrome.
+La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fases 0 a 3 están implementadas**: hay menú y versiones jugables de los tres juegos con cámara y controles alternativos. La fase 4 corresponde al pulido visual y las pruebas para el evento.
 
 ## Decisiones de la fase 0
 
@@ -49,7 +49,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - Los tres mejores tiempos aparecen con nombre o apodo corto en una tabla local de estilo arcade. Si un tiempo entra en la tabla, puedes escribir hasta 10 caracteres. No se requiere cuenta y nada se envía a un servidor.
 - La tabla de tiempos empieza desde cero porque los puntos de la versión anterior no se pueden comparar con segundos. Las figuras siguen siendo provisionales.
 
-**Comprobado en el navegador local:** Nave inicia, muestra el tiempo, termina en el primer choque, pide un nombre para un tiempo destacado y conserva la tabla al recargar. Al aparecer el formulario, el juego libera el teclado y se pueden escribir A, D y W en el nombre. El control por cámara de Nave queda pendiente de prueba con la cámara real en Chrome.
+**Comprobado en el navegador local:** Nave inicia, muestra el tiempo, termina en el primer choque, pide un nombre para un tiempo destacado y conserva la tabla al recargar. Al aparecer el formulario, el juego libera el teclado y se pueden escribir A, D y W en el nombre.
 
 ## Plataformas — fase 3
 
@@ -57,4 +57,15 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - El primer choque o caída termina el intento. La puntuación es el porcentaje recorrido; llegar a la meta da 100 %. Se guardan las tres mejores marcas con nombre o apodo.
 - Los puntajes del prototipo anterior permanecen en el navegador bajo otra clave. La tabla de porcentaje empieza desde cero porque ambas puntuaciones no son comparables.
 
-**Comprobado en el navegador local:** el personaje avanza solo, un choque termina el intento y el recorrido completo puede superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. Queda pendiente probar el umbral de la pinza y la dificultad con la cámara real en Chrome.
+**Comprobado en el navegador local:** el personaje avanza solo, un choque termina el intento y el recorrido completo puede superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. El usuario probó la pinza con la cámara real y confirmó que el salto se siente cómodo; alguna pinza puede perderse ocasionalmente, por lo que se mantiene el ajuste actual.
+
+## Organización del código
+
+- `src/game-catalog.ts` contiene el texto, los controles disponibles, el marcador y la clave de récords de cada juego. La interfaz toma sus datos de este catálogo.
+- `src/app-shell.ts` construye y actualiza el menú, el marco exterior, el marcador y el formulario de nombre. No contiene reglas de juego.
+- `src/game-themes.css` contiene las variables visuales de cada tarjeta y marco exterior. Cambiar un tema aquí no modifica los dibujos del canvas.
+- `src/fruit-game.ts`, `src/ship-game.ts` y `src/platform-game.ts` contienen cada mecánica. Las tres escenas cumplen el contrato de `src/game-types.ts`.
+- `src/tracking.ts` se ocupa de la cámara; `src/records.ts` guarda y lee los tres mejores resultados de cada juego sin alterar las claves locales existentes.
+- `src/main.ts` conecta esas piezas y administra la partida activa. No construye el HTML ni define los textos de presentación.
+
+Para añadir otro minijuego al proyecto en el futuro: crear una escena que cumpla `PlayableScene`, añadir su entrada a `GAMES`, registrarla en `sessions` en `main.ts` y definir su tema en `game-themes.css`. Esto describe la estructura; no amplía el alcance de la demo actual.

@@ -1,25 +1,17 @@
-export type ScoreEntry = { name: string; score: number };
-export type Records = { played: number; best: ScoreEntry[] };
-
-const FRUIT_KEY = 'pulso-pixel-fruta-records-v1';
-const SHIP_KEY = 'pulso-pixel-nave-records-v1'; // Datos antiguos de puntos; la tabla nueva de tiempos usa otra clave.
-const PLATFORM_KEY = 'pulso-pixel-plataformas-records-v2'; // Recorrido y puntaje nuevos; conserva intacta la tabla anterior.
-export type RecordGame = 'fruit' | 'ship' | 'platform';
-
-function keyFor(game: RecordGame): string {
-  return game === 'fruit' ? FRUIT_KEY : game === 'ship' ? SHIP_KEY : PLATFORM_KEY;
-}
+export type RecordEntry = { name: string; value: number };
+export type Records = { played: number; best: RecordEntry[] };
+export type RecordStorage = { key: string; field: string; includeZero: boolean };
 
 export function normalizePlayerName(value: string): string {
   return value.trim().toLocaleUpperCase('es').replace(/[^\p{L}\p{N} ]/gu, '').replace(/\s+/g, ' ').slice(0, 10).trim();
 }
 
-export function addResult(records: Records, score: number): { records: Records; rank: number | null } {
-  const entry = { name: 'ANÓNIMO', score: Math.max(0, Math.round(score)) };
-  if (entry.score === 0) return { records: { ...records, played: records.played + 1 }, rank: null };
-  const best = [...records.best, entry].sort((a, b) => b.score - a.score).slice(0, 3);
-  const index = best.indexOf(entry);
-  return { records: { played: records.played + 1, best }, rank: index < 0 ? null : index };
+export function addResult(records: Records, value: number, storage: RecordStorage): { records: Records; rank: number | null } {
+  const entry = { name: 'ANÓNIMO', value: Math.max(0, Math.round(value)) };
+  if (entry.value === 0 && !storage.includeZero) return { records: { ...records, played: records.played + 1 }, rank: null };
+  const best = [...records.best, entry].sort((a, b) => b.value - a.value).slice(0, 3);
+  const rank = best.indexOf(entry);
+  return { records: { played: records.played + 1, best }, rank: rank < 0 ? null : rank };
 }
 
 export function nameResult(records: Records, rank: number, value: string): Records {
@@ -28,31 +20,38 @@ export function nameResult(records: Records, rank: number, value: string): Recor
   return { ...records, best: records.best.map((entry, index) => index === rank ? { ...entry, name } : entry) };
 }
 
-export function loadRecords(game: RecordGame = 'fruit'): Records {
+export function loadRecords(storage: RecordStorage): Records {
   try {
-    const saved = JSON.parse(localStorage.getItem(keyFor(game)) ?? 'null');
-    if (saved && Number.isSafeInteger(saved.played) && saved.played >= 0 &&
-      Array.isArray(saved.best) && saved.best.length <= 3) {
-      const best = saved.best.map((value: unknown): ScoreEntry | null => {
-        // Conserva los récords numéricos de Fruta y Plataformas al añadir nombres.
-        if (Number.isSafeInteger(value) && (value as number) >= 0) return { name: 'ANÓNIMO', score: value as number };
-        if (!value || typeof value !== 'object') return null;
-        const entry = value as Partial<ScoreEntry>;
-        if (typeof entry.name !== 'string' || !entry.name || entry.name.length > 10 ||
-          !Number.isSafeInteger(entry.score) || (entry.score as number) < 0) return null;
-        return { name: entry.name, score: entry.score as number };
-      });
-      if (best.every((entry: ScoreEntry | null): entry is ScoreEntry => entry !== null)) {
-        return { played: saved.played, best: best.filter((entry: ScoreEntry) => entry.score > 0).sort((a: ScoreEntry, b: ScoreEntry) => b.score - a.score) };
+    const saved: unknown = JSON.parse(localStorage.getItem(storage.key) ?? 'null');
+    if (!saved || typeof saved !== 'object') return { played: 0, best: [] };
+    const data = saved as { played?: unknown; best?: unknown };
+    if (!Number.isSafeInteger(data.played) || (data.played as number) < 0 ||
+      !Array.isArray(data.best) || data.best.length > 3) return { played: 0, best: [] };
+    const best = data.best.map((item: unknown): RecordEntry | null => {
+      // Las primeras tablas de Fruta y Plataformas guardaban números sin nombres.
+      if (storage.field === 'score' && Number.isSafeInteger(item) && (item as number) >= 0) {
+        return { name: 'ANÓNIMO', value: item as number };
       }
-    }
-  } catch { /* El juego sigue si el almacenamiento está bloqueado. */ }
+      if (!item || typeof item !== 'object') return null;
+      const entry = item as Record<string, unknown>;
+      if (typeof entry.name !== 'string' || !entry.name || entry.name.length > 10 ||
+        !Number.isSafeInteger(entry[storage.field]) || (entry[storage.field] as number) < 0) return null;
+      return { name: entry.name, value: entry[storage.field] as number };
+    });
+    if (best.some((entry: RecordEntry | null) => entry === null)) return { played: 0, best: [] };
+    return {
+      played: data.played as number,
+      best: (best as RecordEntry[]).filter((entry) => storage.includeZero || entry.value > 0).sort((a, b) => b.value - a.value),
+    };
+  } catch { /* La demo sigue si el almacenamiento está bloqueado o dañado. */ }
   return { played: 0, best: [] };
 }
 
-export function saveRecords(records: Records, game: RecordGame = 'fruit'): boolean {
+export function saveRecords(records: Records, storage: RecordStorage): boolean {
   try {
-    localStorage.setItem(keyFor(game), JSON.stringify(records));
+    // Conserva el formato guardado de cada juego para no perder récords existentes.
+    const best = records.best.map((entry) => ({ name: entry.name, [storage.field]: entry.value }));
+    localStorage.setItem(storage.key, JSON.stringify({ played: records.played, best }));
     return true;
   } catch {
     return false;

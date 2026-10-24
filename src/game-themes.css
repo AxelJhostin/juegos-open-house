@@ -1,0 +1,25 @@
+/* Cada selector controla únicamente el menú de ese juego y su marco exterior.
+   El canvas y sus dibujos permanecen en la escena Phaser correspondiente. */
+.game-card[data-game="fruit"], .panel[data-game="fruit"] {
+  --theme-ink: var(--palette-5);
+  --theme-accent: var(--palette-3);
+  --theme-surface: var(--palette-1);
+  --theme-stage: var(--palette-1);
+  --theme-overlay: #eaf6ffde;
+}
+
+.game-card[data-game="ship"], .panel[data-game="ship"] {
+  --theme-ink: var(--palette-5);
+  --theme-accent: var(--palette-3);
+  --theme-surface: var(--palette-1);
+  --theme-stage: var(--palette-1);
+  --theme-overlay: #eaf6ffde;
+}
+
+.game-card[data-game="platform"], .panel[data-game="platform"] {
+  --theme-ink: var(--palette-5);
+  --theme-accent: var(--palette-3);
+  --theme-surface: var(--palette-1);
+  --theme-stage: var(--palette-1);
+  --theme-overlay: #eaf6ffde;
+}

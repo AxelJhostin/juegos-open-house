@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { Point } from './geometry';
-import type { ControlMode } from './fruit-game';
+import type { ControlMode } from './game-types';
 
 const WIDTH = 960;
 type Meteor = { x: number; y: number; vy: number; radius: number };

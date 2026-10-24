@@ -1,8 +1,7 @@
 import Phaser from 'phaser';
 import { segmentHitsCircle, type Point } from './geometry';
 import { assignHandSlots, type HandSlots } from './hand-slots';
-
-export type ControlMode = 'mouse' | 'keyboard' | 'camera';
+import type { ControlMode } from './game-types';
 
 const WIDTH = 960;
 const DEFAULT_HEIGHT = 540;

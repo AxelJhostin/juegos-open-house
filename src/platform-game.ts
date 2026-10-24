@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { HandSample } from './tracking';
-import type { ControlMode } from './fruit-game';
+import type { ControlMode } from './game-types';
 import { PinchJumpControl } from './pinch-jump';
 
 const WIDTH = 960;
