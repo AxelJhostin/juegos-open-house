@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { segmentHitsCircle, type Point } from './geometry';
 import { assignHandSlots, type HandSlots } from './hand-slots';
 import type { ControlMode } from './game-types';
+import { drawFruit } from './fruit-art';
 
 const WIDTH = 960;
 const DEFAULT_HEIGHT = 540;
@@ -216,12 +217,7 @@ export class FruitGame extends Phaser.Scene {
     if (!graphics) return;
     graphics.clear();
     for (const fruit of this.fruits) {
-      graphics.fillStyle(fruit.color);
-      graphics.fillCircle(fruit.x, fruit.y, fruit.radius);
-      graphics.lineStyle(4, 0x1e5a9c);
-      graphics.strokeCircle(fruit.x, fruit.y, fruit.radius);
-      graphics.fillStyle(0x1e5a9c);
-      graphics.fillRect(fruit.x - 3, fruit.y - fruit.radius - 9, 6, 12);
+      drawFruit(graphics, fruit);
     }
     for (const mark of this.cutMarks) {
       graphics.lineStyle(7, 0x1e5a9c, 0.85);

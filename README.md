@@ -67,6 +67,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - `src/game-shell.css` presenta las pantallas de juego: tablero, controles, marcador, instrucciones y récords. Cada juego hereda una variante visual sin cambiar sus reglas ni el canvas.
 - `src/game-themes.css` contiene las variables visuales de cada tarjeta y de toda la pantalla exterior del juego: fondo, texto, botones, panel y superposición. Cambiar un tema aquí no modifica los dibujos del canvas.
 - `src/fruit-game.ts`, `src/ship-game.ts` y `src/platform-game.ts` contienen cada mecánica. Las tres escenas cumplen el contrato de `src/game-types.ts`.
+- `src/fruit-art.ts` dibuja las frutas en bloques con la paleta local. El arte está separado del radio de colisión y de las reglas del corte.
 - `src/tracking.ts` se ocupa de la cámara; `src/records.ts` guarda y lee los tres mejores resultados de cada juego sin alterar las claves locales existentes.
 - `src/main.ts` conecta esas piezas y administra la partida activa. No construye el HTML ni define los textos de presentación.
 
