@@ -4,9 +4,12 @@ import { normalizePlayerName, type Records } from './records';
 
 type ShellEvents = {
   chooseGame(id: GameId): void;
+  openHandDemo(): void;
   returnHome(): void;
   play(): void;
   stopCamera(): void;
+  startHandDemo(): void;
+  stopHandDemo(): void;
   saveName(name: string): void;
 };
 
@@ -19,9 +22,22 @@ function required<T extends Element>(root: ParentNode, selector: string): T {
 export class AppShell {
   readonly stage: HTMLElement;
   readonly video: HTMLVideoElement;
+  readonly handDemoVideo: HTMLVideoElement;
+  readonly handDemoCanvas: HTMLCanvasElement;
   private readonly root: HTMLElement;
   private readonly home: HTMLElement;
   private readonly panel: HTMLElement;
+  private readonly handDemo: HTMLElement;
+  private readonly handDemoStage: HTMLElement;
+  private readonly handDemoPlaceholder: HTMLElement;
+  private readonly handDemoStart: HTMLButtonElement;
+  private readonly handDemoStop: HTMLButtonElement;
+  private readonly handDemoStatus: HTMLElement;
+  private readonly handDemoCount: HTMLElement;
+  private readonly handDemoStats: HTMLElement;
+  private readonly handDemoEnergyStatus: HTMLElement;
+  private readonly handDemoEnergyFill: HTMLElement;
+  private readonly handDemoEnergyProgress: HTMLElement;
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
@@ -70,6 +86,7 @@ export class AppShell {
             <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
             <p class="home-intro">Tres retos rápidos para jugar con cámara o teclado. Elige tu desafío.</p>
             <div class="hero-facts"><span><b>03</b> MINIJUEGOS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+            <button id="open-hand-demo" class="hand-demo-link" type="button"><span>✦ MIRA CÓMO FUNCIONA LA IA</span><span>Ver los puntos de tus manos ↗</span></button>
           </div>
           <div class="hero-display" aria-hidden="true">
             <div class="display-top"><span>PP // SEÑAL ACTIVA</span><span>● ● ●</span></div>
@@ -79,7 +96,54 @@ export class AppShell {
         </div>
         <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—03</p><h2>ELIGE TU JUEGO</h2></div><p>Una pantalla. Tres formas de jugar.</p></div>
         <div class="game-cards">${cards}</div>
-        <div class="home-footer"><span>✦ PULSO PIXEL · OPEN HOUSE</span><span>La cámara se activa solo cuando eliges jugar con ella.</span></div>
+        <div class="home-footer"><span>✦ PULSO PIXEL · OPEN HOUSE</span><span>La cámara se activa solo cuando tú lo indicas.</span></div>
+      </section>
+      <section id="hand-demo" class="hand-demo" aria-labelledby="hand-demo-title" hidden>
+        <div class="game-topbar">
+          <button id="hand-demo-menu" class="menu-button" type="button">← Menú principal</button>
+          <span class="game-brand">P / P <span>OPEN HOUSE // IA EN ACCIÓN</span></span>
+          <span>EXPLORADOR DE MANOS</span>
+        </div>
+        <header class="hand-demo-header">
+          <p class="eyebrow">PULSO PIXEL // DETECCIÓN EN VIVO</p>
+          <h1 id="hand-demo-title">ASÍ VE LA IA TUS MANOS</h1>
+          <p>Un modelo estima 21 puntos en cada mano. Mueve los dedos y observa cuáles usa Pulso Pixel para jugar.</p>
+        </header>
+        <div class="hand-demo-layout">
+          <div class="hand-demo-board">
+            <div class="board-topline"><span><i aria-hidden="true">✦</i> CÁMARA Y PUNTOS DETECTADOS</span><span>PP // EN VIVO</span></div>
+            <div id="hand-demo-stage" class="hand-demo-stage">
+              <video id="hand-demo-video" autoplay playsinline muted aria-label="Vista local de la cámara con puntos de las manos"></video>
+              <canvas id="hand-demo-canvas" aria-hidden="true"></canvas>
+              <div id="hand-demo-placeholder" class="hand-demo-placeholder"><span aria-hidden="true">✦</span><strong>Activa la cámara para comenzar</strong><p>Coloca una o dos manos frente a ella y mueve los dedos.</p></div>
+            </div>
+            <div class="status-row"><p id="hand-demo-status" role="status" aria-live="polite">Cámara apagada</p><p id="hand-demo-stats">Detección: —</p></div>
+          </div>
+          <aside class="hand-demo-sidebar" aria-label="Explicación de la detección">
+            <div class="side-panel">
+              <p class="side-kicker">01 / PRUEBA LA IA</p>
+              <button id="hand-demo-start" type="button">Activar cámara</button>
+              <button id="hand-demo-stop" type="button" hidden>Detener cámara</button>
+              <p id="hand-demo-count" class="hand-demo-count">0 manos detectadas · 0 puntos</p>
+            </div>
+            <div class="side-panel hand-demo-explanation">
+              <p class="side-kicker">02 / QUÉ ESTÁS VIENDO</p>
+              <p><span class="hand-demo-dot"></span> Los puntos marcan posiciones estimadas de las articulaciones. Las líneas muestran cómo se conectan.</p>
+              <p><span class="hand-demo-dot hand-demo-dot-highlight"></span> Los puntos dorados son las puntas del pulgar y del índice.</p>
+              <p>El índice dirige los juegos; juntar pulgar e índice produce la pinza para saltar.</p>
+            </div>
+            <div class="side-panel hand-demo-energy">
+              <p class="side-kicker">03 / PRUEBA UNA TÉCNICA</p>
+              <strong>VÓRTICE PIXEL</strong>
+              <p>Coloca una mano arriba y otra abajo, como sosteniendo una esfera. Extiende los dedos en sentidos opuestos y mantén la postura un momento.</p>
+              <div class="energy-pose-guide" aria-hidden="true"><span>← DEDOS · MANO SUPERIOR</span><i>✦</i><span>MANO INFERIOR · DEDOS →</span></div>
+              <div id="hand-demo-energy-progress" class="energy-progress" role="progressbar" aria-label="Carga del Vórtice Pixel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="hand-demo-energy-fill"></span></div>
+              <p id="hand-demo-energy-status" class="energy-status" role="status" aria-live="polite">Coloca ambas manos en posición</p>
+              <small>El modelo estima los puntos; el gesto y la animación se programan con esos datos.</small>
+            </div>
+            <p class="privacy">La IA estima posiciones, no identifica personas. El video se procesa aquí; no se guarda ni se transmite.</p>
+          </aside>
+        </div>
       </section>
       <section id="game-panel" class="panel" aria-labelledby="title" hidden>
         <div class="game-topbar">
@@ -132,8 +196,21 @@ export class AppShell {
 
     this.stage = required(root, '#stage');
     this.video = required(root, '#camera-video');
+    this.handDemoVideo = required(root, '#hand-demo-video');
+    this.handDemoCanvas = required(root, '#hand-demo-canvas');
     this.home = required(root, '#home');
     this.panel = required(root, '#game-panel');
+    this.handDemo = required(root, '#hand-demo');
+    this.handDemoStage = required(root, '#hand-demo-stage');
+    this.handDemoPlaceholder = required(root, '#hand-demo-placeholder');
+    this.handDemoStart = required(root, '#hand-demo-start');
+    this.handDemoStop = required(root, '#hand-demo-stop');
+    this.handDemoStatus = required(root, '#hand-demo-status');
+    this.handDemoCount = required(root, '#hand-demo-count');
+    this.handDemoStats = required(root, '#hand-demo-stats');
+    this.handDemoEnergyStatus = required(root, '#hand-demo-energy-status');
+    this.handDemoEnergyFill = required(root, '#hand-demo-energy-fill');
+    this.handDemoEnergyProgress = required(root, '#hand-demo-energy-progress');
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
@@ -163,6 +240,10 @@ export class AppShell {
     for (const card of root.querySelectorAll<HTMLButtonElement>('.game-card')) {
       card.addEventListener('click', () => events.chooseGame(card.dataset.game as GameId));
     }
+    required<HTMLButtonElement>(root, '#open-hand-demo').addEventListener('click', events.openHandDemo);
+    required<HTMLButtonElement>(root, '#hand-demo-menu').addEventListener('click', events.returnHome);
+    this.handDemoStart.addEventListener('click', events.startHandDemo);
+    this.handDemoStop.addEventListener('click', events.stopHandDemo);
     required<HTMLButtonElement>(root, '#menu-button').addEventListener('click', events.returnHome);
     this.playButton.addEventListener('click', events.play);
     this.stopCameraButton.addEventListener('click', events.stopCamera);
@@ -182,12 +263,70 @@ export class AppShell {
 
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
+  get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+
+  showHandDemo(): void {
+    delete this.root.dataset.game;
+    this.root.classList.remove('home-screen');
+    this.root.classList.add('hand-demo-screen');
+    this.home.hidden = true;
+    this.panel.hidden = true;
+    this.handDemo.hidden = false;
+    this.handDemoStage.style.aspectRatio = '4 / 3';
+    this.setHandDemoActive(false);
+    this.setHandDemoStatus('Cámara apagada');
+    this.setHandDemoHands(0);
+    this.handDemoStats.textContent = 'Detección: —';
+  }
+
+  setHandDemoLaunching(launching: boolean): void {
+    this.handDemoStart.disabled = launching;
+    if (launching) this.handDemoStop.hidden = false;
+    else if (!this.handDemoStage.classList.contains('active')) this.handDemoStop.hidden = true;
+  }
+
+  setHandDemoActive(active: boolean): void {
+    this.handDemoStage.classList.toggle('active', active);
+    this.handDemoPlaceholder.hidden = active;
+    this.handDemoStart.hidden = active;
+    this.handDemoStop.hidden = !active;
+  }
+
+  setHandDemoVideoSize(width: number, height: number): void {
+    this.handDemoStage.style.aspectRatio = `${width} / ${height}`;
+    this.handDemoCanvas.width = width;
+    this.handDemoCanvas.height = height;
+  }
+
+  setHandDemoStatus(message: string): void {
+    if (this.handDemoStatus.textContent !== message) this.handDemoStatus.textContent = message;
+  }
+
+  setHandDemoHands(count: number): void {
+    const message = `${count} ${count === 1 ? 'mano detectada' : 'manos detectadas'} · ${count * 21} puntos`;
+    if (this.handDemoCount.textContent !== message) this.handDemoCount.textContent = message;
+  }
+
+  setHandDemoStats(fps: number, duration: number): void {
+    this.handDemoStats.textContent = `Detección: ${fps} fps · ${duration.toFixed(0)} ms por imagen`;
+  }
+
+  clearHandDemoStats(): void { this.handDemoStats.textContent = 'Detección: —'; }
+
+  setHandDemoEnergy(state: 'idle' | 'charging' | 'active', percent: number): void {
+    const message = state === 'active' ? '¡Vórtice activo!' : state === 'charging' ? 'Cargando energía…' : 'Coloca ambas manos en posición';
+    if (this.handDemoEnergyStatus.textContent !== message) this.handDemoEnergyStatus.textContent = message;
+    this.handDemoEnergyFill.style.width = `${percent}%`;
+    this.handDemoEnergyProgress.setAttribute('aria-valuenow', String(percent));
+    this.handDemoEnergyProgress.classList.toggle('charged', state === 'active');
+  }
 
   selectGame(id: GameId, records: Records): void {
     const game: GameDefinition = GAMES[id];
     this.currentGame = game;
     this.root.dataset.game = id;
     this.root.classList.remove('home-screen');
+    this.root.classList.remove('hand-demo-screen');
     this.panel.dataset.game = id;
     this.mouseOption.hidden = !game.controls.mouse;
     this.mouseOption.disabled = !game.controls.mouse;
@@ -214,16 +353,19 @@ export class AppShell {
     this.modeSelect.disabled = false;
     this.renderRecords(records);
     this.home.hidden = true;
+    this.handDemo.hidden = true;
     this.panel.hidden = false;
   }
 
   showHome(): void {
     delete this.root.dataset.game;
     this.root.classList.add('home-screen');
+    this.root.classList.remove('hand-demo-screen');
     this.stage.classList.remove('playing');
     this.nameEntry.hidden = true;
     this.modeSelect.disabled = false;
     this.panel.hidden = true;
+    this.handDemo.hidden = true;
     this.home.hidden = false;
   }
 

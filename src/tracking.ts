@@ -1,11 +1,13 @@
-import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision';
+import { FilesetResolver, HandLandmarker, type NormalizedLandmark } from '@mediapipe/tasks-vision';
 import { handPinchRatio } from './pinch-jump';
 
 export type HandSample = { x: number; y: number; pinchRatio: number | null };
+export type HandLandmarks = NormalizedLandmark[][];
 
 type Callbacks = {
   onState(message: string, active: boolean): void;
   onPoints(points: HandSample[]): void;
+  onLandmarks?(hands: HandLandmarks): void;
   onStats(fps: number, durationMs: number): void;
 };
 
@@ -92,6 +94,7 @@ export class HandTracker {
     this.landmarker?.close();
     this.landmarker = null;
     this.callbacks.onPoints([]);
+    this.callbacks.onLandmarks?.([]);
   }
 
   private detect(runId: number): void {
@@ -101,6 +104,7 @@ export class HandTracker {
         const started = performance.now();
         const result = this.landmarker.detectForVideo(this.video, started);
         const duration = performance.now() - started;
+        this.callbacks.onLandmarks?.(result.landmarks);
         const points = result.landmarks.flatMap((hand) => {
           const tip = hand[8]; // Punto 8: punta del índice de cada mano.
           return tip ? [{ x: tip.x, y: tip.y, pinchRatio: handPinchRatio(hand, this.video.videoWidth, this.video.videoHeight) }] : [];

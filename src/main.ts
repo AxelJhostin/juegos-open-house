@@ -6,12 +6,14 @@ import { PlatformGame } from './platform-game';
 import { GAMES, type GameDefinition, type GameId } from './game-catalog';
 import type { PlayableScene } from './game-types';
 import { HandTracker, type HandSample } from './tracking';
+import { HandDemoVisualizer } from './hand-demo-visualizer';
 import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, saveRecords, type Records } from './records';
 import './style.css';
 import './game-themes.css';
 import './home.css';
 import './game-shell.css';
+import './hand-demo.css';
 
 const WIDTH = 960;
 const HEIGHT = 540;
@@ -26,9 +28,12 @@ const root = document.querySelector<HTMLElement>('#app');
 if (!root) throw new Error('Falta el contenedor de la aplicación.');
 const shell = new AppShell(root, {
   chooseGame: selectGame,
+  openHandDemo,
   returnHome,
   play: () => { void play(); },
   stopCamera: () => tracker.stop(),
+  startHandDemo: () => { void startHandDemo(); },
+  stopHandDemo,
   saveName,
 });
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
@@ -67,6 +72,7 @@ let records: Records = loadRecords(active.definition.records);
 let pendingRank: number | null = null;
 let lastResult = 0;
 let launchId = 0;
+let handDemoLaunchId = 0;
 let detectedHands = 0;
 
 const game = new Phaser.Game({
@@ -123,8 +129,63 @@ const tracker = new HandTracker(shell.video, {
   onStats(fps, duration): void { shell.setTrackingStats(fps, duration); },
 });
 
+const handDemoVisualizer = new HandDemoVisualizer(shell.handDemoCanvas,
+  (state, percent) => shell.setHandDemoEnergy(state, percent));
+
+const handDemoTracker = new HandTracker(shell.handDemoVideo, {
+  onState(message, active): void {
+    shell.setHandDemoStatus(message);
+    if (!active) {
+      handDemoVisualizer.stop();
+      shell.setHandDemoActive(false);
+      shell.setHandDemoLaunching(false);
+      shell.clearHandDemoStats();
+    }
+  },
+  onPoints(): void {},
+  onLandmarks(hands): void {
+    handDemoVisualizer.setLandmarks(hands);
+    shell.setHandDemoHands(hands.length);
+  },
+  onStats(fps, duration): void { shell.setHandDemoStats(fps, duration); },
+});
+
+function openHandDemo(): void {
+  setGameplayKeyboardEnabled(false);
+  tracker.stop();
+  shell.showHandDemo();
+}
+
+async function startHandDemo(): Promise<void> {
+  if (handDemoTracker.isActive) return;
+  const thisLaunch = ++handDemoLaunchId;
+  shell.setHandDemoLaunching(true);
+  await handDemoTracker.start();
+  if (thisLaunch !== handDemoLaunchId || !shell.isHandDemoVisible) {
+    handDemoTracker.stop();
+    shell.setHandDemoLaunching(false);
+    return;
+  }
+  if (handDemoTracker.isActive) {
+    shell.setHandDemoVideoSize(shell.handDemoVideo.videoWidth, shell.handDemoVideo.videoHeight);
+    handDemoVisualizer.start();
+    shell.setHandDemoActive(true);
+  }
+  shell.setHandDemoLaunching(false);
+}
+
+function stopHandDemo(): void {
+  ++handDemoLaunchId;
+  handDemoVisualizer.stop();
+  handDemoTracker.stop();
+  shell.setHandDemoActive(false);
+  shell.setHandDemoLaunching(false);
+  shell.clearHandDemoStats();
+}
+
 function selectGame(id: GameId): void {
   setGameplayKeyboardEnabled(false);
+  stopHandDemo();
   launchId++;
   pendingRank = null;
   active = sessions[id];
@@ -138,6 +199,7 @@ function returnHome(): void {
   pendingRank = null;
   active.scene.abortRound();
   tracker.stop();
+  stopHandDemo();
   shell.showHome();
 }
 
@@ -186,5 +248,13 @@ async function play(): Promise<void> {
   shell.showPlaying();
 }
 
-document.addEventListener('visibilitychange', () => { if (document.hidden) tracker.stop(); });
-window.addEventListener('pagehide', () => tracker.stop());
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    tracker.stop();
+    stopHandDemo();
+  }
+});
+window.addEventListener('pagehide', () => {
+  tracker.stop();
+  stopHandDemo();
+});
