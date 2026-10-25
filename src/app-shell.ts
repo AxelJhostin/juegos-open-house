@@ -38,6 +38,7 @@ export class AppShell {
   private readonly handDemoEnergyStatus: HTMLElement;
   private readonly handDemoEnergyFill: HTMLElement;
   private readonly handDemoEnergyProgress: HTMLElement;
+  private readonly handDemoMagicStatus: HTMLElement;
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
@@ -141,6 +142,13 @@ export class AppShell {
               <p id="hand-demo-energy-status" class="energy-status" role="status" aria-live="polite">Coloca ambas manos en posición</p>
               <small>El modelo estima los puntos; el gesto y la animación se programan con esos datos.</small>
             </div>
+            <div class="side-panel hand-demo-magic">
+              <p class="side-kicker">04 / SEGUNDO GESTO</p>
+              <strong>SELLO ARCANO</strong>
+              <p>Levanta índice y meñique; dobla medio y anular, con el pulgar cerca de la palma. Hazlo con una mano para un sello o con ambas para dos.</p>
+              <div class="magic-hand-guide" aria-hidden="true"><span>ÍNDICE <b>↑</b></span><span>MEDIO <b>↓</b></span><span>ANULAR <b>↓</b></span><span>MEÑIQUE <b>↑</b></span></div>
+              <p id="hand-demo-magic-status" class="magic-status" role="status" aria-live="polite">Haz el gesto con una o dos manos</p>
+            </div>
             <p class="privacy">La IA estima posiciones, no identifica personas. El video se procesa aquí; no se guarda ni se transmite.</p>
           </aside>
         </div>
@@ -211,6 +219,7 @@ export class AppShell {
     this.handDemoEnergyStatus = required(root, '#hand-demo-energy-status');
     this.handDemoEnergyFill = required(root, '#hand-demo-energy-fill');
     this.handDemoEnergyProgress = required(root, '#hand-demo-energy-progress');
+    this.handDemoMagicStatus = required(root, '#hand-demo-magic-status');
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
@@ -276,6 +285,7 @@ export class AppShell {
     this.setHandDemoActive(false);
     this.setHandDemoStatus('Cámara apagada');
     this.setHandDemoHands(0);
+    this.setHandDemoMagic(0, 0);
     this.handDemoStats.textContent = 'Detección: —';
   }
 
@@ -319,6 +329,13 @@ export class AppShell {
     this.handDemoEnergyFill.style.width = `${percent}%`;
     this.handDemoEnergyProgress.setAttribute('aria-valuenow', String(percent));
     this.handDemoEnergyProgress.classList.toggle('charged', state === 'active');
+  }
+
+  setHandDemoMagic(active: number, charging: number): void {
+    const message = active === 2 ? '2 sellos activos' : active === 1
+      ? charging ? '1 sello activo · otro cargando' : '1 sello activo'
+      : charging === 2 ? 'Cargando 2 sellos…' : charging === 1 ? 'Cargando 1 sello…' : 'Haz el gesto con una o dos manos';
+    if (this.handDemoMagicStatus.textContent !== message) this.handDemoMagicStatus.textContent = message;
   }
 
   selectGame(id: GameId, records: Records): void {

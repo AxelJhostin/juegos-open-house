@@ -99,6 +99,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 
 - Añadir la pantalla explicativa acordada para visualizar los 21 puntos de una o dos manos con el detector existente, con activación y apagado explícitos de la cámara.
 - Mostrar en esa pantalla una técnica visual original activada solo por la postura acordada de dos manos, con la esfera centrada entre ambas, como demostración de detección de gestos.
+- Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.

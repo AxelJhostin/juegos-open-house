@@ -1,11 +1,32 @@
 import type { HandLandmarks } from './tracking';
 import { energyPoseFromHands, type EnergyPose } from './energy-pose';
+import { magicPosesFromHands, type MagicPose } from './magic-gesture';
 import { drawEnergyOrb } from './hand-energy-art';
+import { drawMagicSeal } from './magic-art';
 import { drawHandLandmarks } from './hand-landmark-art';
+import { assignHandSlots, type HandSlots } from './hand-slots';
 
 type EnergyState = 'idle' | 'charging' | 'active';
 const CHARGE_MS = 850;
+const MAGIC_CHARGE_MS = 480;
+const MAGIC_VISUAL_SCALE = 3;
 const LOST_GRACE_MS = 180;
+
+type MagicSlot = {
+  pose: MagicPose | null;
+  lastAt: number;
+  since: number;
+  x: number;
+  y: number;
+  radius: number;
+  charge: number;
+  burst: number;
+  wasActive: boolean;
+};
+
+function emptyMagicSlot(): MagicSlot {
+  return { pose: null, lastAt: 0, since: 0, x: 0, y: 0, radius: 50, charge: 0, burst: 0, wasActive: false };
+}
 
 export class HandDemoVisualizer {
   private frameId = 0;
@@ -24,11 +45,16 @@ export class HandDemoVisualizer {
   private previousFrame = 0;
   private lastState: EnergyState = 'idle';
   private lastPercent = -1;
+  private magicSlots: [MagicSlot, MagicSlot] = [emptyMagicSlot(), emptyMagicSlot()];
+  private previousMagicLocations: HandSlots = [null, null];
+  private lastMagicActive = -1;
+  private lastMagicCharging = -1;
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onEnergy: (state: EnergyState, percent: number) => void,
+    private readonly onMagic: (active: number, charging: number) => void,
   ) {}
 
   start(): void {
@@ -50,8 +76,13 @@ export class HandDemoVisualizer {
     this.wasActive = false;
     this.lastState = 'idle';
     this.lastPercent = -1;
+    this.magicSlots = [emptyMagicSlot(), emptyMagicSlot()];
+    this.previousMagicLocations = [null, null];
+    this.lastMagicActive = -1;
+    this.lastMagicCharging = -1;
     this.canvas.getContext('2d')?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.onEnergy('idle', 0);
+    this.onMagic(0, 0);
   }
 
   setLandmarks(hands: HandLandmarks): void {
@@ -59,11 +90,42 @@ export class HandDemoVisualizer {
     const now = performance.now();
     this.hands = hands;
     this.lastLandmarksAt = now;
-    const pose = energyPoseFromHands(hands, this.canvas.width / Math.max(1, this.canvas.height));
-    if (!pose) return;
-    if (now - this.lastPoseAt > LOST_GRACE_MS) this.poseSince = now;
-    this.lastPoseAt = now;
-    this.pose = pose;
+    const aspectRatio = this.canvas.width / Math.max(1, this.canvas.height);
+    const pose = energyPoseFromHands(hands, aspectRatio);
+    if (pose) {
+      if (now - this.lastPoseAt > LOST_GRACE_MS) this.poseSince = now;
+      this.lastPoseAt = now;
+      this.pose = pose;
+      this.previousMagicLocations = [null, null];
+      for (const slot of this.magicSlots) slot.lastAt = 0;
+      return;
+    }
+
+    const magicPoses = magicPosesFromHands(hands, aspectRatio);
+    if (magicPoses.length > 0) {
+      this.lastPoseAt = 0;
+      this.pose = null;
+    }
+    const assigned = assignHandSlots(this.previousMagicLocations, magicPoses);
+    const nextLocations: HandSlots = [null, null];
+    for (let index = 0; index < 2; index++) {
+      const candidate = assigned[index] as MagicPose | null;
+      const previous = this.previousMagicLocations[index];
+      const slot = this.magicSlots[index];
+      if (candidate) {
+        const switched = !previous || Math.hypot(candidate.x - previous.x, candidate.y - previous.y) > 0.22;
+        if (switched || now - slot.lastAt > LOST_GRACE_MS) {
+          slot.since = now;
+          slot.charge = 0;
+          slot.burst = 0;
+          slot.wasActive = false;
+        }
+        slot.pose = candidate;
+        slot.lastAt = now;
+        nextLocations[index] = candidate;
+      } else if (now - slot.lastAt < LOST_GRACE_MS) nextLocations[index] = previous;
+    }
+    this.previousMagicLocations = nextLocations;
   }
 
   private render = (now: number): void => {
@@ -100,6 +162,38 @@ export class HandDemoVisualizer {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     drawEnergyOrb(context, { x: this.x, y: this.y, radius: this.radius, charge: this.charge, burst: this.burst },
       this.reduceMotion ? 0 : now);
+
+    let magicActive = 0;
+    let magicCharging = 0;
+    for (let index = 0; index < 2; index++) {
+      const slot = this.magicSlots[index];
+      const magicHolding = visible && slot.pose !== null && now - slot.lastAt < LOST_GRACE_MS;
+      slot.charge = magicHolding ? Math.min(1, (now - slot.since) / MAGIC_CHARGE_MS) : 0;
+      if (magicHolding && slot.pose) {
+        const targetX = (1 - slot.pose.x) * this.canvas.width;
+        const targetY = slot.pose.y * this.canvas.height;
+        const targetRadius = Math.max(34, Math.min(95, slot.pose.radius * this.canvas.height)) * MAGIC_VISUAL_SCALE;
+        const follow = 1 - Math.exp(-dt / 45);
+        if (!slot.wasActive && slot.charge < 0.05) {
+          slot.x = targetX;
+          slot.y = targetY;
+          slot.radius = targetRadius;
+        } else {
+          slot.x += (targetX - slot.x) * follow;
+          slot.y += (targetY - slot.y) * follow;
+          slot.radius += (targetRadius - slot.radius) * follow;
+        }
+      }
+      const magicReady = magicHolding && slot.charge >= 1;
+      if (magicReady && !slot.wasActive) slot.burst = this.reduceMotion ? 0 : 1;
+      slot.wasActive = magicReady;
+      slot.burst = magicHolding ? Math.max(0, slot.burst - dt / 500) : 0;
+      if (!magicHolding) slot.pose = null;
+      if (magicReady) magicActive++;
+      else if (magicHolding) magicCharging++;
+      drawMagicSeal(context, { x: slot.x, y: slot.y, radius: slot.radius, charge: slot.charge, burst: slot.burst },
+        this.reduceMotion ? 0 : now + index * 730);
+    }
     if (visible) drawHandLandmarks(this.canvas, this.hands, false);
 
     const state: EnergyState = active ? 'active' : holding ? 'charging' : 'idle';
@@ -108,6 +202,11 @@ export class HandDemoVisualizer {
       this.onEnergy(state, percent);
       this.lastState = state;
       this.lastPercent = percent;
+    }
+    if (magicActive !== this.lastMagicActive || magicCharging !== this.lastMagicCharging) {
+      this.onMagic(magicActive, magicCharging);
+      this.lastMagicActive = magicActive;
+      this.lastMagicCharging = magicCharging;
     }
     this.frameId = requestAnimationFrame(this.render);
   };

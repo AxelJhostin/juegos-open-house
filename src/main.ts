@@ -130,7 +130,8 @@ const tracker = new HandTracker(shell.video, {
 });
 
 const handDemoVisualizer = new HandDemoVisualizer(shell.handDemoCanvas,
-  (state, percent) => shell.setHandDemoEnergy(state, percent));
+  (state, percent) => shell.setHandDemoEnergy(state, percent),
+  (active, charging) => shell.setHandDemoMagic(active, charging));
 
 const handDemoTracker = new HandTracker(shell.handDemoVideo, {
   onState(message, active): void {

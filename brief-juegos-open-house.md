@@ -38,6 +38,7 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 - Una pantalla de inicio permite escoger el juego y explica los controles.
 - Una pantalla explicativa independiente muestra sobre la cámara los 21 puntos de cada mano que estima el modelo. Se abre desde el menú y no cuenta como otro juego.
 - En esa pantalla, una postura de dos manos (una arriba y otra abajo, con los dedos extendidos en sentidos opuestos) activa una esfera de energía original situada entre ambas. Esto muestra cómo el código convierte los puntos estimados en un gesto y un efecto visual.
+- Un segundo gesto original, índice y meñique extendidos con medio y anular doblados, activa un sello mágico por mano; puede aparecer en una o en las dos manos a la vez.
 - Fruta dura alrededor de 45 segundos. Plataformas tiene intentos cortos que terminan al chocar, caer o llegar a la meta. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** seguir una mano como control principal; preparar el seguimiento para permitir hasta dos manos. La segunda mano puede habilitarse si las pruebas muestran que aporta sin complicar el uso.
 - **Nave:** la posición horizontal de la mano dirige la nave.
