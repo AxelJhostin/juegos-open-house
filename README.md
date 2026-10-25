@@ -67,7 +67,10 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - `src/game-shell.css` presenta las pantallas de juego: tablero, controles, marcador, instrucciones y récords. Cada juego hereda una variante visual sin cambiar sus reglas ni el canvas.
 - `src/game-themes.css` contiene las variables visuales de cada tarjeta y de toda la pantalla exterior del juego: fondo, texto, botones, panel y superposición. Cambiar un tema aquí no modifica los dibujos del canvas.
 - `src/fruit-game.ts`, `src/ship-game.ts` y `src/platform-game.ts` contienen cada mecánica. Las tres escenas cumplen el contrato de `src/game-types.ts`.
-- `src/fruit-art.ts` dibuja las frutas en bloques con la paleta local. El arte está separado del radio de colisión y de las reglas del corte.
+- `src/fruit-art.ts` dibuja manzana, pera, cítrico y fresa en bloques, cada una con una paleta propia. Estos colores pertenecen solo a Fruta; el arte está separado del radio de colisión y de las reglas del corte.
+- `src/ship-art.ts` dibuja la nave y tres variantes de meteorito en bloques. La llama pulsa, la nave se inclina al moverse y los meteoritos giran; son animaciones visuales sobre las posiciones y colisiones de `src/ship-game.ts`.
+- `src/platform-art.ts` dibuja el bloque, los picos y el suelo geométrico de Plataformas. El bloque gira durante el salto; la física y las colisiones permanecen en `src/platform-game.ts`.
+- `src/platform-level.ts` define el recorrido de Plataformas: seis tramos de suelo, cinco huecos y doce picos, incluidos dos pares cercanos. La disposición empieza sencilla y pide más precisión hacia el final; no cambia el control de salto.
 - `src/tracking.ts` se ocupa de la cámara; `src/records.ts` guarda y lee los tres mejores resultados de cada juego sin alterar las claves locales existentes.
 - `src/main.ts` conecta esas piezas y administra la partida activa. No construye el HTML ni define los textos de presentación.
 

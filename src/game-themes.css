@@ -43,7 +43,7 @@
   --theme-page: var(--palette-1);
   --theme-accent: var(--palette-3);
   --theme-surface: var(--palette-1);
-  --theme-stage: var(--palette-1);
+  --theme-stage: #192852;
   --theme-overlay: #eaf6ffde;
   --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --shell-card: var(--palette-2);

@@ -2,17 +2,15 @@ import Phaser from 'phaser';
 import type { HandSample } from './tracking';
 import type { ControlMode } from './game-types';
 import { PinchJumpControl } from './pinch-jump';
+import { drawBackdrop, drawCube, drawHazard, drawPlatform } from './platform-art';
+import { PLATFORM_LEVEL } from './platform-level';
 
 const WIDTH = 960;
-const WORLD_WIDTH = 3300;
+const WORLD_WIDTH = PLATFORM_LEVEL.worldWidth;
 const SPEED = 240;
 const JUMP_SPEED = -680;
 const GRAVITY = 1800;
 const PLAYER_HALF_WIDTH = 18;
-const PLATFORMS: Array<[number, number]> = [
-  [0, 850], [960, 1550], [1660, 2250], [2360, 2900], [3010, WORLD_WIDTH],
-];
-const HAZARDS = [530, 1250, 1970, 2650];
 type Callbacks = { onHud(progress: number): void; onEnd(progress: number, won: boolean): void };
 
 export class PlatformGame extends Phaser.Scene {
@@ -29,6 +27,7 @@ export class PlatformGame extends Phaser.Scene {
   private jumpBuffer = 0;
   private coyote = 0;
   private grounded = true;
+  private cubeAngle = 0;
   private playing = false;
   private mode: ControlMode = 'keyboard';
   private progress = 0;
@@ -67,6 +66,7 @@ export class PlatformGame extends Phaser.Scene {
     this.jumpBuffer = 0;
     this.coyote = 0.1;
     this.grounded = true;
+    this.cubeAngle = 0;
     this.progress = 0;
     this.callbacks.onHud(0);
   }
@@ -122,7 +122,7 @@ export class PlatformGame extends Phaser.Scene {
       this.y += this.vy * dt;
     }
     const ground = this.groundY();
-    const onPlatform = PLATFORMS.some(([from, to]) =>
+    const onPlatform = PLATFORM_LEVEL.platforms.some(([from, to]) =>
       this.x + PLAYER_HALF_WIDTH > from && this.x - PLAYER_HALF_WIDTH < to);
     if (this.vy >= 0 && onPlatform && previousY <= ground && this.y >= ground) {
       this.y = ground;
@@ -132,6 +132,13 @@ export class PlatformGame extends Phaser.Scene {
       this.grounded = false;
     }
     if (this.grounded) this.coyote = 0.1;
+    if (this.grounded) {
+      const quarterTurn = Math.PI / 2;
+      const targetAngle = Math.round(this.cubeAngle / quarterTurn) * quarterTurn;
+      this.cubeAngle += (targetAngle - this.cubeAngle) * Math.min(1, dt * 18);
+    } else {
+      this.cubeAngle += dt * 4.3;
+    }
 
     const progress = Math.min(100, Math.floor((this.x - 70) / (WORLD_WIDTH - 140) * 100));
     if (progress !== this.progress) {
@@ -139,7 +146,7 @@ export class PlatformGame extends Phaser.Scene {
       this.callbacks.onHud(progress);
     }
     if (this.y > this.fieldHeight + 50 ||
-      (this.y > ground - 32 && HAZARDS.some((hazard) => Math.abs(this.x - hazard) < 32))) {
+      (this.y > ground - 32 && PLATFORM_LEVEL.spikes.some((hazard) => Math.abs(this.x - hazard) < 32))) {
       this.finish(false);
       return;
     }
@@ -164,19 +171,14 @@ export class PlatformGame extends Phaser.Scene {
 
   private draw(graphics: Phaser.GameObjects.Graphics): void {
     const ground = this.groundY();
-    for (const [from, to] of PLATFORMS) {
-      const left = from - this.cameraOffset;
-      if (left > WIDTH || to - this.cameraOffset < 0) continue;
-      graphics.fillStyle(0x3e8fd6, 0.85);
-      graphics.fillRect(left, ground, to - from, this.fieldHeight - ground);
-      graphics.fillStyle(0x1e5a9c);
-      graphics.fillRect(left, ground, to - from, 7);
+    drawBackdrop(graphics, ground, this.cameraOffset, WIDTH);
+    for (const [from, to] of PLATFORM_LEVEL.platforms) {
+      drawPlatform(graphics, from, to, ground, this.fieldHeight, this.cameraOffset, WIDTH);
     }
-    for (const hazard of HAZARDS) {
+    for (const hazard of PLATFORM_LEVEL.spikes) {
       const left = hazard - this.cameraOffset;
       if (left < -30 || left > WIDTH + 30) continue;
-      graphics.fillStyle(0x1e5a9c);
-      graphics.fillTriangle(left - 20, ground, left, ground - 36, left + 20, ground);
+      drawHazard(graphics, left, ground);
     }
     const goalX = WORLD_WIDTH - 50 - this.cameraOffset;
     if (goalX < WIDTH) {
@@ -186,11 +188,6 @@ export class PlatformGame extends Phaser.Scene {
       graphics.fillTriangle(goalX + 5, ground - 98, goalX + 58, ground - 77, goalX + 5, ground - 60);
     }
     const playerX = this.x - this.cameraOffset;
-    graphics.fillStyle(0xeaf6ff);
-    graphics.fillRect(playerX - 18, this.y - 42, 36, 42);
-    graphics.lineStyle(4, 0x1e5a9c);
-    graphics.strokeRect(playerX - 18, this.y - 42, 36, 42);
-    graphics.fillStyle(0x3e8fd6);
-    graphics.fillRect(playerX + 5, this.y - 30, 7, 7);
+    drawCube(graphics, playerX, this.y, this.cubeAngle);
   }
 }

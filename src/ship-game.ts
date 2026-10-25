@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import type { Point } from './geometry';
 import type { ControlMode } from './game-types';
+import { drawMeteor, drawShip, type MeteorVisual } from './ship-art';
 
 const WIDTH = 960;
-type Meteor = { x: number; y: number; vy: number; radius: number };
+type Meteor = MeteorVisual & { vy: number; spin: number };
 type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): void };
 
 export class ShipGame extends Phaser.Scene {
@@ -11,6 +12,7 @@ export class ShipGame extends Phaser.Scene {
   private keys?: Record<'left' | 'right' | 'a' | 'd', Phaser.Input.Keyboard.Key>;
   private fieldHeight = 540;
   private shipX = WIDTH / 2;
+  private shipBank = 0;
   private cameraX: number | null = null;
   private meteors: Meteor[] = [];
   private playing = false;
@@ -42,6 +44,7 @@ export class ShipGame extends Phaser.Scene {
     this.mode = mode;
     this.playing = true;
     this.shipX = WIDTH / 2;
+    this.shipBank = 0;
     this.cameraX = null;
     this.meteors = [];
     this.elapsedMs = 0;
@@ -82,6 +85,7 @@ export class ShipGame extends Phaser.Scene {
       this.tenthShown = tenth;
       this.callbacks.onHud(this.elapsedMs);
     }
+    const previousShipX = this.shipX;
     if (this.mode === 'camera' && this.cameraX !== null) {
       this.shipX += (this.cameraX - this.shipX) * Math.min(1, dt * 12);
     } else if (this.keys) {
@@ -89,9 +93,14 @@ export class ShipGame extends Phaser.Scene {
       this.shipX += axis * 500 * dt;
     }
     this.shipX = Phaser.Math.Clamp(this.shipX, 36, WIDTH - 36);
+    const targetBank = dt > 0 ? Phaser.Math.Clamp((this.shipX - previousShipX) / dt / 500, -1, 1) * 0.1 : 0;
+    this.shipBank += (targetBank - this.shipBank) * Math.min(1, dt * 10);
 
     const shipY = this.fieldHeight * 0.84;
-    for (const meteor of this.meteors) meteor.y += meteor.vy * dt;
+    for (const meteor of this.meteors) {
+      meteor.y += meteor.vy * dt;
+      meteor.angle += meteor.spin * dt;
+    }
     const survivors: Meteor[] = [];
     for (const meteor of this.meteors) {
       if (Math.hypot(meteor.x - this.shipX, meteor.y - shipY) < meteor.radius + 27) {
@@ -115,26 +124,16 @@ export class ShipGame extends Phaser.Scene {
         y: -30,
         vy: Math.min(570, 220 + elapsed * 5),
         radius: Phaser.Math.Between(18, 28),
+        variant: Phaser.Math.Between(0, 2),
+        angle: Phaser.Math.FloatBetween(-Math.PI, Math.PI),
+        spin: Phaser.Math.FloatBetween(0.6, 1.1) * (Math.random() < 0.5 ? -1 : 1),
       });
     }
     this.draw(graphics, shipY);
   }
 
   private draw(graphics: Phaser.GameObjects.Graphics, shipY: number): void {
-    for (const meteor of this.meteors) {
-      graphics.fillStyle(0x3e8fd6);
-      graphics.fillCircle(meteor.x, meteor.y, meteor.radius);
-      graphics.lineStyle(4, 0x1e5a9c);
-      graphics.strokeCircle(meteor.x, meteor.y, meteor.radius);
-      graphics.fillStyle(0x1e5a9c);
-      graphics.fillCircle(meteor.x - meteor.radius * 0.3, meteor.y - meteor.radius * 0.2, 4);
-      graphics.fillCircle(meteor.x + meteor.radius * 0.35, meteor.y + meteor.radius * 0.25, 5);
-    }
-    graphics.fillStyle(0xeaf6ff);
-    graphics.fillTriangle(this.shipX, shipY - 33, this.shipX - 30, shipY + 25, this.shipX + 30, shipY + 25);
-    graphics.lineStyle(4, 0x1e5a9c);
-    graphics.strokeTriangle(this.shipX, shipY - 33, this.shipX - 30, shipY + 25, this.shipX + 30, shipY + 25);
-    graphics.fillStyle(0x3e8fd6);
-    graphics.fillCircle(this.shipX, shipY + 4, 8);
+    for (const meteor of this.meteors) drawMeteor(graphics, meteor);
+    drawShip(graphics, this.shipX, shipY, this.shipBank, this.elapsedMs / 1000);
   }
 }

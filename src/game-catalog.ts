@@ -77,10 +77,10 @@ export const GAMES = {
     summary: 'Avanza automáticamente. Salta huecos y obstáculos sin chocar.',
     callToAction: 'Jugar plataformas →',
     controls: {
-      keyboard: 'El personaje avanza solo. Pulsa Espacio, W o flecha arriba para saltar.',
-      camera: 'El personaje avanza solo. Separa pulgar e índice; júntalos para saltar. Ábrelos antes del siguiente salto. Espacio también funciona.',
+      keyboard: 'El bloque avanza solo. Pulsa Espacio, W o flecha arriba para saltar.',
+      camera: 'El bloque avanza solo. Separa pulgar e índice; júntalos para saltar. Ábrelos antes del siguiente salto. Espacio también funciona.',
     },
-    intro: { title: 'Salta a tiempo', text: 'El personaje corre solo. Salta obstáculos y huecos; el primer choque termina el intento. La puntuación es el porcentaje recorrido.' },
+    intro: { title: 'Salta a tiempo', text: 'El bloque avanza solo. Salta picos y huecos; el primer choque termina el intento. La puntuación es el porcentaje recorrido.' },
     hud: { label: 'Progreso', unit: '%', initial: 0 },
     records: { key: 'pulso-pixel-plataformas-records-v2', field: 'score', includeZero: false },
     recordsTitle: 'Mejores recorridos',

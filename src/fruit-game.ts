@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { segmentHitsCircle, type Point } from './geometry';
 import { assignHandSlots, type HandSlots } from './hand-slots';
 import type { ControlMode } from './game-types';
-import { drawFruit } from './fruit-art';
+import { drawFruit, FRUIT_KINDS, type FruitKind } from './fruit-art';
 
 const WIDTH = 960;
 const DEFAULT_HEIGHT = 540;
@@ -12,9 +12,8 @@ const GRAVITY = [1000, 1500] as const;
 const SPAWN_INTERVAL = [0.82, 0.55] as const;
 export const PLAY_TOP = 0.12;
 export const PLAY_BOTTOM = 0.86;
-const FRUIT_COLORS = [0x7fc4f2, 0x3e8fd6, 0xbfe3fa];
 
-type Fruit = Point & { vx: number; vy: number; gravity: number; radius: number; color: number };
+type Fruit = Point & { vx: number; vy: number; gravity: number; radius: number; kind: FruitKind };
 type CutMark = { from: Point; to: Point; until: number };
 type GameCallbacks = { onHud(score: number, seconds: number, level: number): void; onEnd(score: number): void };
 
@@ -184,7 +183,7 @@ export class FruitGame extends Phaser.Scene {
       x: Phaser.Math.Between(180, WIDTH - 180), y: launchY,
       vx: Phaser.Math.Between(-35, 35), vy: -Math.sqrt(2 * gravity * (launchY - apexY)), gravity,
       radius: Phaser.Math.Between(25, 34),
-      color: FRUIT_COLORS[Phaser.Math.Between(0, FRUIT_COLORS.length - 1)],
+      kind: FRUIT_KINDS[Phaser.Math.Between(0, FRUIT_KINDS.length - 1)],
     });
   }
 
