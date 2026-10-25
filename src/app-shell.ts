@@ -63,7 +63,7 @@ export class AppShell {
     }).join('');
     root.innerHTML = `
       <section id="home" class="home" aria-labelledby="home-title">
-        <div class="home-topbar"><span class="home-brand"><span class="brand-mark" aria-hidden="true">✦</span> P / P</span><span class="home-topline">OPEN HOUSE // ARCADE INTERACTIVO</span><span class="home-ready"><span aria-hidden="true"></span> LISTO PARA JUGAR</span></div>
+        <div class="home-topbar"><span class="home-university"><img src="/puce-manabi.png" alt="PUCE Manabí"></span><span class="home-topline">OPEN HOUSE // ARCADE INTERACTIVO</span><span class="home-ready"><span aria-hidden="true"></span> LISTO PARA JUGAR</span></div>
         <div class="home-hero">
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
