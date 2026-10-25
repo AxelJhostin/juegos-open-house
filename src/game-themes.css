@@ -13,10 +13,12 @@
   --shell-soft: var(--palette-3);
   --shell-cta: var(--palette-5);
   --shell-cta-ink: var(--palette-1);
-  --card-surface: var(--palette-1);
+  --card-surface: #fff7f1;
   --card-ink: var(--palette-5);
-  --card-preview: var(--palette-2);
-  --card-art: var(--palette-4);
+  --card-preview: #ffe0cb;
+  --card-art: #ef7068;
+  --card-accent: #ef7068;
+  --card-accent-ink: #102945;
 }
 
 #app[data-game="ship"], .game-card[data-game="ship"] {
@@ -32,10 +34,12 @@
   --shell-soft: var(--palette-4);
   --shell-cta: var(--palette-1);
   --shell-cta-ink: var(--palette-5);
-  --card-surface: var(--palette-5);
+  --card-surface: #24376e;
   --card-ink: var(--palette-1);
-  --card-preview: var(--palette-4);
-  --card-art: var(--palette-3);
+  --card-preview: #405c9d;
+  --card-art: #b997ef;
+  --card-accent: #69dde8;
+  --card-accent-ink: #17335b;
 }
 
 #app[data-game="platform"], .game-card[data-game="platform"] {
@@ -51,8 +55,10 @@
   --shell-soft: var(--palette-3);
   --shell-cta: var(--palette-5);
   --shell-cta-ink: var(--palette-1);
-  --card-surface: var(--palette-1);
+  --card-surface: #f5f0ff;
   --card-ink: var(--palette-5);
-  --card-preview: var(--palette-2);
-  --card-art: var(--palette-4);
+  --card-preview: #ded4ff;
+  --card-art: #a986f2;
+  --card-accent: #ffad78;
+  --card-accent-ink: #303564;
 }

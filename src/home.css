@@ -1,7 +1,14 @@
 #app.home-screen {
+  --home-cyan: #69dde8;
+  --home-violet: #b997ef;
+  --home-coral: #ef7068;
+  --home-gold: #ffd27d;
   background-color: var(--palette-2);
-  background-image: radial-gradient(#3e8fd633 1px, transparent 1px);
-  background-size: 26px 26px;
+  background-image:
+    radial-gradient(circle at 8% 28%, #ffdcc580, transparent 30%),
+    radial-gradient(circle at 92% 78%, #ded4ff91, transparent 32%),
+    radial-gradient(#3e8fd633 1px, transparent 1px);
+  background-size: auto, auto, 26px 26px;
   padding: clamp(16px, 2vw, 28px);
 }
 
@@ -32,7 +39,7 @@
 }
 
 .home-ready { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
-.home-ready span { width: 9px; height: 9px; background: var(--palette-4); box-shadow: 0 0 0 3px var(--palette-1); }
+.home-ready span { width: 9px; height: 9px; background: var(--home-cyan); box-shadow: 0 0 0 3px var(--palette-1); }
 
 .home-university {
   display: block;
@@ -76,7 +83,7 @@
 }
 
 #home-title > span:last-child { margin-left: clamp(16px, 2vw, 32px); }
-.hero-dot { color: var(--palette-4); }
+.hero-dot { color: var(--home-coral); }
 
 .home-intro {
   max-width: 38rem;
@@ -142,23 +149,24 @@
 .display-top { border-bottom: 1px solid #7fc4f277; }
 .display-bottom { border-top: 1px solid #7fc4f277; }
 .display-top span:last-child { color: var(--palette-3); letter-spacing: .35em; }
-.display-bottom span:last-child { color: var(--palette-3); }
+.display-bottom span:last-child { color: var(--home-gold); }
 
 .display-reticle { position: absolute; inset: 49px 0 48px; }
 .reticle-ring,
 .reticle-core,
 .reticle-cursor { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 .reticle-ring { aspect-ratio: 1; border-radius: 50%; }
-.ring-outer { width: min(57%, 168px); border: 2px dashed var(--palette-3); opacity: .72; }
-.ring-inner { width: min(40%, 120px); border: 2px solid var(--palette-3); box-shadow: 0 0 0 10px #7fc4f21a; }
+.ring-outer { width: min(57%, 168px); border: 2px dashed var(--home-violet); opacity: .85; }
+.ring-inner { width: min(40%, 120px); border: 2px solid var(--home-cyan); box-shadow: 0 0 0 10px #69dde822; }
 .reticle-core {
   display: grid;
   place-items: center;
   width: 64px;
   height: 64px;
   border: 3px solid var(--palette-1);
-  background: var(--palette-4);
-  box-shadow: 7px 7px 0 var(--palette-3);
+  background: var(--home-violet);
+  color: #24376e;
+  box-shadow: 7px 7px 0 var(--home-cyan);
   font-size: 42px;
   line-height: 1;
 }
@@ -168,7 +176,7 @@
   width: 17px;
   height: 17px;
   border: 3px solid var(--palette-1);
-  background: var(--palette-3);
+  background: var(--home-coral);
 }
 
 .home-section-head { align-items: end; gap: 20px; padding: 12px 0; border-top: 2px solid var(--palette-5); }
@@ -201,8 +209,8 @@
 .game-card:focus-visible { outline: 3px solid var(--palette-5); outline-offset: 5px; }
 .game-card:active { transform: translateY(-1px); box-shadow: 4px 5px 0 var(--palette-4); }
 
-.card-head { gap: 8px; width: 100%; padding: 13px 17px; border-bottom: 1px solid currentColor; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
-.card-kind { opacity: .85; }
+.card-head { gap: 8px; width: 100%; padding: 8px 17px 13px; border-top: 5px solid var(--card-accent, var(--palette-3)); border-bottom: 1px solid currentColor; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.card-kind { padding: 3px 6px; background: var(--card-accent, var(--palette-3)); color: var(--card-accent-ink, var(--palette-5)); }
 .card-preview {
   position: relative;
   display: block;
@@ -231,7 +239,7 @@
   box-shadow: inset -12px -9px 0 var(--palette-3);
 }
 .game-card[data-game="fruit"] .preview-one { width: 71px; height: 71px; left: 26%; top: 21px; }
-.game-card[data-game="fruit"] .preview-two { width: 46px; height: 46px; left: 65%; top: 52px; }
+.game-card[data-game="fruit"] .preview-two { width: 46px; height: 46px; left: 65%; top: 52px; background: #f8bf59; box-shadow: inset -10px -7px 0 #ee8d49; }
 .game-card[data-game="fruit"] .preview-one::before,
 .game-card[data-game="fruit"] .preview-two::before {
   content: '';
@@ -240,7 +248,7 @@
   height: 10px;
   top: -12px;
   left: 48%;
-  background: var(--palette-5);
+  background: #4b9b69;
   clip-path: polygon(0 100%, 65% 0, 100% 0, 100% 100%);
 }
 .game-card[data-game="fruit"] .preview-three {
@@ -268,7 +276,7 @@
   height: 20px;
   left: 35px;
   top: 39px;
-  background: var(--palette-4);
+  background: #69dde8;
 }
 .game-card[data-game="ship"] .preview-two,
 .game-card[data-game="ship"] .preview-three {
@@ -278,7 +286,7 @@
   box-shadow: inset -6px -5px 0 var(--palette-4);
 }
 .game-card[data-game="ship"] .preview-two { width: 37px; height: 37px; left: 19%; top: 16px; }
-.game-card[data-game="ship"] .preview-three { width: 27px; height: 27px; left: 78%; top: 62px; }
+.game-card[data-game="ship"] .preview-three { width: 27px; height: 27px; left: 78%; top: 62px; background: #ffad78; box-shadow: inset -6px -5px 0 #e97778; }
 
 .game-card[data-game="platform"] .preview-one {
   width: 52%;
@@ -313,7 +321,7 @@
   height: 34px;
   left: 72%;
   bottom: 32px;
-  background: var(--palette-5);
+  background: #ff886c;
   clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 
@@ -321,7 +329,7 @@
 .card-copy strong { font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1; text-transform: uppercase; letter-spacing: -.045em; }
 .card-copy > span { max-width: 43ch; font-size: 13px; line-height: 1.4; font-weight: 600; }
 .card-action { width: 100%; gap: 8px; min-height: 44px; padding: 0 0 0 19px; border-top: 1px solid currentColor; font-size: 12px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
-.card-action-arrow { align-self: stretch; display: grid; place-items: center; width: 44px; border-left: 1px solid currentColor; font-size: 23px; line-height: 1; transition: background .16s ease; }
+.card-action-arrow { align-self: stretch; display: grid; place-items: center; width: 44px; border-left: 1px solid currentColor; background: var(--card-accent, var(--palette-3)); color: var(--card-accent-ink, var(--palette-5)); font-size: 23px; line-height: 1; transition: background .16s ease; }
 .game-card:hover .card-action-arrow,
 .game-card:focus-visible .card-action-arrow { background: var(--card-preview, var(--palette-2)); }
 

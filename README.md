@@ -63,7 +63,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 
 - `src/game-catalog.ts` contiene el texto, los controles disponibles, el marcador y la clave de récords de cada juego. La interfaz toma sus datos de este catálogo.
 - `src/app-shell.ts` construye y actualiza el menú, el marco exterior, el marcador y el formulario de nombre. No contiene reglas de juego.
-- `src/home.css` define la portada y las ilustraciones geométricas de las tres tarjetas. Se dibujan con CSS y usan la paleta del proyecto; no necesitan archivos de imagen.
+- `src/home.css` define la portada y las ilustraciones geométricas de las tres tarjetas. Se dibujan con CSS; el azul de Pulso Pixel se combina con acentos cálidos para Fruta, cian para Nave y violeta con naranja para Plataformas.
 - `public/puce-manabi.png` es el logo transparente proporcionado por el usuario para la portada; el archivo recibido es PNG, no SVG.
 - `src/game-shell.css` presenta las pantallas de juego: tablero, controles, marcador, instrucciones y récords. Cada juego hereda una variante visual sin cambiar sus reglas ni el canvas.
 - `src/game-themes.css` contiene las variables visuales de cada tarjeta y de toda la pantalla exterior del juego: fondo, texto, botones, panel y superposición. Cambiar un tema aquí no modifica los dibujos del canvas.
