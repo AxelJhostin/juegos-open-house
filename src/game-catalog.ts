@@ -91,6 +91,26 @@ export const GAMES = {
     rankText: '¡Entraste en los mejores recorridos!',
     savedText: (value: number) => `Puntuación registrada: ${value}% recorrido.`,
   },
+  guardian: {
+    title: 'Guardiana del Alba', symbol: '✧',
+    menuTag: 'EDICIÓN ESPECIAL · NAOMI',
+    summary: 'Defiende a Naomi con ambas manos. Cada pinza activa un ala y una espada contra las sombras.',
+    callToAction: 'Jugar Guardiana →',
+    controls: {
+      keyboard: 'Defiende el lado izquierdo con F y el derecho con J. Ataca cuando una sombra entre en el círculo dorado.',
+      camera: 'Muestra las dos manos. Abre pulgar e índice; júntalos para atacar en ese lado y sepáralos para volver a atacar. F y J también funcionan.',
+    },
+    intro: { title: 'Protege el alba', text: 'Naomi resiste 45 segundos. Ataca las sombras desde izquierda y derecha; tres golpes terminan la partida. Acierta varios ataques seguidos para sumar más.' },
+    hud: { label: 'Gloria', unit: '', initial: 0, countdown: 45, extraLabel: 'Vida', extra: 3 },
+    records: { key: 'pulso-pixel-guardiana-records-v2', field: 'score', includeZero: false },
+    recordsTitle: 'Guardianes del alba',
+    formatScore: (value: number) => String(value),
+    formatRecord: (value: number) => `${value} gloria`,
+    endTitle: () => 'El alba recuerda',
+    endText: (value: number) => `Naomi reunió ${value} de gloria.`,
+    rankText: '¡Tu nombre entra en la leyenda!',
+    savedText: (value: number) => `Leyenda registrada: ${value} de gloria.`,
+  },
 } satisfies Record<string, GameDefinition>;
 
 export type GameId = keyof typeof GAMES;

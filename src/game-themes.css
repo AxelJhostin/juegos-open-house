@@ -62,3 +62,24 @@
   --card-accent: #ffad78;
   --card-accent-ink: #303564;
 }
+
+#app[data-game="guardian"], .game-card[data-game="guardian"] {
+  --theme-ink: #fff2d3;
+  --theme-page: #151a36;
+  --theme-accent: #efca83;
+  --theme-surface: #1e2849;
+  --theme-stage: #0c1431;
+  --theme-overlay: #111935c7;
+  --theme-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shell-card: #202849;
+  --shell-line: #cfaa69;
+  --shell-soft: #6d547e;
+  --shell-cta: #f4d492;
+  --shell-cta-ink: #1b213d;
+  --card-surface: #1d2648;
+  --card-ink: #fff2d3;
+  --card-preview: #131a39;
+  --card-art: #f6dca9;
+  --card-accent: #efca83;
+  --card-accent-ink: #1e2546;
+}

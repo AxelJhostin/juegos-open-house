@@ -85,8 +85,8 @@ export class AppShell {
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
             <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
-            <p class="home-intro">Tres retos rápidos para jugar con cámara o teclado. Elige tu desafío.</p>
-            <div class="hero-facts"><span><b>03</b> MINIJUEGOS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+            <p class="home-intro">Cuatro retos para jugar con cámara o teclado. Elige tu desafío.</p>
+            <div class="hero-facts"><span><b>04</b> EXPERIENCIAS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
             <button id="open-hand-demo" class="hand-demo-link" type="button"><span>✦ MIRA CÓMO FUNCIONA LA IA</span><span>Ver los puntos de tus manos ↗</span></button>
           </div>
           <div class="hero-display" aria-hidden="true">
@@ -95,7 +95,7 @@ export class AppShell {
             <div class="display-bottom"><span>ENTRADA / MOVIMIENTO</span><span>READY_</span></div>
           </div>
         </div>
-        <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—03</p><h2>ELIGE TU JUEGO</h2></div><p>Una pantalla. Tres formas de jugar.</p></div>
+        <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—04</p><h2>ELIGE TU JUEGO</h2></div><p>Cuatro mundos. Tus manos deciden.</p></div>
         <div class="game-cards">${cards}</div>
         <div class="home-footer"><span>✦ PULSO PIXEL · OPEN HOUSE</span><span>La cámara se activa solo cuando tú lo indicas.</span></div>
       </section>

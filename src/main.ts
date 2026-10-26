@@ -3,6 +3,7 @@ import { AppShell } from './app-shell';
 import { FruitGame, PLAY_BOTTOM, PLAY_TOP } from './fruit-game';
 import { ShipGame } from './ship-game';
 import { PlatformGame } from './platform-game';
+import { GuardianGame } from './guardian-game';
 import { GAMES, type GameDefinition, type GameId } from './game-catalog';
 import type { PlayableScene } from './game-types';
 import { HandTracker, type HandSample } from './tracking';
@@ -64,6 +65,14 @@ const sessions: Record<GameId, GameSession> = {
       onEnd: (value, won) => finishRound(value, won),
     }),
     cameraHint: () => (sessions.platform.scene as PlatformGame).gestureReady ? ' · pinza lista' : ' · separa los dedos',
+  },
+  guardian: {
+    definition: GAMES.guardian,
+    scene: new GuardianGame({
+      onHud: (value, seconds, lives) => shell.updateHud(value, seconds, lives),
+      onEnd: (value) => finishRound(value),
+    }),
+    cameraHint: () => (sessions.guardian.scene as GuardianGame).gestureHint,
   },
 };
 
