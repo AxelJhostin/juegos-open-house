@@ -24,7 +24,7 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 1. **Nave:** movimiento lateral para esquivar meteoritos, hasta el primer choque; el tiempo sobrevivido es la puntuación. Los meteoritos aumentan en velocidad y frecuencia.
 2. **Plataformas:** avance automático por un recorrido lineal corto; una pinza o tecla activa el salto. El primer choque o caída termina el intento y se registra el porcentaje recorrido. Personaje y escenario originales. Sin objetos recolectables, jefes ni mundos adicionales.
 3. **Rebanar fruta:** ronda de tiempo limitado; la trayectoria del dedo corta frutas, suma puntos y puede crear combos. Se puede añadir una bomba como peligro. Sin niveles, tienda, desbloqueos ni campaña.
-4. **Guardiana del Alba:** Naomi aparece al centro. Las dos manos activan ataques independientes por pinza hacia izquierda y derecha. Se puntúa por enemigos derrotados en una ronda corta; tres golpes terminan la partida. Arte original inspirado en la foto aportada por el usuario, sin incluir la foto original en la aplicación.
+4. **Guardiana del Alba:** Naomi aparece al centro con poses de movimiento y ataque. Las dos manos activan ataques independientes por pinza hacia izquierda y derecha. Se puntúa por enemigos derrotados en una ronda corta; tres golpes terminan la partida. Arte original inspirado en la foto aportada por el usuario, sin incluir la foto original en la aplicación.
 
 ### Controles
 

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { ControlMode } from './game-types';
 import type { HandSample } from './tracking';
 import { PinchJumpControl } from './pinch-jump';
+import { GuardianCharacter } from './guardian-character';
 import { GUARDIAN_CENTER_X, strikeTarget, type GuardianSide } from './guardian-combat';
 import { drawGuardianBackdrop, drawGuardianSpark, drawShadow, drawStrikeGuide, drawWingStrike, type GuardianSpark, type ShadowVisual } from './guardian-art';
 
@@ -13,7 +14,7 @@ type Callbacks = { onHud(score: number, seconds: number, lives: number): void; o
 export class GuardianGame extends Phaser.Scene {
   private backdrop?: Phaser.GameObjects.Graphics;
   private effects?: Phaser.GameObjects.Graphics;
-  private portrait?: Phaser.GameObjects.Image;
+  private character?: GuardianCharacter;
   private readout?: Phaser.GameObjects.Text;
   private readonly pinches = { left: new PinchJumpControl(), right: new PinchJumpControl() };
   private readonly queued = { left: false, right: false };
@@ -51,11 +52,16 @@ export class GuardianGame extends Phaser.Scene {
     return ready.length ? ` · ${ready.length} ${ready.length === 1 ? 'pinza lista' : 'pinzas listas'}` : ' · separa pulgares e índices';
   }
 
-  preload(): void { this.load.image('naomi-guardian', '/guardian/naomi-key-art.png'); }
+  preload(): void {
+    this.load.image('naomi-guardian', '/guardian/naomi-key-art.png');
+    this.load.image('naomi-attack-left', '/guardian/naomi-attack-left.png');
+    this.load.image('naomi-attack-right', '/guardian/naomi-attack-right.png');
+    this.load.image('naomi-attack-both', '/guardian/naomi-attack-both.png');
+  }
 
   create(): void {
     this.backdrop = this.add.graphics();
-    this.portrait = this.add.image(GUARDIAN_CENTER_X, this.fieldHeight, 'naomi-guardian').setOrigin(0.5, 1).setVisible(false);
+    this.character = new GuardianCharacter(this);
     this.effects = this.add.graphics();
     this.readout = this.add.text(WIDTH / 2, 20, '', {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
@@ -66,7 +72,7 @@ export class GuardianGame extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => window.removeEventListener('keydown', this.onKeyDown));
   }
 
-  setFieldHeight(height: number): void { this.fieldHeight = height; this.placePortrait(); }
+  setFieldHeight(height: number): void { this.fieldHeight = height; this.character?.setFieldHeight(height); }
 
   startRound(mode: ControlMode): void {
     this.mode = mode;
@@ -89,8 +95,8 @@ export class GuardianGame extends Phaser.Scene {
       this.slash[side] = 0;
       this.cooldown[side] = 0;
     }
-    this.placePortrait();
-    this.portrait?.setVisible(true);
+    this.character?.setFieldHeight(this.fieldHeight);
+    this.character?.start();
     this.readout?.setVisible(true);
     this.callbacks.onHud(0, ROUND_SECONDS, this.lives);
   }
@@ -105,7 +111,7 @@ export class GuardianGame extends Phaser.Scene {
     this.playing = false;
     this.shadows = [];
     this.sparks = [];
-    this.portrait?.setVisible(false);
+    this.character?.stop();
     this.readout?.setVisible(false);
     this.backdrop?.clear();
     this.backdropHeight = 0;
@@ -142,11 +148,7 @@ export class GuardianGame extends Phaser.Scene {
       this.backdropCamera = cameraBackdrop;
     }
     effects.clear();
-    this.placePortrait();
-    if (this.portrait) {
-      this.portrait.y = this.fieldHeight + Math.sin(time * 0.002) * 3;
-      this.portrait.setTint(this.hitFlash > 0 ? 0xffafbc : 0xffffff);
-    }
+    this.character?.update(time, dt);
     if (this.mode === 'camera' && performance.now() - this.lastTwoHandsAt > 350) this.pausedForHands = true;
     if (this.pausedForHands) {
       this.readout?.setText('MUESTRA DOS MANOS · ABRE Y CIERRA CADA PINZA');
@@ -176,6 +178,7 @@ export class GuardianGame extends Phaser.Scene {
         this.lives--;
         this.combo = 0;
         this.hitFlash = 0.4;
+        this.character?.takeHit();
         this.burst(shadow.x, shadow.y, 0xf995b5, 15);
         this.callbacks.onHud(this.score, Math.ceil(ROUND_SECONDS - this.elapsed), this.lives);
         if (this.lives <= 0) {
@@ -197,18 +200,11 @@ export class GuardianGame extends Phaser.Scene {
     if (this.elapsed >= ROUND_SECONDS) this.finish();
   }
 
-  private placePortrait(): void {
-    const portrait = this.portrait;
-    if (!portrait) return;
-    const height = Math.min(this.fieldHeight * 0.89, 500);
-    portrait.setDisplaySize(height * 1024 / 1536, height);
-    portrait.setPosition(GUARDIAN_CENTER_X, this.fieldHeight);
-  }
-
   private attack(side: GuardianSide): void {
     if (this.cooldown[side] > 0) return;
     this.slash[side] = 0.24;
     this.cooldown[side] = 0.32;
+    this.character?.attack(side);
     const target = strikeTarget(this.shadows, side);
     if (!target) {
       this.combo = 0;

@@ -37,7 +37,7 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
    - Naomi, guerrera medieval angelical inspirada en la foto facilitada por el usuario, protagoniza un combate de dos lados.
    - Una mano controla el ataque del ala izquierda y la otra el del ala derecha. Cada pinza activa un golpe; los enemigos pueden llegar a ambos lados a la vez.
    - Ronda corta con puntuación por enemigos derrotados, tres golpes recibidos como límite, repetición rápida y tabla local de tres mejores resultados con nombre.
-   - Retrato, enemigos, escenario y efectos originales. El título es provisional; el video de cámara sigue procesándose solo en el navegador.
+   - Naomi tiene poses animadas de reposo, ataque izquierdo, derecho y doble; enemigos, escenario y efectos originales. El título es provisional; el video de cámara sigue procesándose solo en el navegador.
 
 ## Experiencia y controles
 

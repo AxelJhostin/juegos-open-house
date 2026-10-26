@@ -13,12 +13,13 @@
 - Colores: índigo nocturno `#111b3c`, violeta sombra `#44346b`, marfil `#f7f0d9`, oro `#f5c768`, azul luminoso `#8ddfff`.
 - Materiales: armadura marfil/plata con ribetes dorados; sombras violetas con núcleo magenta.
 - Foco: rostro y sol en el centro, ataques luminosos en los laterales. El fondo queda más oscuro que los objetivos.
-- Movimiento: alas y cabello con oscilación discreta; golpe rápido con estela y partículas; impacto con destello breve.
+- Movimiento: reposo con respiración y balanceo suaves; poses distintas de golpe izquierdo, derecho y doble; desplazamiento y recuperación breves; impacto con reacción y destello.
 - Exclusiones: personajes, emblemas, nombres o recursos de franquicias existentes; foto personal original dentro de la app.
 
 ## Recursos y procedencia
 
-- `public/guardian/naomi-key-art.png`: retrato de Naomi generado para este proyecto a partir de la foto aportada en la conversación. Fuente: herramienta integrada `image_gen`, 2026-10-25. La foto de referencia no se distribuye con el juego.
-- Contrato técnico: PNG RGBA de 1024 × 1536, ancla visual inferior central, escalado proporcional en Phaser.
+- `public/guardian/naomi-key-art.png`: pose de reposo de Naomi, generada para este proyecto a partir de la foto aportada en la conversación. Fuente: herramienta integrada `image_gen`, 2026-10-25. La foto de referencia no se distribuye con el juego.
+- `public/guardian/naomi-attack-left.png`, `naomi-attack-right.png` y `naomi-attack-both.png`: variantes generadas a partir de la pose de reposo con la misma herramienta y fecha. Cada una corresponde a una acción, sin reutilizar arte de franquicias.
+- Contrato técnico: cuatro PNG RGBA de 1024 × 1536, ancla visual inferior central, escalado proporcional en Phaser. Los límites de golpe son datos del juego y no dependen del tamaño de las poses.
 - Los enemigos, el santuario y los efectos de combate se dibujan en Phaser; su geometría y colisiones permanecen separadas del retrato.
-- Estado: revisado dentro del tablero en navegador. La lectura de las zonas de ataque y el control de teclado se verificaron; la pinza de dos manos necesita prueba humana con cámara.
+- Estado: las poses y la transición de ataque doble se revisaron dentro del tablero en navegador. La pinza de dos manos necesita prueba humana con cámara.
