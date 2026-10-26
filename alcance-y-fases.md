@@ -102,6 +102,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Mostrar en esa pantalla una técnica visual original activada solo por la postura acordada de dos manos, con la esfera centrada entre ambas, como demostración de detección de gestos.
 - Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
 - **Ampliación acordada después:** añadir Guardiana del Alba como cuarto juego especial. Primero validar el ataque independiente de dos manos con un prototipo jugable; después integrar a Naomi, el arte, las animaciones y la presentación. Mantener teclado como alternativa, partida corta y cámara local.
+- **Acceso temporal acordado:** ocultar Guardiana del menú público y abrirla solo mediante el enlace directo `#guardiana`, con una clave local. Recordar el desbloqueo solo mientras la página esté abierta; no añadir cuentas ni servidor.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.

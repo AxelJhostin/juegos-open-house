@@ -38,10 +38,11 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
    - Una mano controla el ataque del ala izquierda y la otra el del ala derecha. Cada pinza activa un golpe; los enemigos pueden llegar a ambos lados a la vez.
    - Ronda corta con puntuación por enemigos derrotados, tres golpes recibidos como límite, repetición rápida y tabla local de tres mejores resultados con nombre.
    - Naomi tiene poses animadas de reposo, ataque izquierdo, derecho y doble; enemigos, escenario y efectos originales. El título es provisional; el video de cámara sigue procesándose solo en el navegador.
+   - Durante las pruebas, el juego permanece fuera del menú público. Se abre desde un enlace directo con una clave temporal local, sin cuentas ni servidor.
 
 ## Experiencia y controles
 
-- Una pantalla de inicio permite escoger el juego y explica los controles.
+- Una pantalla de inicio permite escoger los tres juegos públicos y explica los controles. Guardiana permanece reservada temporalmente.
 - Una pantalla explicativa independiente muestra sobre la cámara los 21 puntos de cada mano que estima el modelo. Se abre desde el menú y no cuenta como otro juego.
 - En esa pantalla, una postura de dos manos (una arriba y otra abajo, con los dedos extendidos en sentidos opuestos) activa una esfera de energía original situada entre ambas. Esto muestra cómo el código convierte los puntos estimados en un gesto y un efecto visual.
 - Un segundo gesto original, índice y meñique extendidos con medio y anular doblados, activa un sello mágico por mano; puede aparecer en una o en las dos manos a la vez.
@@ -68,7 +69,7 @@ Usar una aplicación web con **TypeScript + Phaser + MediaPipe Tasks Vision para
 
 ## Alcance de la primera versión
 
-- Menú con los cuatro juegos.
+- Menú con los tres juegos públicos; Guardiana se conserva fuera del menú durante las pruebas.
 - Partidas jugables con teclado y, después, con cámara.
 - Puntaje, final de partida y opción de jugar de nuevo.
 - Identidad visual consistente con una personalidad por juego; Guardiana usa ilustración original. Integrar colores o identidad de la universidad si se facilitan recursos o lineamientos.

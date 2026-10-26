@@ -11,6 +11,7 @@ type ShellEvents = {
   startHandDemo(): void;
   stopHandDemo(): void;
   saveName(name: string): void;
+  unlockGuardian(code: string): boolean;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -64,6 +65,9 @@ export class AppShell {
   private readonly gameNumber: HTMLElement;
   private readonly gameSymbol: HTMLElement;
   private readonly recordsText: HTMLElement;
+  private readonly guardianGate: HTMLDialogElement;
+  private readonly guardianCode: HTMLInputElement;
+  private readonly guardianGateError: HTMLElement;
   private currentGame: GameDefinition = GAMES.fruit;
 
   constructor(root: HTMLElement, events: ShellEvents) {
@@ -85,8 +89,8 @@ export class AppShell {
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
             <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
-            <p class="home-intro">Cuatro retos para jugar con cámara o teclado. Elige tu desafío.</p>
-            <div class="hero-facts"><span><b>04</b> EXPERIENCIAS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+            <p class="home-intro">Tres retos para jugar con cámara o teclado. Elige tu desafío.</p>
+            <div class="hero-facts"><span><b>03</b> EXPERIENCIAS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
             <button id="open-hand-demo" class="hand-demo-link" type="button"><span>✦ MIRA CÓMO FUNCIONA LA IA</span><span>Ver los puntos de tus manos ↗</span></button>
           </div>
           <div class="hero-display" aria-hidden="true">
@@ -95,7 +99,7 @@ export class AppShell {
             <div class="display-bottom"><span>ENTRADA / MOVIMIENTO</span><span>READY_</span></div>
           </div>
         </div>
-        <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—04</p><h2>ELIGE TU JUEGO</h2></div><p>Cuatro mundos. Tus manos deciden.</p></div>
+        <div class="home-section-head"><div><p class="section-index">SELECCIÓN // 01—03</p><h2>ELIGE TU JUEGO</h2></div><p>Tres mundos. Tus manos deciden.</p></div>
         <div class="game-cards">${cards}</div>
         <div class="home-footer"><span>✦ PULSO PIXEL · OPEN HOUSE</span><span>La cámara se activa solo cuando tú lo indicas.</span></div>
       </section>
@@ -200,6 +204,17 @@ export class AppShell {
           </aside>
         </div>
       </section>
+      <dialog id="guardian-gate" class="guardian-gate" aria-labelledby="guardian-gate-title" aria-describedby="guardian-gate-description">
+        <div class="guardian-gate-top"><span>✧ EDICIÓN ESPECIAL</span><span>P / P · 04</span></div>
+        <form id="guardian-gate-form">
+          <h2 id="guardian-gate-title">GUARDIANA DEL ALBA</h2>
+          <p id="guardian-gate-description">Introduce la clave para entrar al juego de Naomi.</p>
+          <label for="guardian-code">Clave de acceso</label>
+          <input id="guardian-code" type="password" autocomplete="off" spellcheck="false" required maxlength="32" aria-describedby="guardian-gate-error">
+          <p id="guardian-gate-error" class="guardian-gate-error" role="alert" hidden>Clave incorrecta. Inténtalo de nuevo.</p>
+          <div class="guardian-gate-actions"><button id="guardian-gate-cancel" type="button">Cancelar</button><button type="submit">Entrar →</button></div>
+        </form>
+      </dialog>
     `;
 
     this.stage = required(root, '#stage');
@@ -245,6 +260,9 @@ export class AppShell {
     this.gameNumber = required(root, '#game-number');
     this.gameSymbol = required(root, '#game-symbol');
     this.recordsText = required(root, '#records');
+    this.guardianGate = required(root, '#guardian-gate');
+    this.guardianCode = required(root, '#guardian-code');
+    this.guardianGateError = required(root, '#guardian-gate-error');
 
     for (const card of root.querySelectorAll<HTMLButtonElement>('.game-card')) {
       card.addEventListener('click', () => events.chooseGame(card.dataset.game as GameId));
@@ -268,11 +286,34 @@ export class AppShell {
       }
       events.saveName(name);
     });
+    required<HTMLButtonElement>(root, '#guardian-gate-cancel').addEventListener('click', () => this.guardianGate.close());
+    this.guardianGate.addEventListener('close', () => {
+      this.guardianCode.value = '';
+      this.guardianGateError.hidden = true;
+    });
+    this.guardianCode.addEventListener('input', () => { this.guardianGateError.hidden = true; });
+    required<HTMLFormElement>(root, '#guardian-gate-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!events.unlockGuardian(this.guardianCode.value)) {
+        this.guardianGateError.hidden = false;
+        this.guardianCode.select();
+        return;
+      }
+      this.guardianGate.close();
+      events.chooseGame('guardian');
+    });
   }
 
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+
+  showGuardianGate(): void {
+    this.guardianCode.value = '';
+    this.guardianGateError.hidden = true;
+    if (!this.guardianGate.open) this.guardianGate.showModal();
+    this.guardianCode.focus();
+  }
 
   showHandDemo(): void {
     delete this.root.dataset.game;
@@ -349,9 +390,11 @@ export class AppShell {
     this.mouseOption.disabled = !game.controls.mouse;
     if (!game.controls[this.controlMode]) this.modeSelect.value = 'keyboard';
     this.title.textContent = game.title;
-    const number = String(GAME_ORDER.indexOf(id) + 1).padStart(2, '0');
-    this.eyebrow.textContent = `${number} / ${game.menuTag}`;
-    this.gameNumber.textContent = `JUEGO ${number} / ${String(GAME_ORDER.length).padStart(2, '0')}`;
+    const number = GAME_ORDER.indexOf(id);
+    this.eyebrow.textContent = number < 0 ? game.menuTag : `${String(number + 1).padStart(2, '0')} / ${game.menuTag}`;
+    this.gameNumber.textContent = number < 0
+      ? 'EDICIÓN ESPECIAL'
+      : `JUEGO ${String(number + 1).padStart(2, '0')} / ${String(GAME_ORDER.length).padStart(2, '0')}`;
     this.gameSymbol.textContent = game.symbol;
     this.scoreLabel.textContent = game.hud.label;
     this.scoreUnit.textContent = game.hud.unit;

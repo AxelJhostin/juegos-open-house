@@ -114,4 +114,5 @@ export const GAMES = {
 } satisfies Record<string, GameDefinition>;
 
 export type GameId = keyof typeof GAMES;
-export const GAME_ORDER = Object.keys(GAMES) as GameId[];
+// Guardiana se conserva en el catálogo, pero por ahora no aparece en el menú público.
+export const GAME_ORDER: GameId[] = ['fruit', 'ship', 'platform'];
