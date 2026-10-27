@@ -1,0 +1,6 @@
+projectKey=juegos-open-house-axel
+serverUrl=http://sonar:9000
+serverVersion=10.3.0.82913
+dashboardUrl=http://sonar:9000/dashboard?id=juegos-open-house-axel
+ceTaskId=AaF-BsYVuV86qTvVMc1A
+ceTaskUrl=http://sonar:9000/api/ce/task?id=AaF-BsYVuV86qTvVMc1A

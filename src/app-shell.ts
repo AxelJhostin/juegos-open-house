@@ -354,7 +354,9 @@ export class AppShell {
   }
 
   setHandDemoHands(count: number): void {
-    const message = `${count} ${count === 1 ? 'mano detectada' : 'manos detectadas'} · ${count * 21} puntos`;
+    const label = count === 1 ? 'mano detectada' : 'manos detectadas';
+    const totalPoints = count * 21;
+    const message = `${count} ${label} · ${totalPoints} puntos`;
     if (this.handDemoCount.textContent !== message) this.handDemoCount.textContent = message;
   }
 
@@ -365,17 +367,41 @@ export class AppShell {
   clearHandDemoStats(): void { this.handDemoStats.textContent = 'Detección: —'; }
 
   setHandDemoEnergy(state: 'idle' | 'charging' | 'active', percent: number): void {
-    const message = state === 'active' ? '¡Vórtice activo!' : state === 'charging' ? 'Cargando energía…' : 'Coloca ambas manos en posición';
+    let message = 'Coloca ambas manos en posición';
+    if (state === 'active') {
+      message = '¡Vórtice activo!';
+    } else if (state === 'charging') {
+      message = 'Cargando energía…';
+    }
+
     if (this.handDemoEnergyStatus.textContent !== message) this.handDemoEnergyStatus.textContent = message;
     this.handDemoEnergyFill.style.width = `${percent}%`;
     this.handDemoEnergyProgress.setAttribute('aria-valuenow', String(percent));
+    this.handDemoProgressOrState(state);
+  }
+
+  private handDemoProgressOrState(state: 'idle' | 'charging' | 'active'): void {
     this.handDemoEnergyProgress.classList.toggle('charged', state === 'active');
   }
 
+  private resolveMagicStatusMessage(active: number, charging: number): string {
+    if (active === 2) {
+      return '2 sellos activos';
+    }
+    if (active === 1) {
+      return charging > 0 ? '1 sello activo · otro cargando' : '1 sello activo';
+    }
+    if (charging === 2) {
+      return 'Cargando 2 sellos…';
+    }
+    if (charging === 1) {
+      return 'Cargando 1 sello…';
+    }
+    return 'Haz el gesto con una o dos manos';
+  }
+
   setHandDemoMagic(active: number, charging: number): void {
-    const message = active === 2 ? '2 sellos activos' : active === 1
-      ? charging ? '1 sello activo · otro cargando' : '1 sello activo'
-      : charging === 2 ? 'Cargando 2 sellos…' : charging === 1 ? 'Cargando 1 sello…' : 'Haz el gesto con una o dos manos';
+    const message = this.resolveMagicStatusMessage(active, charging);
     if (this.handDemoMagicStatus.textContent !== message) this.handDemoMagicStatus.textContent = message;
   }
 
