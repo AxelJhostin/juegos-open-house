@@ -12,6 +12,7 @@ type ShellEvents = {
   stopHandDemo(): void;
   saveName(name: string): void;
   toggleSound(): void;
+  changeControlMode(mode: ControlMode): void;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -43,10 +44,15 @@ export class AppShell {
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
+  private readonly fullscreenButton: HTMLButtonElement;
   private readonly stopCameraButton: HTMLButtonElement;
   private readonly overlay: HTMLElement;
   private readonly overlayTitle: HTMLElement;
   private readonly overlayText: HTMLElement;
+  private readonly restartGesture: HTMLElement;
+  private readonly restartGestureFill: HTMLElement;
+  private readonly restartGestureProgress: HTMLElement;
+  private readonly restartGestureText: HTMLElement;
   private readonly nameEntry: HTMLFormElement;
   private readonly playerName: HTMLInputElement;
   private readonly help: HTMLElement;
@@ -159,7 +165,7 @@ export class AppShell {
         <div class="game-topbar">
           <button id="menu-button" class="menu-button" type="button">← Menú principal</button>
           <span class="game-brand">P / P <span>OPEN HOUSE // ARCADE INTERACTIVO</span></span>
-          <span id="game-number" class="game-number"></span><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
+          <span id="game-number" class="game-number"></span><button id="fullscreen-button" class="sound-toggle" type="button" aria-pressed="false">⛶ Pantalla completa</button><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
         </div>
         <header class="game-header">
           <div class="game-titleblock"><p id="eyebrow" class="eyebrow"></p><h1 id="title"></h1></div>
@@ -183,6 +189,10 @@ export class AppShell {
                     <label for="player-name">Nuevo récord · escribe tu nombre o apodo (máx. 10 caracteres)</label>
                     <div><input id="player-name" name="player-name" type="text" maxlength="10" autocomplete="off" autocapitalize="characters" required placeholder="TU NOMBRE"><button type="submit">Guardar nombre</button></div>
                   </form>
+                  <div id="restart-gesture" class="restart-gesture" hidden>
+                    <p id="restart-gesture-text">Abre la mano y luego mantén una pinza para jugar otra vez.</p>
+                    <div id="restart-gesture-progress" class="restart-gesture-progress" role="progressbar" aria-label="Pinza para reiniciar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="restart-gesture-fill"></span></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -225,10 +235,15 @@ export class AppShell {
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
+    this.fullscreenButton = required(root, '#fullscreen-button');
     this.stopCameraButton = required(root, '#stop-camera');
     this.overlay = required(root, '#round-overlay');
     this.overlayTitle = required(root, '#overlay-title');
     this.overlayText = required(root, '#overlay-text');
+    this.restartGesture = required(root, '#restart-gesture');
+    this.restartGestureFill = required(root, '#restart-gesture-fill');
+    this.restartGestureProgress = required(root, '#restart-gesture-progress');
+    this.restartGestureText = required(root, '#restart-gesture-text');
     this.nameEntry = required(root, '#name-entry');
     this.playerName = required(root, '#player-name');
     this.help = required(root, '#help');
@@ -259,8 +274,14 @@ export class AppShell {
     this.handDemoStop.addEventListener('click', events.stopHandDemo);
     required<HTMLButtonElement>(root, '#menu-button').addEventListener('click', events.returnHome);
     this.playButton.addEventListener('click', events.play);
+    this.fullscreenButton.addEventListener('click', () => { void this.toggleFullscreen(); });
+    this.fullscreenButton.hidden = !document.fullscreenEnabled;
+    document.addEventListener('fullscreenchange', () => this.updateFullscreenButton());
     this.stopCameraButton.addEventListener('click', events.stopCamera);
-    this.modeSelect.addEventListener('change', () => this.updateHelp());
+    this.modeSelect.addEventListener('change', () => {
+      this.updateHelp();
+      events.changeControlMode(this.controlMode);
+    });
     this.playerName.addEventListener('input', () => this.playerName.setCustomValidity(''));
     this.nameEntry.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -277,6 +298,36 @@ export class AppShell {
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+
+  private async toggleFullscreen(): Promise<void> {
+    try {
+      if (document.fullscreenElement === this.panel) await document.exitFullscreen();
+      else await this.panel.requestFullscreen();
+    } catch {
+      this.fullscreenButton.textContent = 'Pantalla completa no disponible';
+    }
+  }
+
+  exitFullscreen(): void {
+    if (document.fullscreenElement === this.panel) void document.exitFullscreen();
+  }
+
+  private updateFullscreenButton(): void {
+    const active = document.fullscreenElement === this.panel;
+    this.fullscreenButton.textContent = active ? '⛶ Salir de pantalla completa' : '⛶ Pantalla completa';
+    this.fullscreenButton.setAttribute('aria-pressed', String(active));
+  }
+
+  setRestartGesture(visible: boolean, progress = 0): void {
+    this.restartGesture.hidden = !visible;
+    if (!visible) return;
+    const percent = Math.round(Math.max(0, Math.min(1, progress)) * 100);
+    this.restartGestureFill.style.width = `${percent}%`;
+    this.restartGestureProgress.setAttribute('aria-valuenow', String(percent));
+    this.restartGestureText.textContent = percent > 0
+      ? 'Mantén la pinza para jugar otra vez…'
+      : 'Abre pulgar e índice; luego júntalos y mantén la pinza para jugar otra vez.';
+  }
 
   setSoundEnabled(enabled: boolean): void {
     for (const button of this.soundButtons) {
@@ -415,6 +466,7 @@ export class AppShell {
   }
 
   showHome(): void {
+    this.exitFullscreen();
     delete this.root.dataset.game;
     this.root.classList.add('home-screen');
     this.root.classList.remove('hand-demo-screen');
@@ -488,6 +540,7 @@ export class AppShell {
   setLaunching(launching: boolean): void { this.playButton.disabled = launching; }
 
   showPlaying(): void {
+    this.setRestartGesture(false);
     this.stage.classList.add('playing');
     this.overlay.hidden = true;
     this.modeSelect.disabled = true;
@@ -508,7 +561,10 @@ export class AppShell {
   }
 
   clearTrackingStats(): void { this.stats.textContent = 'Detección: —'; }
-  setStageHeight(width: number, height: number): void { this.stage.style.aspectRatio = `${width} / ${height}`; }
+  setStageHeight(width: number, height: number): void {
+    this.stage.style.aspectRatio = `${width} / ${height}`;
+    this.panel.style.setProperty('--stage-ratio', String(width / height));
+  }
 
   switchToKeyboard(): void {
     this.modeSelect.value = 'keyboard';

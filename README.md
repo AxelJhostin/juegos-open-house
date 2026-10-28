@@ -27,6 +27,8 @@ La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fa
 
 La página abre en el menú principal. Elige **Rebanar fruta**, **Nave espacial** o **Plataformas**; en la pantalla de cada juego selecciona el control y pulsa **Empezar partida**. El botón **Menú principal** permite salir de una ronda sin guardarla. Cada juego conserva sus resultados por separado en el navegador.
 
+En cualquier juego, **Pantalla completa** amplía la vista de partida; el mismo botón o Esc permite salir. Al terminar una partida en modo cámara, el detector sigue activo para poder repetir con una mano: primero separa pulgar e índice y después mantenlos juntos unos 0,9 segundos. Si la marca entra en los récords, guarda el nombre antes de usar el gesto. **Jugar otra vez** sigue disponible con mouse o teclado. La cámara se apaga al volver al menú, detenerla o cambiar de pestaña.
+
 ## Prototipo de rebanar fruta
 
 - Elige **Mouse**, **Teclado** o **Cámara** y pulsa **Empezar partida**. Cada ronda dura 45 segundos; cada fruta cortada suma 10 puntos. Al terminar puedes repetir.

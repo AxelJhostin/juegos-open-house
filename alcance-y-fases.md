@@ -114,6 +114,10 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 
 Investigar por separado una extensión de navegador que traduzca gestos en teclado para juegos compatibles. Primero probar con un juego concreto y sus permisos; no asumir compatibilidad universal.
 
+### Idea pendiente de conversar — fotos con efectos de gestos
+
+Una zona para posar en el Open House podría reutilizar la cámara y los efectos originales de la pantalla explicativa. Los estudiantes fotografiarían la pantalla con sus propios teléfonos mientras la animación aparece en vivo. La aplicación no tomaría, guardaría ni enviaría fotos o video. Es una propuesta pendiente de acordar dentro del alcance del evento; no se implementa por iniciativa propia.
+
 ## Orden de prioridades si el tiempo se reduce
 
 1. La cámara detecta y sigue la mano con suficiente estabilidad.

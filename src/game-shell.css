@@ -14,6 +14,9 @@
   background-size: 34px 34px;
 }
 .panel { width: min(100%, 1120px); margin-inline: auto; }
+#game-panel:fullscreen { width: 100vw; height: 100vh; height: 100dvh; max-width: none; margin: 0; padding: 16px 20px; overflow: auto; background: var(--theme-page); }
+#game-panel:fullscreen .game-layout { grid-template-columns: minmax(0, 1fr) 280px; }
+#game-panel:fullscreen .game-board { width: min(100%, calc((100dvh - 250px) * var(--stage-ratio, 1.7778))); justify-self: center; }
 .game-topbar, .game-header, .board-topline, .status-row { display: flex; align-items: center; justify-content: space-between; }
 .game-topbar { min-height: 40px; gap: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--shell-line); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .menu-button { padding: 7px 10px; border: 1px solid var(--shell-line); background: var(--shell-card); color: var(--theme-ink); font-size: 12px; text-transform: uppercase; white-space: nowrap; }
@@ -77,6 +80,11 @@
 .name-entry { text-align: left; }
 .name-entry label { line-height: 1.35; }
 .name-entry input { background: var(--theme-surface); color: var(--theme-ink); }
+.restart-gesture { margin-top: 17px; padding-top: 13px; border-top: 1px solid var(--shell-line); }
+.restart-gesture[hidden] { display: none; }
+.restart-gesture p { margin: 0 0 9px; font-size: 12px; font-weight: 800; }
+.restart-gesture-progress { height: 10px; border: 1px solid var(--shell-line); background: var(--shell-soft); overflow: hidden; }
+.restart-gesture-progress span { display: block; width: 0; height: 100%; background: var(--palette-4); }
 
 #app[data-game="ship"] .board-topline { background: #3e8fd633; }
 #app[data-game="ship"] .board-topline i { color: var(--palette-5); }
@@ -85,6 +93,7 @@
 #app[data-game="platform"] .board-topline { background: linear-gradient(90deg, var(--palette-3) 0 13%, transparent 13% 100%); }
 @media (max-width: 960px) {
   .game-layout { grid-template-columns: 1fr; }
+  #game-panel:fullscreen .game-layout { grid-template-columns: 1fr; }
   .game-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   .privacy { grid-column: 1 / -1; }
 }

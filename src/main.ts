@@ -10,6 +10,7 @@ import { HandDemoVisualizer } from './hand-demo-visualizer';
 import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, saveRecords, type Records } from './records';
 import { SoundEffects } from './sound';
+import { RestartGesture } from './restart-gesture';
 import './style.css';
 import './game-themes.css';
 import './home.css';
@@ -41,6 +42,13 @@ const shell = new AppShell(root, {
     sound.setEnabled(!sound.isEnabled);
     shell.setSoundEnabled(sound.isEnabled);
     if (sound.isEnabled) void sound.unlock();
+  },
+  changeControlMode: (mode) => {
+    if (mode === 'camera') return;
+    cameraReplayReady = false;
+    restartGesture.reset();
+    shell.setRestartGesture(false);
+    tracker.stop();
   },
 });
 shell.setSoundEnabled(sound.isEnabled);
@@ -85,6 +93,8 @@ let lastResult = 0;
 let launchId = 0;
 let handDemoLaunchId = 0;
 let detectedHands = 0;
+const restartGesture = new RestartGesture();
+let cameraReplayReady = false;
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -125,9 +135,13 @@ const tracker = new HandTracker(shell.video, {
     shell.setCameraStatus(message + hint);
     shell.setCameraActive(isActive);
     if (!isActive) {
+      cameraReplayReady = false;
+      restartGesture.reset();
+      shell.setRestartGesture(false);
       setStageHeight(HEIGHT);
       shell.clearTrackingStats();
-      if (active.scene.isPlaying && active.scene.controlMode === 'camera') {
+      if (shell.isGameVisible && active.scene.controlMode === 'camera' &&
+        (active.scene.isPlaying || shell.controlMode === 'camera')) {
         active.scene.switchToKeyboard();
         shell.switchToKeyboard();
       }
@@ -135,7 +149,16 @@ const tracker = new HandTracker(shell.video, {
   },
   onPoints(samples): void {
     detectedHands = samples.length;
-    active.scene.setCameraPoints(shell.video.videoWidth ? samples.map(toStageSample) : []);
+    if (active.scene.isPlaying) active.scene.setCameraPoints(shell.video.videoWidth ? samples.map(toStageSample) : []);
+    if (cameraReplayReady && shell.isGameVisible) {
+      const result = restartGesture.sample(samples, performance.now());
+      shell.setRestartGesture(true, result.progress);
+      if (result.restart) {
+        cameraReplayReady = false;
+        shell.setRestartGesture(false);
+        void play();
+      }
+    }
   },
   onStats(fps, duration): void { shell.setTrackingStats(fps, duration); },
 });
@@ -199,6 +222,8 @@ function stopHandDemo(): void {
 
 function selectGame(id: GameId): void {
   setGameplayKeyboardEnabled(false);
+  cameraReplayReady = false;
+  restartGesture.reset();
   stopHandDemo();
   launchId++;
   pendingRank = null;
@@ -209,6 +234,8 @@ function selectGame(id: GameId): void {
 
 function returnHome(): void {
   setGameplayKeyboardEnabled(false);
+  cameraReplayReady = false;
+  restartGesture.reset();
   launchId++;
   pendingRank = null;
   active.scene.abortRound();
@@ -219,7 +246,10 @@ function returnHome(): void {
 
 function finishRound(value: number, won = false): void {
   setGameplayKeyboardEnabled(false);
-  tracker.stop();
+  const cameraReplay = active.scene.controlMode === 'camera' && tracker.isActive;
+  restartGesture.reset();
+  cameraReplayReady = false;
+  if (!cameraReplay) tracker.stop();
   lastResult = value;
   const result = addResult(records, value, active.definition.records);
   records = result.records;
@@ -227,6 +257,8 @@ function finishRound(value: number, won = false): void {
   const saved = saveRecords(records, active.definition.records);
   shell.renderRecords(records);
   shell.showResult(value, won, result.rank, saved);
+  cameraReplayReady = cameraReplay && result.rank === null;
+  shell.setRestartGesture(cameraReplayReady);
 }
 
 function saveName(name: string): void {
@@ -236,10 +268,16 @@ function saveName(name: string): void {
   pendingRank = null;
   shell.renderRecords(records);
   shell.showSavedName(lastResult, saved);
+  restartGesture.reset();
+  cameraReplayReady = active.scene.controlMode === 'camera' && tracker.isActive;
+  shell.setRestartGesture(cameraReplayReady);
 }
 
 async function play(): Promise<void> {
   if (active.scene.isPlaying) return;
+  cameraReplayReady = false;
+  restartGesture.reset();
+  shell.setRestartGesture(false);
   const thisLaunch = ++launchId;
   shell.setLaunching(true);
   const audioReady = sound.unlock();
