@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de caminata · Naomi</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #161d2f; color: #f9edd6; font: 16px system-ui, sans-serif; }
+  main { max-width: 600px; padding: 24px; text-align: center; }
+  h1 { font-size: 1.3rem; }
+  canvas { display: block; width: min(75vw, 360px); height: auto; margin: 16px auto; background: #f7f5ef; border-radius: 12px; }
+  button { padding: 10px 18px; border: 0; border-radius: 8px; font: inherit; cursor: pointer; }
+  p { line-height: 1.5; }
+</style>
+<main>
+  <h1>Guía de pasos de Naomi</h1>
+  <p>Los colores permiten seguir cada pierna mientras alternan. Es una guía de movimiento para rehacer los sprites.</p>
+  <canvas id="preview" width="400" height="500" aria-label="Guía animada de caminata de ocho cuadros"></canvas>
+  <button id="toggle" type="button">Pausar</button>
+  <p id="status" aria-live="polite">Cargando guía…</p>
+</main>
+<script>
+  const canvas = document.querySelector('#preview');
+  const context = canvas.getContext('2d');
+  const button = document.querySelector('#toggle');
+  const status = document.querySelector('#status');
+  const sheet = new Image();
+  let frame = 0;
+  let playing = true;
+  function draw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(sheet, (frame % 4) * 400, Math.floor(frame / 4) * 500, 400, 500, 0, 0, 400, 500);
+    status.textContent = `Cuadro ${frame + 1} de 8`;
+  }
+  sheet.onload = () => {
+    draw();
+    setInterval(() => { if (playing) { frame = (frame + 1) % 8; draw(); } }, 150);
+  };
+  sheet.onerror = () => { status.textContent = 'No se pudo cargar la guía de pasos.'; };
+  button.addEventListener('click', () => { playing = !playing; button.textContent = playing ? 'Pausar' : 'Reproducir'; });
+  sheet.src = 'guia-pasos-esqueleto.png';
+</script>
+</html>

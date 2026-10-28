@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naomi · estudio de caminata</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #161d2f; color: #f9edd6; font: 16px system-ui, sans-serif; }
+  main { max-width: 600px; padding: 24px; text-align: center; }
+  h1 { font-size: 1.3rem; }
+  canvas { display: block; width: min(75vw, 360px); height: auto; margin: 16px auto; background: #303c50; border-radius: 12px; }
+  button { padding: 10px 18px; border: 0; border-radius: 8px; font: inherit; cursor: pointer; }
+  p { line-height: 1.5; }
+</style>
+<main>
+  <h1>Naomi · estudio de ocho cuadros</h1>
+  <p>Es un borrador: algunos pasos se repiten y ciertas partes quedan cortadas. Sirve para evaluar el diseño y el movimiento.</p>
+  <canvas id="preview" width="384" height="512" aria-label="Estudio animado de caminata de Naomi"></canvas>
+  <button id="toggle" type="button">Pausar</button>
+  <p id="status" aria-live="polite">Cargando imágenes…</p>
+</main>
+<script>
+  const canvas = document.querySelector('#preview');
+  const context = canvas.getContext('2d');
+  const button = document.querySelector('#toggle');
+  const status = document.querySelector('#status');
+  const sheet = new Image();
+  let frame = 0;
+  let playing = true;
+  function draw() {
+    const w = sheet.naturalWidth / 4;
+    const h = sheet.naturalHeight / 2;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(sheet, (frame % 4) * w, Math.floor(frame / 4) * h, w, h, 0, 0, canvas.width, canvas.height);
+    status.textContent = `Cuadro ${frame + 1} de 8`;
+  }
+  sheet.onload = () => {
+    draw();
+    setInterval(() => { if (playing) { frame = (frame + 1) % 8; draw(); } }, 150);
+  };
+  sheet.onerror = () => { status.textContent = 'No se pudo cargar la hoja de imágenes.'; };
+  button.addEventListener('click', () => { playing = !playing; button.textContent = playing ? 'Pausar' : 'Reproducir'; });
+  sheet.src = 'estudio-ocho-pasos-v3.png';
+</script>
+</html>

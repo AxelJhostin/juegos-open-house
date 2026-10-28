@@ -6,6 +6,7 @@ Proyecto de una colección pequeña de juegos web originales controlados con mov
 - [Brief del proyecto](brief-juegos-open-house.md): idea, experiencia y juegos acordados.
 - [Alcance y fases](alcance-y-fases.md): límites, etapas y criterios para decidir cuándo avanzar.
 - [Instrucciones para Codex](AGENTS.md): reglas de trabajo para mantener el proyecto acotado.
+- [Materiales del juego independiente de Naomi y Monse](concept-art/README.md): personajes, referencias e intentos de animación, reservados para después del evento.
 
 La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fases 0 a 3 están implementadas**: hay menú y versiones jugables de los tres juegos con cámara y controles alternativos. La fase 4 corresponde al pulido visual y las pruebas para el evento.
 
