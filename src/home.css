@@ -325,28 +325,6 @@
   clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 
-.game-card[data-game="guardian"] { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(180px, 38%) minmax(0, 1fr); grid-template-rows: auto 1fr auto; min-height: 270px; }
-.game-card[data-game="guardian"] .card-head { grid-column: 2; grid-row: 1; }
-.game-card[data-game="guardian"] .card-preview { grid-column: 1; grid-row: 1 / 4; height: 100%; min-height: 270px; border-right: 2px solid currentColor; border-bottom: 0; }
-.game-card[data-game="guardian"] .card-preview::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 25%, #e8c98152, transparent 50%), linear-gradient(90deg, #141b3d9e, transparent 45%, #141b3d9e);
-}
-.game-card[data-game="guardian"] .preview-one {
-  width: 100%; height: 138%; left: 0; bottom: -38%;
-  background: url('/guardian/naomi-key-art.png') center bottom / auto 100% no-repeat;
-  filter: drop-shadow(0 0 16px #e6c78777);
-}
-.game-card[data-game="guardian"] .preview-two { width: 170px; height: 170px; left: calc(50% - 85px); top: -63px; border: 2px solid #f4d49277; border-radius: 50%; }
-.game-card[data-game="guardian"] .preview-three { display: none; }
-.game-card[data-game="guardian"] .preview-symbol { z-index: 2; color: #ffe6ab; }
-.game-card[data-game="guardian"] .card-copy { grid-column: 2; grid-row: 2; justify-content: center; gap: 12px; padding: 18px 25px; }
-.game-card[data-game="guardian"] .card-copy strong { font-size: clamp(28px, 3.2vw, 41px); }
-.game-card[data-game="guardian"] .card-copy > span { max-width: 46ch; font-size: 15px; }
-.game-card[data-game="guardian"] .card-action { grid-column: 2; grid-row: 3; }
-
 .card-copy { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 15px 19px 13px; }
 .card-copy strong { font-size: clamp(19px, 1.9vw, 25px); line-height: 1.1; text-transform: uppercase; letter-spacing: -.045em; }
 .card-copy > span { max-width: 43ch; font-size: 13px; line-height: 1.4; font-weight: 600; }
@@ -387,12 +365,6 @@
   .game-cards { grid-template-columns: 1fr; }
   .game-card { min-height: 0; }
   .card-preview { height: 130px; }
-  .game-card[data-game="guardian"] { grid-column: auto; display: flex; min-height: 0; }
-  .game-card[data-game="guardian"] .card-head,
-  .game-card[data-game="guardian"] .card-preview,
-  .game-card[data-game="guardian"] .card-copy,
-  .game-card[data-game="guardian"] .card-action { grid-column: auto; grid-row: auto; }
-  .game-card[data-game="guardian"] .card-preview { height: 200px; min-height: 200px; border-right: 0; border-bottom: 2px solid currentColor; }
   .home-section-head > p { display: none; }
   .home-footer { align-items: flex-start; flex-direction: column; }
 }

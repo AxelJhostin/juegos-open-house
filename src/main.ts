@@ -3,7 +3,6 @@ import { AppShell } from './app-shell';
 import { FruitGame, PLAY_BOTTOM, PLAY_TOP } from './fruit-game';
 import { ShipGame } from './ship-game';
 import { PlatformGame } from './platform-game';
-import { GuardianGame } from './guardian-game';
 import { GAMES, type GameDefinition, type GameId } from './game-catalog';
 import type { PlayableScene } from './game-types';
 import { HandTracker, type HandSample } from './tracking';
@@ -15,12 +14,9 @@ import './game-themes.css';
 import './home.css';
 import './game-shell.css';
 import './hand-demo.css';
-import './guardian-gate.css';
 
 const WIDTH = 960;
 const HEIGHT = 540;
-const GUARDIAN_ACCESS_CODE = 'sushi';
-let guardianUnlocked = false;
 
 type GameSession = {
   definition: GameDefinition;
@@ -39,11 +35,6 @@ const shell = new AppShell(root, {
   startHandDemo: () => { void startHandDemo(); },
   stopHandDemo,
   saveName,
-  unlockGuardian(code): boolean {
-    if (code.trim().toLowerCase() !== GUARDIAN_ACCESS_CODE) return false;
-    guardianUnlocked = true;
-    return true;
-  },
 });
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
 if (guides) {
@@ -73,14 +64,6 @@ const sessions: Record<GameId, GameSession> = {
       onEnd: (value, won) => finishRound(value, won),
     }),
     cameraHint: () => (sessions.platform.scene as PlatformGame).gestureReady ? ' · pinza lista' : ' · separa los dedos',
-  },
-  guardian: {
-    definition: GAMES.guardian,
-    scene: new GuardianGame({
-      onHud: (value, seconds, lives) => shell.updateHud(value, seconds, lives),
-      onEnd: (value) => finishRound(value),
-    }),
-    cameraHint: () => (sessions.guardian.scene as GuardianGame).gestureHint,
   },
 };
 
@@ -202,10 +185,6 @@ function stopHandDemo(): void {
 }
 
 function selectGame(id: GameId): void {
-  if (id === 'guardian' && !guardianUnlocked) {
-    shell.showGuardianGate();
-    return;
-  }
   setGameplayKeyboardEnabled(false);
   stopHandDemo();
   launchId++;
@@ -214,15 +193,6 @@ function selectGame(id: GameId): void {
   records = loadRecords(active.definition.records);
   shell.selectGame(id, records);
 }
-
-// El enlace reservado permite probar Guardiana sin mostrarla en el menú.
-function openReservedGame(): void {
-  if (window.location.hash !== '#guardiana') return;
-  selectGame('guardian');
-  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-}
-window.addEventListener('hashchange', openReservedGame);
-openReservedGame();
 
 function returnHome(): void {
   setGameplayKeyboardEnabled(false);

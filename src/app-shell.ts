@@ -11,7 +11,6 @@ type ShellEvents = {
   startHandDemo(): void;
   stopHandDemo(): void;
   saveName(name: string): void;
-  unlockGuardian(code: string): boolean;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -65,9 +64,6 @@ export class AppShell {
   private readonly gameNumber: HTMLElement;
   private readonly gameSymbol: HTMLElement;
   private readonly recordsText: HTMLElement;
-  private readonly guardianGate: HTMLDialogElement;
-  private readonly guardianCode: HTMLInputElement;
-  private readonly guardianGateError: HTMLElement;
   private currentGame: GameDefinition = GAMES.fruit;
 
   constructor(root: HTMLElement, events: ShellEvents) {
@@ -204,17 +200,6 @@ export class AppShell {
           </aside>
         </div>
       </section>
-      <dialog id="guardian-gate" class="guardian-gate" aria-labelledby="guardian-gate-title" aria-describedby="guardian-gate-description">
-        <div class="guardian-gate-top"><span>✧ EDICIÓN ESPECIAL</span><span>P / P · 04</span></div>
-        <form id="guardian-gate-form">
-          <h2 id="guardian-gate-title">GUARDIANA DEL ALBA</h2>
-          <p id="guardian-gate-description">Introduce la clave para entrar al juego de Naomi.</p>
-          <label for="guardian-code">Clave de acceso</label>
-          <input id="guardian-code" type="password" autocomplete="off" spellcheck="false" required maxlength="32" aria-describedby="guardian-gate-error">
-          <p id="guardian-gate-error" class="guardian-gate-error" role="alert" hidden>Clave incorrecta. Inténtalo de nuevo.</p>
-          <div class="guardian-gate-actions"><button id="guardian-gate-cancel" type="button">Cancelar</button><button type="submit">Entrar →</button></div>
-        </form>
-      </dialog>
     `;
 
     this.stage = required(root, '#stage');
@@ -260,9 +245,6 @@ export class AppShell {
     this.gameNumber = required(root, '#game-number');
     this.gameSymbol = required(root, '#game-symbol');
     this.recordsText = required(root, '#records');
-    this.guardianGate = required(root, '#guardian-gate');
-    this.guardianCode = required(root, '#guardian-code');
-    this.guardianGateError = required(root, '#guardian-gate-error');
 
     for (const card of root.querySelectorAll<HTMLButtonElement>('.game-card')) {
       card.addEventListener('click', () => events.chooseGame(card.dataset.game as GameId));
@@ -286,34 +268,11 @@ export class AppShell {
       }
       events.saveName(name);
     });
-    required<HTMLButtonElement>(root, '#guardian-gate-cancel').addEventListener('click', () => this.guardianGate.close());
-    this.guardianGate.addEventListener('close', () => {
-      this.guardianCode.value = '';
-      this.guardianGateError.hidden = true;
-    });
-    this.guardianCode.addEventListener('input', () => { this.guardianGateError.hidden = true; });
-    required<HTMLFormElement>(root, '#guardian-gate-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      if (!events.unlockGuardian(this.guardianCode.value)) {
-        this.guardianGateError.hidden = false;
-        this.guardianCode.select();
-        return;
-      }
-      this.guardianGate.close();
-      events.chooseGame('guardian');
-    });
   }
 
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
-
-  showGuardianGate(): void {
-    this.guardianCode.value = '';
-    this.guardianGateError.hidden = true;
-    if (!this.guardianGate.open) this.guardianGate.showModal();
-    this.guardianCode.focus();
-  }
 
   showHandDemo(): void {
     delete this.root.dataset.game;

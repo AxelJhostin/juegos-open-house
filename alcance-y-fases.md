@@ -2,9 +2,11 @@
 
 Este documento limita la primera entrega al open house. Se lee junto con `brief-juegos-open-house.md`, que contiene la idea, el hardware y la descripción de los juegos acordados.
 
+El juego de Naomi queda reservado para un proyecto 2D independiente y no forma parte de las fases ni de la aplicación del Open House.
+
 ## Meta de la primera entrega
 
-Preparar una demo local para una MacBook Air M4, jugable en un navegador y lista para mostrar en una pantalla. Incluye los tres minijuegos originales y un cuarto juego especial acordado después, con controles por cámara y controles alternativos.
+Preparar una demo local para una MacBook Air M4, jugable en un navegador y lista para mostrar en una pantalla. Incluye tres minijuegos originales con controles por cámara y controles alternativos.
 
 La meta es una demo pequeña, clara y entretenida que podamos explicar y mantener. No es un producto comercial ni una colección completa de juegos.
 
@@ -14,7 +16,7 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 
 - Una aplicación web, en TypeScript y Phaser, con MediaPipe Tasks Vision para seguir las manos.
 - Una pantalla inicial sencilla con título, selección de juego, instrucciones y elección de teclado/cámara.
-- Cuatro partidas con puntaje o tiempo, fin de partida y opción de repetir. Fruta dura unos 45 segundos; Plataformas y Nave tienen intentos cortos que terminan al chocar o caer.
+- Tres partidas con puntaje o tiempo, fin de partida y opción de repetir. Fruta dura unos 45 segundos; Plataformas y Nave tienen intentos cortos que terminan al chocar o caer.
 - Diseño prioritario para laptop y pantalla grande en orientación horizontal. No requiere diseño para celular.
 - Carga local del código, los modelos y los recursos necesarios para que la demo no dependa de internet una vez preparada.
 - La cámara se activa solo al elegir el modo cámara. El video se procesa localmente; no se graba ni se envía a ningún servidor.
@@ -24,19 +26,18 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 1. **Nave:** movimiento lateral para esquivar meteoritos, hasta el primer choque; el tiempo sobrevivido es la puntuación. Los meteoritos aumentan en velocidad y frecuencia.
 2. **Plataformas:** avance automático por un recorrido lineal corto; una pinza o tecla activa el salto. El primer choque o caída termina el intento y se registra el porcentaje recorrido. Personaje y escenario originales. Sin objetos recolectables, jefes ni mundos adicionales.
 3. **Rebanar fruta:** ronda de tiempo limitado; la trayectoria del dedo corta frutas, suma puntos y puede crear combos. Se puede añadir una bomba como peligro. Sin niveles, tienda, desbloqueos ni campaña.
-4. **Guardiana del Alba:** Naomi aparece al centro con poses de movimiento y ataque. Las dos manos activan ataques independientes por pinza hacia izquierda y derecha. Se puntúa por enemigos derrotados en una ronda corta; tres golpes terminan la partida. Arte original inspirado en la foto aportada por el usuario, sin incluir la foto original en la aplicación.
 
 ### Controles
 
-- Teclado: flechas o A/D para mover Nave; Espacio, W o flecha arriba para saltar en Plataformas; F y J activan los dos ataques de Guardiana. Instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
-- Cámara: Nave usa movimiento horizontal; Plataformas salta al juntar pulgar e índice y exige separarlos antes del siguiente salto; Rebanar fruta usa la trayectoria de uno o dos índices; Guardiana usa una pinza independiente por mano.
+- Teclado: flechas o A/D para mover Nave; Espacio, W o flecha arriba para saltar en Plataformas. Instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
+- Cámara: Nave usa movimiento horizontal; Plataformas salta al juntar pulgar e índice y exige separarlos antes del siguiente salto; Rebanar fruta usa la trayectoria de uno o dos índices.
 - Mouse: arrastrar para rebanar fruta.
-- Detectar hasta dos manos con el mismo modelo local. La lógica de cada juego decide si necesita una o ambas; Guardiana pausa la ronda cuando faltan manos para no perder por un fallo de detección.
+- Detectar hasta dos manos con el mismo modelo local. La lógica de cada juego decide si necesita una o ambas.
 - Mantener los controles alternativos aunque el modo cámara funcione.
 
 ### Arte y sonido
 
-- Una paleta coherente para toda la aplicación, con personajes, obstáculos, frutas y elementos de interfaz originales. Guardiana usa ilustración propia y un tema medieval angelical para distinguirla como juego especial.
+- Una paleta coherente para toda la aplicación, con personajes, obstáculos, frutas y elementos de interfaz originales.
 - Usar colores o logotipo de la universidad si el usuario proporciona recursos oficiales. Si no, usar una paleta provisional original.
 - Efectos breves para acciones importantes (salto, corte, golpe, fin de ronda). Música continua, animaciones extensas y escenas cinemáticas no son necesarias.
 
@@ -101,15 +102,13 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Añadir la pantalla explicativa acordada para visualizar los 21 puntos de una o dos manos con el detector existente, con activación y apagado explícitos de la cámara.
 - Mostrar en esa pantalla una técnica visual original activada solo por la postura acordada de dos manos, con la esfera centrada entre ambas, como demostración de detección de gestos.
 - Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
-- **Ampliación acordada después:** añadir Guardiana del Alba como cuarto juego especial. Primero validar el ataque independiente de dos manos con un prototipo jugable; después integrar a Naomi, el arte, las animaciones y la presentación. Mantener teclado como alternativa, partida corta y cámara local.
-- **Acceso temporal acordado:** ocultar Guardiana del menú público y abrirla solo mediante el enlace directo `#guardiana`, con una clave local. Recordar el desbloqueo solo mientras la página esté abierta; no añadir cuentas ni servidor.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.
 - Probar con varias personas que no conocen el proyecto: observar si entienden cómo empezar y si quieren volver a jugar.
 - Verificar la demo en la laptop, el navegador y la pantalla que se usarán en el evento; verificar modo sin internet.
 
-**Salida:** los cuatro juegos se entienden sin explicación larga, no hay fallos que impidan jugar y una partida puede repetirse con rapidez.
+**Salida:** los tres juegos se entienden sin explicación larga, no hay fallos que impidan jugar y una partida puede repetirse con rapidez.
 
 ### Fase 5 — Después del evento
 
@@ -118,8 +117,8 @@ Investigar por separado una extensión de navegador que traduzca gestos en tecla
 ## Orden de prioridades si el tiempo se reduce
 
 1. La cámara detecta y sigue la mano con suficiente estabilidad.
-2. Los cuatro juegos son jugables con teclado y tienen inicio, puntaje y fin.
-3. El modo cámara funciona en los cuatro.
+2. Los tres juegos son jugables con teclado y tienen inicio, puntaje y fin.
+3. El modo cámara funciona en los tres.
 4. Instrucciones claras, buen ritmo y alternativa de teclado.
 5. Pixel art coherente y algunos efectos/sonidos.
 6. Récord local y otros extras, solo si todo lo anterior ya está listo.

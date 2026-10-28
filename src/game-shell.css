@@ -13,12 +13,6 @@
   background-image: linear-gradient(#3e8fd61f 1px, transparent 1px), linear-gradient(90deg, #3e8fd61f 1px, transparent 1px);
   background-size: 34px 34px;
 }
-#app[data-game="guardian"] {
-  background-image: radial-gradient(circle at 50% 8%, #8c6ba25e, transparent 42%),
-    radial-gradient(#efca8340 1px, transparent 1px);
-  background-size: auto, 38px 38px;
-}
-
 .panel { width: min(100%, 1120px); margin-inline: auto; }
 .game-topbar, .game-header, .board-topline, .status-row { display: flex; align-items: center; justify-content: space-between; }
 .game-topbar { min-height: 40px; gap: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--shell-line); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
@@ -86,14 +80,6 @@
 #app[data-game="ship"] .controls select { border-color: var(--shell-line); }
 #app[data-game="ship"] .name-entry input { border-color: var(--shell-line); }
 #app[data-game="platform"] .board-topline { background: linear-gradient(90deg, var(--palette-3) 0 13%, transparent 13% 100%); }
-#app[data-game="guardian"] .board-topline { background: linear-gradient(90deg, #cfaa693d, transparent 60%); }
-#app[data-game="guardian"] .board-topline i { color: #1b213d; }
-#app[data-game="guardian"] .hud-stat:last-child strong { color: #ffb9be; }
-#app[data-game="guardian"] .stage {
-  background: radial-gradient(circle at 50% 37%, #6d547e88, transparent 49%),
-    url('/guardian/naomi-key-art.png') center bottom / auto 92% no-repeat, #0c1431;
-}
-
 @media (max-width: 960px) {
   .game-layout { grid-template-columns: 1fr; }
   .game-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
