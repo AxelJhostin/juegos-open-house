@@ -50,6 +50,17 @@ const shell = new AppShell(root, {
     shell.setRestartGesture(false);
     tracker.stop();
   },
+  togglePoseMode: () => {
+    if (shell.isPoseMode) {
+      shell.setPoseMode(false);
+      handDemoVisualizer.setPoseMode(false);
+      shell.exitFullscreen();
+    } else {
+      shell.enterPoseMode();
+      handDemoVisualizer.setPoseMode(true);
+    }
+  },
+  poseModeChanged: (active) => handDemoVisualizer.setPoseMode(active),
 });
 shell.setSoundEnabled(sound.isEnabled);
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
@@ -172,6 +183,9 @@ const handDemoTracker = new HandTracker(shell.handDemoVideo, {
   onState(message, active): void {
     shell.setHandDemoStatus(message);
     if (!active) {
+      handDemoVisualizer.setPoseMode(false);
+      shell.setPoseMode(false);
+      shell.exitFullscreen();
       handDemoVisualizer.stop();
       shell.setHandDemoActive(false);
       shell.setHandDemoLaunching(false);
@@ -213,6 +227,9 @@ async function startHandDemo(): Promise<void> {
 
 function stopHandDemo(): void {
   ++handDemoLaunchId;
+  handDemoVisualizer.setPoseMode(false);
+  shell.setPoseMode(false);
+  shell.exitFullscreen();
   handDemoVisualizer.stop();
   handDemoTracker.stop();
   shell.setHandDemoActive(false);

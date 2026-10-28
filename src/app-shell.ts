@@ -13,6 +13,8 @@ type ShellEvents = {
   saveName(name: string): void;
   toggleSound(): void;
   changeControlMode(mode: ControlMode): void;
+  togglePoseMode(): void;
+  poseModeChanged(active: boolean): void;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -31,6 +33,10 @@ export class AppShell {
   private readonly panel: HTMLElement;
   private readonly handDemo: HTMLElement;
   private readonly handDemoStage: HTMLElement;
+  private readonly handDemoBoard: HTMLElement;
+  private readonly handDemoFullscreenButton: HTMLButtonElement;
+  private readonly handDemoFullscreenExit: HTMLButtonElement;
+  private readonly poseButton: HTMLButtonElement;
   private readonly handDemoPlaceholder: HTMLElement;
   private readonly handDemoStart: HTMLButtonElement;
   private readonly handDemoStop: HTMLButtonElement;
@@ -44,7 +50,11 @@ export class AppShell {
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
+  private readonly stagePlayButton: HTMLButtonElement;
   private readonly fullscreenButton: HTMLButtonElement;
+  private readonly fullscreenExitButton: HTMLButtonElement;
+  private readonly gameBoard: HTMLElement;
+  private readonly boardHud: HTMLElement;
   private readonly stopCameraButton: HTMLButtonElement;
   private readonly overlay: HTMLElement;
   private readonly overlayTitle: HTMLElement;
@@ -111,6 +121,7 @@ export class AppShell {
         <div class="game-topbar">
           <button id="hand-demo-menu" class="menu-button" type="button">← Menú principal</button>
           <span class="game-brand">P / P <span>OPEN HOUSE // IA EN ACCIÓN</span></span>
+          <button id="hand-demo-fullscreen" class="sound-toggle" type="button" aria-pressed="false">⛶ Ampliar cámara</button>
           <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
         </div>
         <header class="hand-demo-header">
@@ -119,11 +130,12 @@ export class AppShell {
           <p>Un modelo estima 21 puntos en cada mano. Mueve los dedos y observa cuáles usa Pulso Pixel para jugar.</p>
         </header>
         <div class="hand-demo-layout">
-          <div class="hand-demo-board">
-            <div class="board-topline"><span><i aria-hidden="true">✦</i> CÁMARA Y PUNTOS DETECTADOS</span><span>PP // EN VIVO</span></div>
+          <div id="hand-demo-board" class="hand-demo-board">
+            <div class="board-topline"><span><i aria-hidden="true">✦</i> CÁMARA Y PUNTOS DETECTADOS</span><span>PP // EN VIVO</span><button id="hand-demo-fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
             <div id="hand-demo-stage" class="hand-demo-stage">
               <video id="hand-demo-video" autoplay playsinline muted aria-label="Vista local de la cámara con puntos de las manos"></video>
               <canvas id="hand-demo-canvas" aria-hidden="true"></canvas>
+              <div class="pose-caption" aria-hidden="true">✦ PULSO PIXEL</div>
               <div id="hand-demo-placeholder" class="hand-demo-placeholder"><span aria-hidden="true">✦</span><strong>Activa la cámara para comenzar</strong><p>Coloca una o dos manos frente a ella y mueve los dedos.</p></div>
             </div>
             <div class="status-row"><p id="hand-demo-status" role="status" aria-live="polite">Cámara apagada</p><p id="hand-demo-stats">Detección: —</p></div>
@@ -133,6 +145,8 @@ export class AppShell {
               <p class="side-kicker">01 / PRUEBA LA IA</p>
               <button id="hand-demo-start" type="button">Activar cámara</button>
               <button id="hand-demo-stop" type="button" hidden>Detener cámara</button>
+              <button id="pose-button" type="button" disabled>Modo pose · activa la cámara</button>
+              <small class="pose-note">La app no toma fotos. Usa tu teléfono para fotografiar la pantalla.</small>
               <p id="hand-demo-count" class="hand-demo-count">0 manos detectadas · 0 puntos</p>
             </div>
             <div class="side-panel hand-demo-explanation">
@@ -165,7 +179,7 @@ export class AppShell {
         <div class="game-topbar">
           <button id="menu-button" class="menu-button" type="button">← Menú principal</button>
           <span class="game-brand">P / P <span>OPEN HOUSE // ARCADE INTERACTIVO</span></span>
-          <span id="game-number" class="game-number"></span><button id="fullscreen-button" class="sound-toggle" type="button" aria-pressed="false">⛶ Pantalla completa</button><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
+          <span id="game-number" class="game-number"></span><button id="fullscreen-button" class="sound-toggle" type="button" aria-pressed="false">⛶ Ampliar juego</button><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
         </div>
         <header class="game-header">
           <div class="game-titleblock"><p id="eyebrow" class="eyebrow"></p><h1 id="title"></h1></div>
@@ -176,8 +190,8 @@ export class AppShell {
           </div>
         </header>
         <div class="game-layout">
-          <div class="game-board">
-            <div class="board-topline"><span><i id="game-symbol" aria-hidden="true"></i> CAMPO DE JUEGO</span><span>PP // EN VIVO</span></div>
+          <div id="game-board" class="game-board">
+            <div class="board-topline"><span><i id="game-symbol" aria-hidden="true"></i> CAMPO DE JUEGO</span><span id="board-hud" class="board-hud"></span><span class="board-live">PP // EN VIVO</span><button id="fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
             <div id="stage" class="stage">
               <video id="camera-video" autoplay playsinline muted aria-label="Vista local de la cámara"></video>
               <div class="play-guides" aria-hidden="true"><span class="guide-top">LÍMITE SUPERIOR</span><span class="guide-bottom">SALIDA DE FRUTAS</span></div>
@@ -193,6 +207,7 @@ export class AppShell {
                     <p id="restart-gesture-text">Abre la mano y luego mantén una pinza para jugar otra vez.</p>
                     <div id="restart-gesture-progress" class="restart-gesture-progress" role="progressbar" aria-label="Pinza para reiniciar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="restart-gesture-fill"></span></div>
                   </div>
+                  <button id="stage-play-button" class="stage-play-button" type="button">Empezar partida</button>
                 </div>
               </div>
             </div>
@@ -222,6 +237,10 @@ export class AppShell {
     this.panel = required(root, '#game-panel');
     this.handDemo = required(root, '#hand-demo');
     this.handDemoStage = required(root, '#hand-demo-stage');
+    this.handDemoBoard = required(root, '#hand-demo-board');
+    this.handDemoFullscreenButton = required(root, '#hand-demo-fullscreen');
+    this.handDemoFullscreenExit = required(root, '#hand-demo-fullscreen-exit');
+    this.poseButton = required(root, '#pose-button');
     this.handDemoPlaceholder = required(root, '#hand-demo-placeholder');
     this.handDemoStart = required(root, '#hand-demo-start');
     this.handDemoStop = required(root, '#hand-demo-stop');
@@ -235,7 +254,11 @@ export class AppShell {
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
+    this.stagePlayButton = required(root, '#stage-play-button');
     this.fullscreenButton = required(root, '#fullscreen-button');
+    this.fullscreenExitButton = required(root, '#fullscreen-exit');
+    this.gameBoard = required(root, '#game-board');
+    this.boardHud = required(root, '#board-hud');
     this.stopCameraButton = required(root, '#stop-camera');
     this.overlay = required(root, '#round-overlay');
     this.overlayTitle = required(root, '#overlay-title');
@@ -272,11 +295,23 @@ export class AppShell {
     required<HTMLButtonElement>(root, '#hand-demo-menu').addEventListener('click', events.returnHome);
     this.handDemoStart.addEventListener('click', events.startHandDemo);
     this.handDemoStop.addEventListener('click', events.stopHandDemo);
+    this.handDemoFullscreenButton.addEventListener('click', () => { void this.toggleFullscreen(this.handDemoBoard); });
+    this.handDemoFullscreenExit.addEventListener('click', () => { void document.exitFullscreen(); });
+    this.poseButton.addEventListener('click', events.togglePoseMode);
     required<HTMLButtonElement>(root, '#menu-button').addEventListener('click', events.returnHome);
     this.playButton.addEventListener('click', events.play);
-    this.fullscreenButton.addEventListener('click', () => { void this.toggleFullscreen(); });
+    this.stagePlayButton.addEventListener('click', events.play);
+    this.fullscreenButton.addEventListener('click', () => { void this.toggleFullscreen(this.gameBoard); });
+    this.fullscreenExitButton.addEventListener('click', () => { void document.exitFullscreen(); });
     this.fullscreenButton.hidden = !document.fullscreenEnabled;
-    document.addEventListener('fullscreenchange', () => this.updateFullscreenButton());
+    this.handDemoFullscreenButton.hidden = !document.fullscreenEnabled;
+    document.addEventListener('fullscreenchange', () => {
+      this.updateFullscreenButton();
+      if (document.fullscreenElement !== this.handDemoBoard && this.isPoseMode) {
+        this.setPoseMode(false);
+        events.poseModeChanged(false);
+      }
+    });
     this.stopCameraButton.addEventListener('click', events.stopCamera);
     this.modeSelect.addEventListener('change', () => {
       this.updateHelp();
@@ -298,24 +333,44 @@ export class AppShell {
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+  get isPoseMode(): boolean { return this.handDemoBoard.classList.contains('pose-mode'); }
 
-  private async toggleFullscreen(): Promise<void> {
+  private async toggleFullscreen(target: HTMLElement): Promise<void> {
     try {
-      if (document.fullscreenElement === this.panel) await document.exitFullscreen();
-      else await this.panel.requestFullscreen();
+      if (document.fullscreenElement === target) await document.exitFullscreen();
+      else await target.requestFullscreen();
     } catch {
-      this.fullscreenButton.textContent = 'Pantalla completa no disponible';
+      const button = target === this.gameBoard ? this.fullscreenButton : this.handDemoFullscreenButton;
+      button.textContent = 'Pantalla completa no disponible';
     }
   }
 
   exitFullscreen(): void {
-    if (document.fullscreenElement === this.panel) void document.exitFullscreen();
+    if (document.fullscreenElement === this.gameBoard || document.fullscreenElement === this.handDemoBoard) {
+      void document.exitFullscreen();
+    }
   }
 
   private updateFullscreenButton(): void {
-    const active = document.fullscreenElement === this.panel;
-    this.fullscreenButton.textContent = active ? '⛶ Salir de pantalla completa' : '⛶ Pantalla completa';
-    this.fullscreenButton.setAttribute('aria-pressed', String(active));
+    const gameActive = document.fullscreenElement === this.gameBoard;
+    const demoActive = document.fullscreenElement === this.handDemoBoard;
+    this.fullscreenButton.textContent = gameActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar juego';
+    this.handDemoFullscreenButton.textContent = demoActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
+    this.fullscreenButton.setAttribute('aria-pressed', String(gameActive));
+    this.handDemoFullscreenButton.setAttribute('aria-pressed', String(demoActive));
+    this.fullscreenExitButton.hidden = !gameActive;
+    this.handDemoFullscreenExit.hidden = !demoActive;
+  }
+
+  enterPoseMode(): void {
+    this.setPoseMode(true);
+    void this.toggleFullscreen(this.handDemoBoard);
+  }
+
+  setPoseMode(active: boolean): void {
+    this.handDemoBoard.classList.toggle('pose-mode', active);
+    this.poseButton.textContent = active ? 'Salir del modo pose' : 'Modo pose · para fotografías';
+    this.poseButton.setAttribute('aria-pressed', String(active));
   }
 
   setRestartGesture(visible: boolean, progress = 0): void {
@@ -363,10 +418,13 @@ export class AppShell {
     this.handDemoPlaceholder.hidden = active;
     this.handDemoStart.hidden = active;
     this.handDemoStop.hidden = !active;
+    this.poseButton.disabled = !active || !document.fullscreenEnabled;
+    this.poseButton.textContent = active ? 'Modo pose · para fotografías' : 'Modo pose · activa la cámara';
   }
 
   setHandDemoVideoSize(width: number, height: number): void {
     this.handDemoStage.style.aspectRatio = `${width} / ${height}`;
+    this.handDemoBoard.style.setProperty('--surface-ratio', String(width / height));
     this.handDemoCanvas.width = width;
     this.handDemoCanvas.height = height;
   }
@@ -458,6 +516,8 @@ export class AppShell {
     this.nameEntry.hidden = true;
     this.playButton.textContent = 'Empezar partida';
     this.playButton.disabled = false;
+    this.stagePlayButton.textContent = 'Empezar partida';
+    this.stagePlayButton.disabled = false;
     this.modeSelect.disabled = false;
     this.renderRecords(records);
     this.home.hidden = true;
@@ -482,6 +542,10 @@ export class AppShell {
     this.scoreText.textContent = this.currentGame.formatScore(value);
     if (countdown !== undefined) this.timeText.textContent = String(countdown);
     if (extra !== undefined) this.extraValue.textContent = String(extra);
+    const parts = [`${this.currentGame.hud.label}: ${this.currentGame.formatScore(value)}${this.currentGame.hud.unit}`];
+    if (countdown !== undefined) parts.push(`Tiempo: ${countdown}s`);
+    if (extra !== undefined) parts.push(`${this.currentGame.hud.extraLabel}: ${extra}`);
+    this.boardHud.textContent = parts.join(' · ');
   }
 
   renderRecords(records: Records): void {
@@ -524,6 +588,8 @@ export class AppShell {
     this.modeSelect.disabled = false;
     this.playButton.disabled = rank !== null;
     this.playButton.textContent = 'Jugar otra vez';
+    this.stagePlayButton.disabled = rank !== null;
+    this.stagePlayButton.textContent = 'Jugar otra vez';
     if (rank !== null) {
       this.playerName.value = '';
       this.playerName.focus();
@@ -534,10 +600,14 @@ export class AppShell {
     this.overlayText.textContent = `${this.currentGame.savedText(value)} ${saved ? '' : 'No se pudo guardar el nombre en este navegador. '}¿Otra ronda?`;
     this.nameEntry.hidden = true;
     this.playButton.disabled = false;
+    this.stagePlayButton.disabled = false;
     this.playButton.focus();
   }
 
-  setLaunching(launching: boolean): void { this.playButton.disabled = launching; }
+  setLaunching(launching: boolean): void {
+    this.playButton.disabled = launching;
+    this.stagePlayButton.disabled = launching;
+  }
 
   showPlaying(): void {
     this.setRestartGesture(false);
@@ -545,6 +615,7 @@ export class AppShell {
     this.overlay.hidden = true;
     this.modeSelect.disabled = true;
     this.playButton.textContent = 'Jugando…';
+    this.stagePlayButton.textContent = 'Jugando…';
   }
 
   setCameraActive(active: boolean): void {
@@ -563,7 +634,7 @@ export class AppShell {
   clearTrackingStats(): void { this.stats.textContent = 'Detección: —'; }
   setStageHeight(width: number, height: number): void {
     this.stage.style.aspectRatio = `${width} / ${height}`;
-    this.panel.style.setProperty('--stage-ratio', String(width / height));
+    this.gameBoard.style.setProperty('--surface-ratio', String(width / height));
   }
 
   switchToKeyboard(): void {

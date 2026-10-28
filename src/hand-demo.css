@@ -37,6 +37,14 @@
 .hand-demo-header > p:last-child { max-width: 65ch; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; }
 .hand-demo-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: start; gap: 16px; }
 .hand-demo-board { min-width: 0; border: 2px solid var(--palette-5); background: var(--palette-1); box-shadow: 6px 6px 0 var(--palette-3); }
+#hand-demo-board:fullscreen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100vw; height: 100vh; height: 100dvh; border: 0; background: #071b32; box-shadow: none; }
+#hand-demo-board:fullscreen .board-topline, #hand-demo-board:fullscreen .status-row { width: 100%; min-height: 32px; padding-inline: 12px; background: #102945; color: var(--palette-1); }
+#hand-demo-board:fullscreen .hand-demo-stage { flex: 0 0 auto; width: min(100vw, calc((100dvh - 70px) * var(--surface-ratio, 1.3333))); }
+.pose-caption { display: none; position: absolute; z-index: 2; left: 4%; bottom: 4%; padding: 7px 11px; background: #071b3299; color: #eaf6ff; font-size: clamp(13px, 2vw, 25px); font-weight: 900; letter-spacing: .15em; pointer-events: none; }
+#hand-demo-board.pose-mode .pose-caption { display: block; }
+#hand-demo-board.pose-mode:fullscreen .board-topline { position: absolute; z-index: 3; top: 12px; right: 12px; width: auto; min-height: 0; padding: 0; background: transparent; }
+#hand-demo-board.pose-mode:fullscreen .board-topline > span, #hand-demo-board.pose-mode:fullscreen .status-row { display: none; }
+#hand-demo-board.pose-mode:fullscreen .hand-demo-stage { width: min(100vw, calc(100dvh * var(--surface-ratio, 1.3333))); }
 .hand-demo-stage { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-block: 2px solid var(--palette-5); background: #102945; }
 .hand-demo-stage video, .hand-demo-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hand-demo-stage video { display: none; object-fit: contain; transform: scaleX(-1); }
@@ -51,6 +59,8 @@
 #hand-demo-start, #hand-demo-stop { min-height: 45px; font-size: 12px; text-transform: uppercase; }
 #hand-demo-start { background: var(--palette-5); color: var(--palette-1); }
 #hand-demo-stop { border-color: var(--palette-5); }
+#pose-button { min-height: 42px; border-color: var(--palette-5); font-size: 11px; text-transform: uppercase; }
+.pose-note { color: var(--palette-5); font-size: 11px; font-weight: 700; line-height: 1.4; }
 .hand-demo-count { margin: 2px 0 0; padding: 8px 9px; background: var(--palette-2); font-size: 12px; font-weight: 800; }
 .hand-demo-explanation p:not(.side-kicker) { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.45; }
 .hand-demo-dot { display: inline-block; width: 13px; height: 13px; margin-right: 5px; border: 2px solid var(--palette-5); border-radius: 50%; background: var(--palette-4); vertical-align: -2px; }

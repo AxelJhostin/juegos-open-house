@@ -32,6 +32,7 @@ function emptyMagicSlot(): MagicSlot {
 export class HandDemoVisualizer {
   private frameId = 0;
   private running = false;
+  private poseMode = false;
   private hands: HandLandmarks = [];
   private lastLandmarksAt = 0;
   private lastPoseAt = 0;
@@ -68,6 +69,8 @@ export class HandDemoVisualizer {
     this.previousFrame = performance.now();
     this.frameId = requestAnimationFrame(this.render);
   }
+
+  setPoseMode(active: boolean): void { this.poseMode = active; }
 
   stop(): void {
     this.running = false;
@@ -224,7 +227,7 @@ export class HandDemoVisualizer {
       drawMagicSeal(context, { x: slot.x, y: slot.y, radius: slot.radius, charge: slot.charge, burst: slot.burst },
         this.reduceMotion ? 0 : now + index * 730);
     }
-    if (visible) drawHandLandmarks(this.canvas, this.hands, false);
+    if (visible && !this.poseMode) drawHandLandmarks(this.canvas, this.hands, false);
 
     const state: EnergyState = active ? 'active' : holding ? 'charging' : 'idle';
     const percent = Math.round(this.charge * 20) * 5;

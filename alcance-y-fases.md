@@ -107,6 +107,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.
 - Probar con varias personas que no conocen el proyecto: observar si entienden cómo empezar y si quieren volver a jugar.
 - Verificar la demo en la laptop, el navegador y la pantalla que se usarán en el evento; verificar modo sin internet.
+- **Ajuste acordado:** ofrecer Modo pose en la pantalla de gestos, con cámara y animaciones a pantalla completa para que estudiantes fotografíen la pantalla con sus propios teléfonos. La aplicación no toma ni guarda fotos.
 
 **Salida:** los tres juegos se entienden sin explicación larga, no hay fallos que impidan jugar y una partida puede repetirse con rapidez.
 
@@ -114,9 +115,6 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 
 Investigar por separado una extensión de navegador que traduzca gestos en teclado para juegos compatibles. Primero probar con un juego concreto y sus permisos; no asumir compatibilidad universal.
 
-### Idea pendiente de conversar — fotos con efectos de gestos
-
-Una zona para posar en el Open House podría reutilizar la cámara y los efectos originales de la pantalla explicativa. Los estudiantes fotografiarían la pantalla con sus propios teléfonos mientras la animación aparece en vivo. La aplicación no tomaría, guardaría ni enviaría fotos o video. Es una propuesta pendiente de acordar dentro del alcance del evento; no se implementa por iniciativa propia.
 
 ## Orden de prioridades si el tiempo se reduce
 

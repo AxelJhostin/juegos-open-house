@@ -27,7 +27,9 @@ La tecnología acordada es TypeScript, Phaser y MediaPipe Tasks Vision. Las **fa
 
 La página abre en el menú principal. Elige **Rebanar fruta**, **Nave espacial** o **Plataformas**; en la pantalla de cada juego selecciona el control y pulsa **Empezar partida**. El botón **Menú principal** permite salir de una ronda sin guardarla. Cada juego conserva sus resultados por separado en el navegador.
 
-En cualquier juego, **Pantalla completa** amplía la vista de partida; el mismo botón o Esc permite salir. Al terminar una partida en modo cámara, el detector sigue activo para poder repetir con una mano: primero separa pulgar e índice y después mantenlos juntos unos 0,9 segundos. Si la marca entra en los récords, guarda el nombre antes de usar el gesto. **Jugar otra vez** sigue disponible con mouse o teclado. La cámara se apaga al volver al menú, detenerla o cambiar de pestaña.
+En cualquier juego, **Ampliar juego** pone solo el tablero en pantalla completa, con marcador y controles esenciales; el botón de salir o Esc permiten regresar. Al terminar una partida en modo cámara, el detector sigue activo para poder repetir con una mano: primero separa pulgar e índice y después mantenlos juntos unos 0,9 segundos. Si la marca entra en los récords, guarda el nombre antes de usar el gesto. **Jugar otra vez** sigue disponible con mouse o teclado. La cámara se apaga al volver al menú, detenerla o cambiar de pestaña.
+
+En la pantalla de gestos, **Ampliar cámara** muestra solo la superficie del video y las animaciones. Después de activar la cámara, **Modo pose** amplía esa superficie y oculta los puntos de seguimiento; Vórtice Pixel y Sello Arcano siguen reaccionando a las manos. Los asistentes pueden fotografiar la pantalla con sus teléfonos. La aplicación no captura, guarda ni envía fotos.
 
 ## Prototipo de rebanar fruta
 
