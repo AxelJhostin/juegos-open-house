@@ -30,6 +30,7 @@
 }
 
 .home-topbar {
+  flex-wrap: wrap;
   gap: 24px;
   padding: 0 0 12px;
   border-bottom: 2px solid var(--palette-5);

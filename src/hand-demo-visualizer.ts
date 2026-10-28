@@ -5,6 +5,7 @@ import { drawEnergyOrb } from './hand-energy-art';
 import { drawMagicSeal } from './magic-art';
 import { drawHandLandmarks } from './hand-landmark-art';
 import { assignHandSlots, type HandSlots } from './hand-slots';
+import type { SoundCue } from './sound';
 
 type EnergyState = 'idle' | 'charging' | 'active';
 const CHARGE_MS = 850;
@@ -40,6 +41,9 @@ export class HandDemoVisualizer {
   private y = 0;
   private radius = 50;
   private charge = 0;
+  private visualCharge = 0;
+  private closing = 1;
+  private closingFrom = 0;
   private burst = 0;
   private wasActive = false;
   private previousFrame = 0;
@@ -55,6 +59,7 @@ export class HandDemoVisualizer {
     private readonly canvas: HTMLCanvasElement,
     private readonly onEnergy: (state: EnergyState, percent: number) => void,
     private readonly onMagic: (active: number, charging: number) => void,
+    private readonly onSound: (cue: SoundCue) => void,
   ) {}
 
   start(): void {
@@ -72,6 +77,9 @@ export class HandDemoVisualizer {
     this.lastPoseAt = 0;
     this.poseSince = 0;
     this.charge = 0;
+    this.visualCharge = 0;
+    this.closing = 1;
+    this.closingFrom = 0;
     this.burst = 0;
     this.wasActive = false;
     this.lastState = 'idle';
@@ -136,7 +144,21 @@ export class HandDemoVisualizer {
     this.previousFrame = now;
     const visible = now - this.lastLandmarksAt < 250;
     const holding = visible && this.pose !== null && now - this.lastPoseAt < LOST_GRACE_MS;
+    const previousCharge = this.visualCharge;
     this.charge = holding ? Math.min(1, (now - this.poseSince) / CHARGE_MS) : 0;
+    if (holding) {
+      this.closing = 1;
+      this.visualCharge = this.charge;
+    } else if (previousCharge > 0 && this.closing === 1) {
+      // Al soltar el gesto, conservamos la última posición y animamos el apagado.
+      this.closingFrom = previousCharge;
+      this.closing = 0;
+    }
+    if (!holding && this.closing < 1) {
+      this.closing = Math.min(1, this.closing + dt / (this.reduceMotion ? 150 : 420));
+      const fade = 1 - this.closing * this.closing * (3 - 2 * this.closing);
+      this.visualCharge = this.closingFrom * fade;
+    }
 
     if (holding && this.pose) {
       const targetX = (1 - this.pose.x) * this.canvas.width;
@@ -154,13 +176,18 @@ export class HandDemoVisualizer {
       }
     }
     const active = holding && this.charge >= 1;
-    if (active && !this.wasActive) this.burst = this.reduceMotion ? 0 : 1;
+    if (active && !this.wasActive) {
+      this.burst = this.reduceMotion ? 0 : 1;
+      this.onSound('energy');
+    }
+    if (!holding && this.wasActive) this.onSound('energyClose');
     this.wasActive = active;
     this.burst = holding ? Math.max(0, this.burst - dt / 550) : 0;
     if (!holding) this.pose = null;
 
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    drawEnergyOrb(context, { x: this.x, y: this.y, radius: this.radius, charge: this.charge, burst: this.burst },
+    drawEnergyOrb(context, { x: this.x, y: this.y, radius: this.radius, charge: this.visualCharge,
+      burst: this.burst, closing: holding ? 0 : this.closing },
       this.reduceMotion ? 0 : now);
 
     let magicActive = 0;
@@ -185,7 +212,10 @@ export class HandDemoVisualizer {
         }
       }
       const magicReady = magicHolding && slot.charge >= 1;
-      if (magicReady && !slot.wasActive) slot.burst = this.reduceMotion ? 0 : 1;
+      if (magicReady && !slot.wasActive) {
+        slot.burst = this.reduceMotion ? 0 : 1;
+        this.onSound('magic');
+      }
       slot.wasActive = magicReady;
       slot.burst = magicHolding ? Math.max(0, slot.burst - dt / 500) : 0;
       if (!magicHolding) slot.pose = null;

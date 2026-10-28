@@ -21,6 +21,9 @@
 .game-brand { display: inline-flex; gap: 12px; align-items: center; white-space: nowrap; }
 .game-brand > span { padding-left: 12px; border-left: 1px solid var(--shell-line); }
 .game-number { white-space: nowrap; }
+.sound-toggle { flex: 0 0 auto; padding: 7px 10px; border: 1px solid var(--palette-5); background: var(--palette-1); color: var(--palette-5); font-size: 11px; font-weight: 900; letter-spacing: .03em; white-space: nowrap; }
+.sound-toggle:hover, .sound-toggle:focus-visible { background: var(--palette-3); }
+.sound-toggle:focus-visible { outline: 2px solid var(--palette-5); outline-offset: 2px; }
 
 .game-header { min-height: 92px; gap: 20px; padding: 15px 0 16px; }
 .game-titleblock { min-width: 0; }
@@ -88,6 +91,8 @@
 
 @media (max-width: 700px) {
   #app[data-game] { padding: 14px; }
+  .game-topbar { flex-wrap: wrap; }
+  .game-topbar .sound-toggle { margin-left: auto; }
   .game-brand > span { display: none; }
   .game-header { align-items: flex-start; flex-direction: column; }
   .hud { flex-wrap: wrap; }

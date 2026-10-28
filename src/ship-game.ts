@@ -2,10 +2,11 @@ import Phaser from 'phaser';
 import type { Point } from './geometry';
 import type { ControlMode } from './game-types';
 import { drawMeteor, drawShip, type MeteorVisual } from './ship-art';
+import type { SoundCue } from './sound';
 
 const WIDTH = 960;
-type Meteor = MeteorVisual & { vy: number; spin: number };
-type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): void };
+type Meteor = MeteorVisual & { vy: number; spin: number; warned: boolean };
+type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): void; onSound(cue: SoundCue): void };
 
 export class ShipGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -106,9 +107,14 @@ export class ShipGame extends Phaser.Scene {
       if (Math.hypot(meteor.x - this.shipX, meteor.y - shipY) < meteor.radius + 27) {
         this.playing = false;
         this.meteors = [];
+        this.callbacks.onSound('crash');
         this.callbacks.onHud(this.elapsedMs);
         this.callbacks.onEnd(Math.floor(this.elapsedMs));
         return;
+      }
+      if (!meteor.warned && meteor.y > shipY - 155 && Math.abs(meteor.x - this.shipX) < 100) {
+        meteor.warned = true;
+        this.callbacks.onSound('warning');
       }
       if (meteor.y < this.fieldHeight + meteor.radius) survivors.push(meteor);
     }
@@ -127,6 +133,7 @@ export class ShipGame extends Phaser.Scene {
         variant: Phaser.Math.Between(0, 2),
         angle: Phaser.Math.FloatBetween(-Math.PI, Math.PI),
         spin: Phaser.Math.FloatBetween(0.6, 1.1) * (Math.random() < 0.5 ? -1 : 1),
+        warned: false,
       });
     }
     this.draw(graphics, shipY);

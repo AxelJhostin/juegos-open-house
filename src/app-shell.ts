@@ -11,6 +11,7 @@ type ShellEvents = {
   startHandDemo(): void;
   stopHandDemo(): void;
   saveName(name: string): void;
+  toggleSound(): void;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -64,6 +65,7 @@ export class AppShell {
   private readonly gameNumber: HTMLElement;
   private readonly gameSymbol: HTMLElement;
   private readonly recordsText: HTMLElement;
+  private readonly soundButtons: HTMLButtonElement[];
   private currentGame: GameDefinition = GAMES.fruit;
 
   constructor(root: HTMLElement, events: ShellEvents) {
@@ -80,7 +82,7 @@ export class AppShell {
     }).join('');
     root.innerHTML = `
       <section id="home" class="home" aria-labelledby="home-title">
-        <div class="home-topbar"><span class="home-university"><img src="/puce-manabi.png" alt="PUCE Manabí"></span><span class="home-topline">OPEN HOUSE // ARCADE INTERACTIVO</span><span class="home-ready"><span aria-hidden="true"></span> LISTO PARA JUGAR</span></div>
+        <div class="home-topbar"><span class="home-university"><img src="/puce-manabi.png" alt="PUCE Manabí"></span><span class="home-topline">OPEN HOUSE // ARCADE INTERACTIVO</span><span class="home-ready"><span aria-hidden="true"></span> LISTO PARA JUGAR</span><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button></div>
         <div class="home-hero">
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
@@ -103,7 +105,7 @@ export class AppShell {
         <div class="game-topbar">
           <button id="hand-demo-menu" class="menu-button" type="button">← Menú principal</button>
           <span class="game-brand">P / P <span>OPEN HOUSE // IA EN ACCIÓN</span></span>
-          <span>EXPLORADOR DE MANOS</span>
+          <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
         </div>
         <header class="hand-demo-header">
           <p class="eyebrow">PULSO PIXEL // DETECCIÓN EN VIVO</p>
@@ -157,7 +159,7 @@ export class AppShell {
         <div class="game-topbar">
           <button id="menu-button" class="menu-button" type="button">← Menú principal</button>
           <span class="game-brand">P / P <span>OPEN HOUSE // ARCADE INTERACTIVO</span></span>
-          <span id="game-number" class="game-number"></span>
+          <span id="game-number" class="game-number"></span><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button>
         </div>
         <header class="game-header">
           <div class="game-titleblock"><p id="eyebrow" class="eyebrow"></p><h1 id="title"></h1></div>
@@ -245,6 +247,8 @@ export class AppShell {
     this.gameNumber = required(root, '#game-number');
     this.gameSymbol = required(root, '#game-symbol');
     this.recordsText = required(root, '#records');
+    this.soundButtons = [...root.querySelectorAll<HTMLButtonElement>('[data-sound-toggle]')];
+    for (const button of this.soundButtons) button.addEventListener('click', events.toggleSound);
 
     for (const card of root.querySelectorAll<HTMLButtonElement>('.game-card')) {
       card.addEventListener('click', () => events.chooseGame(card.dataset.game as GameId));
@@ -273,6 +277,14 @@ export class AppShell {
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+
+  setSoundEnabled(enabled: boolean): void {
+    for (const button of this.soundButtons) {
+      button.textContent = enabled ? '♪ Sonido: sí' : '♪ Sonido: no';
+      button.setAttribute('aria-pressed', String(enabled));
+      button.setAttribute('aria-label', enabled ? 'Silenciar sonidos' : 'Activar sonidos');
+    }
+  }
 
   showHandDemo(): void {
     delete this.root.dataset.game;

@@ -3,6 +3,7 @@ import { segmentHitsCircle, type Point } from './geometry';
 import { assignHandSlots, type HandSlots } from './hand-slots';
 import type { ControlMode } from './game-types';
 import { drawFruit, FRUIT_KINDS, type FruitKind } from './fruit-art';
+import type { SoundCue } from './sound';
 
 const WIDTH = 960;
 const DEFAULT_HEIGHT = 540;
@@ -15,7 +16,7 @@ export const PLAY_BOTTOM = 0.86;
 
 type Fruit = Point & { vx: number; vy: number; gravity: number; radius: number; kind: FruitKind };
 type CutMark = { from: Point; to: Point; until: number };
-type GameCallbacks = { onHud(score: number, seconds: number, level: number): void; onEnd(score: number): void };
+type GameCallbacks = { onHud(score: number, seconds: number, level: number): void; onEnd(score: number): void; onSound(cue: SoundCue): void };
 
 export class FruitGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -136,6 +137,7 @@ export class FruitGame extends Phaser.Scene {
       const seconds = Math.ceil(this.secondsLeft);
       const nextLevel = ROUND_SECONDS - this.secondsLeft >= LEVEL_TWO_AT ? 2 : 1;
       if (seconds !== this.shownSeconds || nextLevel !== this.level) {
+        if (nextLevel !== this.level) this.callbacks.onSound('level');
         this.level = nextLevel;
         this.shownSeconds = seconds;
         this.callbacks.onHud(this.score, seconds, this.level);
@@ -196,7 +198,10 @@ export class FruitGame extends Phaser.Scene {
       if (segmentHitsCircle(from, to, fruit, fruit.radius + 5)) this.score += 10;
       else remaining.push(fruit);
     }
-    if (remaining.length !== this.fruits.length) this.callbacks.onHud(this.score, this.shownSeconds, this.level);
+    if (remaining.length !== this.fruits.length) {
+      this.callbacks.onSound('slice');
+      this.callbacks.onHud(this.score, this.shownSeconds, this.level);
+    }
     this.fruits = remaining;
   }
 
@@ -208,6 +213,7 @@ export class FruitGame extends Phaser.Scene {
     this.cameraPointers = [null, null];
     this.fruits = [];
     this.cutMarks = [];
+    this.callbacks.onSound('roundEnd');
     this.callbacks.onEnd(this.score);
   }
 

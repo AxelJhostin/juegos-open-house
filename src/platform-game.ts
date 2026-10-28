@@ -4,6 +4,7 @@ import type { ControlMode } from './game-types';
 import { PinchJumpControl } from './pinch-jump';
 import { drawBackdrop, drawCube, drawHazard, drawPlatform } from './platform-art';
 import { PLATFORM_LEVEL } from './platform-level';
+import type { SoundCue } from './sound';
 
 const WIDTH = 960;
 const WORLD_WIDTH = PLATFORM_LEVEL.worldWidth;
@@ -11,7 +12,7 @@ const SPEED = 240;
 const JUMP_SPEED = -680;
 const GRAVITY = 1800;
 const PLAYER_HALF_WIDTH = 18;
-type Callbacks = { onHud(progress: number): void; onEnd(progress: number, won: boolean): void };
+type Callbacks = { onHud(progress: number): void; onEnd(progress: number, won: boolean): void; onSound(cue: SoundCue): void };
 
 export class PlatformGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -114,6 +115,7 @@ export class PlatformGame extends Phaser.Scene {
       this.grounded = false;
       this.coyote = 0;
       this.jumpBuffer = 0;
+      this.callbacks.onSound('jump');
     }
 
     const previousY = this.y;
@@ -125,6 +127,7 @@ export class PlatformGame extends Phaser.Scene {
     const onPlatform = PLATFORM_LEVEL.platforms.some(([from, to]) =>
       this.x + PLAYER_HALF_WIDTH > from && this.x - PLAYER_HALF_WIDTH < to);
     if (this.vy >= 0 && onPlatform && previousY <= ground && this.y >= ground) {
+      if (!this.grounded) this.callbacks.onSound('land');
       this.y = ground;
       this.vy = 0;
       this.grounded = true;
@@ -164,6 +167,7 @@ export class PlatformGame extends Phaser.Scene {
 
   private finish(won: boolean): void {
     this.playing = false;
+    this.callbacks.onSound(won ? 'goal' : 'crash');
     this.callbacks.onEnd(this.progress, won);
   }
 

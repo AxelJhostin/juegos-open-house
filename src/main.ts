@@ -9,6 +9,7 @@ import { HandTracker, type HandSample } from './tracking';
 import { HandDemoVisualizer } from './hand-demo-visualizer';
 import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, saveRecords, type Records } from './records';
+import { SoundEffects } from './sound';
 import './style.css';
 import './game-themes.css';
 import './home.css';
@@ -26,6 +27,7 @@ type GameSession = {
 
 const root = document.querySelector<HTMLElement>('#app');
 if (!root) throw new Error('Falta el contenedor de la aplicación.');
+const sound = new SoundEffects();
 const shell = new AppShell(root, {
   chooseGame: selectGame,
   openHandDemo,
@@ -35,7 +37,13 @@ const shell = new AppShell(root, {
   startHandDemo: () => { void startHandDemo(); },
   stopHandDemo,
   saveName,
+  toggleSound: () => {
+    sound.setEnabled(!sound.isEnabled);
+    shell.setSoundEnabled(sound.isEnabled);
+    if (sound.isEnabled) void sound.unlock();
+  },
 });
+shell.setSoundEnabled(sound.isEnabled);
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
 if (guides) {
   guides.style.top = `${PLAY_TOP * 100}%`;
@@ -48,6 +56,7 @@ const sessions: Record<GameId, GameSession> = {
     scene: new FruitGame({
       onHud: (value, seconds, level) => shell.updateHud(value, seconds, level),
       onEnd: (value) => finishRound(value),
+      onSound: (cue) => sound.play(cue),
     }),
   },
   ship: {
@@ -55,6 +64,7 @@ const sessions: Record<GameId, GameSession> = {
     scene: new ShipGame({
       onHud: (value) => shell.updateHud(value),
       onEnd: (value) => finishRound(value),
+      onSound: (cue) => sound.play(cue),
     }),
   },
   platform: {
@@ -62,6 +72,7 @@ const sessions: Record<GameId, GameSession> = {
     scene: new PlatformGame({
       onHud: (value) => shell.updateHud(value),
       onEnd: (value, won) => finishRound(value, won),
+      onSound: (cue) => sound.play(cue),
     }),
     cameraHint: () => (sessions.platform.scene as PlatformGame).gestureReady ? ' · pinza lista' : ' · separa los dedos',
   },
@@ -131,7 +142,8 @@ const tracker = new HandTracker(shell.video, {
 
 const handDemoVisualizer = new HandDemoVisualizer(shell.handDemoCanvas,
   (state, percent) => shell.setHandDemoEnergy(state, percent),
-  (active, charging) => shell.setHandDemoMagic(active, charging));
+  (active, charging) => shell.setHandDemoMagic(active, charging),
+  (cue) => sound.play(cue));
 
 const handDemoTracker = new HandTracker(shell.handDemoVideo, {
   onState(message, active): void {
@@ -161,6 +173,7 @@ async function startHandDemo(): Promise<void> {
   if (handDemoTracker.isActive) return;
   const thisLaunch = ++handDemoLaunchId;
   shell.setHandDemoLaunching(true);
+  void sound.unlock();
   await handDemoTracker.start();
   if (thisLaunch !== handDemoLaunchId || !shell.isHandDemoVisible) {
     handDemoTracker.stop();
@@ -229,6 +242,7 @@ async function play(): Promise<void> {
   if (active.scene.isPlaying) return;
   const thisLaunch = ++launchId;
   shell.setLaunching(true);
+  const audioReady = sound.unlock();
   const mode = shell.controlMode;
   if (mode === 'camera') {
     await tracker.start();
@@ -245,6 +259,7 @@ async function play(): Promise<void> {
   } else tracker.stop();
 
   active.scene.startRound(mode);
+  void audioReady.then(() => { if (thisLaunch === launchId && active.scene.isPlaying) sound.play('start'); });
   setGameplayKeyboardEnabled(true);
   shell.showPlaying();
 }
