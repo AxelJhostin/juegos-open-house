@@ -74,13 +74,13 @@ export const GAMES = {
   platform: {
     title: 'Plataformas', symbol: '▣',
     menuTag: 'RITMO',
-    summary: 'Avanza automáticamente. Salta huecos y obstáculos sin chocar.',
+    summary: 'Salta al pulso entre columnas, picos y huecos de un recorrido techno rock.',
     callToAction: 'Jugar plataformas →',
     controls: {
-      keyboard: 'El bloque avanza solo. Pulsa Espacio, W o flecha arriba para saltar.',
-      camera: 'El bloque avanza solo. Separa pulgar e índice; júntalos para saltar. Ábrelos antes del siguiente salto. Espacio también funciona.',
+      keyboard: 'El bloque avanza solo. Salta con Espacio, W o ↑ cuando la marca luminosa pasa bajo él. La música también marca el pulso.',
+      camera: 'Junta pulgar e índice cuando la marca luminosa pasa bajo el bloque; sepáralos antes del siguiente salto. Espacio también funciona.',
     },
-    intro: { title: 'Salta a tiempo', text: 'El bloque avanza solo. Salta picos y huecos; el primer choque termina el intento. La puntuación es el porcentaje recorrido.' },
+    intro: { title: 'Salta al pulso', text: 'Sigue Pulso de Acero: cada marca y acento musical anuncian un salto. Sube columnas, cruza huecos y esquiva picos; el final acelera.' },
     hud: { label: 'Progreso', unit: '%', initial: 0 },
     records: { key: 'pulso-pixel-plataformas-records-v2', field: 'score', includeZero: false },
     recordsTitle: 'Mejores recorridos',

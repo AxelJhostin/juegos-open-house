@@ -108,6 +108,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Probar con varias personas que no conocen el proyecto: observar si entienden cómo empezar y si quieren volver a jugar.
 - Verificar la demo en la laptop, el navegador y la pantalla que se usarán en el evento; verificar modo sin internet.
 - **Ajuste acordado:** ofrecer Modo pose en la pantalla de gestos, con cámara y animaciones a pantalla completa para que estudiantes fotografíen la pantalla con sus propios teléfonos. La aplicación no toma ni guarda fotos.
+- **Ajuste acordado:** dar a Plataformas un recorrido más variado y una pieza instrumental original de techno rock. Los acentos musicales y las marcas visibles guían los saltos; se conserva la alternativa sin sonido.
 
 **Salida:** los tres juegos se entienden sin explicación larga, no hay fallos que impidan jugar y una partida puede repetirse con rapidez.
 

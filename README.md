@@ -62,7 +62,9 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - El primer choque o caída termina el intento. La puntuación es el porcentaje recorrido; llegar a la meta da 100 %. Se guardan las tres mejores marcas con nombre o apodo.
 - Los puntajes del prototipo anterior permanecen en el navegador bajo otra clave. La tabla de porcentaje empieza desde cero porque ambas puntuaciones no son comparables.
 
-**Comprobado en el navegador local:** el personaje avanza solo, un choque termina el intento y el recorrido completo puede superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. El usuario probó la pinza con la cámara real y confirmó que el salto se siente cómodo; alguna pinza puede perderse ocasionalmente, por lo que se mantiene el ajuste actual.
+**Comprobado durante la fase 3:** el personaje avanza solo, un choque termina el intento y el recorrido inicial podía superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. El usuario probó la pinza con la cámara real y confirmó que el salto se siente cómodo; alguna pinza puede perderse ocasionalmente, por lo que se mantiene el ajuste actual.
+
+**Pulido de fase 4:** el recorrido dura unos 30 segundos y tiene 20 marcas de salto. Alterna picos, columnas elevadas, descensos y huecos con peligro visible; el tramo final exige saltar cada dos pulsos. La pieza instrumental original **Pulso de Acero** usa batería electrónica, bajo y sintetizadores con carácter rock a 128 BPM. Cada marca coincide con un acento musical y tiene una señal visible para jugar sin sonido. La música se genera localmente con Web Audio y se detiene al terminar o salir.
 
 ## Organización del código
 
@@ -76,7 +78,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - `src/fruit-art.ts` dibuja manzana, pera, cítrico y fresa en bloques, cada una con una paleta propia. Estos colores pertenecen solo a Fruta; el arte está separado del radio de colisión y de las reglas del corte.
 - `src/ship-art.ts` dibuja la nave y tres variantes de meteorito en bloques. La llama pulsa, la nave se inclina al moverse y los meteoritos giran; son animaciones visuales sobre las posiciones y colisiones de `src/ship-game.ts`.
 - `src/platform-art.ts` dibuja el bloque, los picos y el suelo geométrico de Plataformas. El bloque gira durante el salto; la física y las colisiones permanecen en `src/platform-game.ts`.
-- `src/platform-level.ts` define el recorrido de Plataformas: seis tramos de suelo, cinco huecos y doce picos, incluidos dos pares cercanos. La disposición empieza sencilla y pide más precisión hacia el final; no cambia el control de salto.
+- `src/platform-level.ts` define el recorrido y los pulsos de Plataformas; `src/sound.ts` usa esos mismos pulsos para la música original.
 - `src/tracking.ts` se ocupa de la cámara; `src/records.ts` guarda y lee los tres mejores resultados de cada juego sin alterar las claves locales existentes.
 - `src/main.ts` conecta esas piezas y administra la partida activa. No construye el HTML ni define los textos de presentación.
 

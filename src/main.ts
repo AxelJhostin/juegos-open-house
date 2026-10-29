@@ -93,6 +93,7 @@ const sessions: Record<GameId, GameSession> = {
       onHud: (value) => shell.updateHud(value),
       onEnd: (value, won) => finishRound(value, won),
       onSound: (cue) => sound.play(cue),
+      onMusic: (elapsed) => elapsed === null ? sound.stopPlatformMusic() : sound.updatePlatformMusic(elapsed),
     }),
     cameraHint: () => (sessions.platform.scene as PlatformGame).gestureReady ? ' · pinza lista' : ' · separa los dedos',
   },
@@ -315,7 +316,9 @@ async function play(): Promise<void> {
   } else tracker.stop();
 
   active.scene.startRound(mode);
-  void audioReady.then(() => { if (thisLaunch === launchId && active.scene.isPlaying) sound.play('start'); });
+  void audioReady.then(() => {
+    if (thisLaunch === launchId && active.scene.isPlaying && active !== sessions.platform) sound.play('start');
+  });
   setGameplayKeyboardEnabled(true);
   shell.showPlaying();
 }
@@ -323,12 +326,14 @@ async function play(): Promise<void> {
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     sound.stopShipEngine();
+    sound.stopPlatformMusic();
     tracker.stop();
     stopHandDemo();
   }
 });
 window.addEventListener('pagehide', () => {
   sound.stopShipEngine();
+  sound.stopPlatformMusic();
   tracker.stop();
   stopHandDemo();
 });

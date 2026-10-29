@@ -2,17 +2,16 @@ import Phaser from 'phaser';
 import type { HandSample } from './tracking';
 import type { ControlMode } from './game-types';
 import { PinchJumpControl } from './pinch-jump';
-import { drawBackdrop, drawCube, drawHazard, drawPlatform } from './platform-art';
-import { PLATFORM_LEVEL } from './platform-level';
+import { drawBackdrop, drawCube, drawHazard, drawJumpCue, drawPit, drawPlatform } from './platform-art';
+import { PLATFORM_LEVEL, PLATFORM_SPEED, platformHeightAt } from './platform-level';
 import type { SoundCue } from './sound';
 
 const WIDTH = 960;
 const WORLD_WIDTH = PLATFORM_LEVEL.worldWidth;
-const SPEED = 240;
 const JUMP_SPEED = -680;
 const GRAVITY = 1800;
 const PLAYER_HALF_WIDTH = 18;
-type Callbacks = { onHud(progress: number): void; onEnd(progress: number, won: boolean): void; onSound(cue: SoundCue): void };
+type Callbacks = { onHud(progress: number): void; onEnd(progress: number, won: boolean): void; onSound(cue: SoundCue): void; onMusic(elapsedSeconds: number | null): void };
 
 export class PlatformGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -81,6 +80,7 @@ export class PlatformGame extends Phaser.Scene {
 
   abortRound(): void {
     this.playing = false;
+    this.callbacks.onMusic(null);
     this.pinch.reset();
     this.graphics?.clear();
   }
@@ -101,7 +101,9 @@ export class PlatformGame extends Phaser.Scene {
     if (!this.playing) return;
 
     const dt = Math.min(delta, 50) / 1000;
-    this.x = Math.min(WORLD_WIDTH - 70, this.x + SPEED * dt);
+    const previousX = this.x;
+    this.x = Math.min(WORLD_WIDTH - 70, this.x + PLATFORM_SPEED * dt);
+    this.callbacks.onMusic((this.x - 70) / PLATFORM_SPEED);
 
     const keys = this.keys;
     const keyJump = keys ? Phaser.Input.Keyboard.JustDown(keys.space) ||
@@ -124,14 +126,23 @@ export class PlatformGame extends Phaser.Scene {
       this.y += this.vy * dt;
     }
     const ground = this.groundY();
-    const onPlatform = PLATFORM_LEVEL.platforms.some(([from, to]) =>
-      this.x + PLAYER_HALF_WIDTH > from && this.x - PLAYER_HALF_WIDTH < to);
-    if (this.vy >= 0 && onPlatform && previousY <= ground && this.y >= ground) {
+    const touching = PLATFORM_LEVEL.platforms.filter((platform) =>
+      this.x + PLAYER_HALF_WIDTH > platform.from && this.x - PLAYER_HALF_WIDTH < platform.to);
+    // Una columna elevada exige despegar antes de tocar su pared lateral.
+    if (touching.some((platform) => platform.from > 0 && previousX + PLAYER_HALF_WIDTH <= platform.from &&
+      this.y > ground - platform.height + 2)) {
+      this.finish(false);
+      return;
+    }
+    const landing = this.vy >= 0 ? touching
+      .filter((platform) => previousY <= ground - platform.height && this.y >= ground - platform.height)
+      .sort((a, b) => b.height - a.height)[0] : undefined;
+    if (landing) {
       if (!this.grounded) this.callbacks.onSound('land');
-      this.y = ground;
+      this.y = ground - landing.height;
       this.vy = 0;
       this.grounded = true;
-    } else if (this.grounded && !onPlatform) {
+    } else if (this.grounded && !touching.some((platform) => Math.abs(this.y - (ground - platform.height)) < 2)) {
       this.grounded = false;
     }
     if (this.grounded) this.coyote = 0.1;
@@ -149,7 +160,8 @@ export class PlatformGame extends Phaser.Scene {
       this.callbacks.onHud(progress);
     }
     if (this.y > this.fieldHeight + 50 ||
-      (this.y > ground - 32 && PLATFORM_LEVEL.spikes.some((hazard) => Math.abs(this.x - hazard) < 32))) {
+      PLATFORM_LEVEL.gaps.some((gap) => this.x > gap.from && this.x < gap.to && this.y > ground + 48) ||
+      PLATFORM_LEVEL.spikes.some((hazard) => this.y > ground - hazard.height - 32 && Math.abs(this.x - hazard.x) < 32)) {
       this.finish(false);
       return;
     }
@@ -167,6 +179,7 @@ export class PlatformGame extends Phaser.Scene {
 
   private finish(won: boolean): void {
     this.playing = false;
+    this.callbacks.onMusic(null);
     this.callbacks.onSound(won ? 'goal' : 'crash');
     this.callbacks.onEnd(this.progress, won);
   }
@@ -176,20 +189,29 @@ export class PlatformGame extends Phaser.Scene {
   private draw(graphics: Phaser.GameObjects.Graphics): void {
     const ground = this.groundY();
     drawBackdrop(graphics, ground, this.cameraOffset, WIDTH);
-    for (const [from, to] of PLATFORM_LEVEL.platforms) {
-      drawPlatform(graphics, from, to, ground, this.fieldHeight, this.cameraOffset, WIDTH);
+    for (const gap of PLATFORM_LEVEL.gaps) {
+      drawPit(graphics, gap.from, gap.to, ground, this.fieldHeight, this.cameraOffset, WIDTH);
+    }
+    for (const platform of PLATFORM_LEVEL.platforms) {
+      drawPlatform(graphics, platform.from, platform.to, ground - platform.height, this.fieldHeight, this.cameraOffset, WIDTH);
+    }
+    for (const cue of PLATFORM_LEVEL.cues) {
+      const markerX = cue.x - this.cameraOffset;
+      if (markerX < -30 || markerX > WIDTH + 30) continue;
+      drawJumpCue(graphics, markerX, ground - (platformHeightAt(cue.x) ?? 0), Math.abs(this.x - cue.x) < 16);
     }
     for (const hazard of PLATFORM_LEVEL.spikes) {
-      const left = hazard - this.cameraOffset;
+      const left = hazard.x - this.cameraOffset;
       if (left < -30 || left > WIDTH + 30) continue;
-      drawHazard(graphics, left, ground);
+      drawHazard(graphics, left, ground - hazard.height);
     }
     const goalX = WORLD_WIDTH - 50 - this.cameraOffset;
     if (goalX < WIDTH) {
+      const goalY = ground - (platformHeightAt(WORLD_WIDTH - 50) ?? 0);
       graphics.fillStyle(0x1e5a9c);
-      graphics.fillRect(goalX, ground - 100, 5, 100);
+      graphics.fillRect(goalX, goalY - 100, 5, 100);
       graphics.fillStyle(0x7fc4f2);
-      graphics.fillTriangle(goalX + 5, ground - 98, goalX + 58, ground - 77, goalX + 5, ground - 60);
+      graphics.fillTriangle(goalX + 5, goalY - 98, goalX + 58, goalY - 77, goalX + 5, goalY - 60);
     }
     const playerX = this.x - this.cameraOffset;
     drawCube(graphics, playerX, this.y, this.cubeAngle);

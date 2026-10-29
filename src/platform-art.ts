@@ -1,15 +1,15 @@
 import type Phaser from 'phaser';
 
-const SKYLINE = 0x72a8df;
-const GROUND = 0x27366d;
-const GROUND_TILE = 0x344b88;
-const EDGE = 0x66dce5;
+const SKYLINE = 0xa66bf0;
+const GROUND = 0x29164f;
+const GROUND_TILE = 0x482077;
+const EDGE = 0xd977ff;
 const CUBE_OUTLINE = 0x422b78;
 const CUBE_BODY = 0xa986f2;
 const CUBE_LIGHT = 0xdec5ff;
 const CUBE_CORE = 0x5de1e6;
 const SPIKE_OUTLINE = 0x573363;
-const SPIKE_BODY = 0xff886c;
+const SPIKE_BODY = 0xff5fa8;
 const SPIKE_LIGHT = 0xffd27d;
 
 // Estos adornos se desplazan más despacio que el suelo y no participan en la colisión.
@@ -22,6 +22,8 @@ export function drawBackdrop(graphics: Phaser.GameObjects.Graphics, groundY: num
     graphics.strokeRect(x, groundY - height - 32, 96, height);
     graphics.lineStyle(1, SKYLINE, 0.13);
     graphics.strokeRect(x + 20, groundY - height - 12, 56, height - 40);
+    graphics.fillStyle(0xd977ff, 0.13);
+    graphics.fillRect(x + 43, groundY - height - 22, 8, 8);
   }
 }
 
@@ -68,17 +70,41 @@ export function drawPlatform(
   graphics.fillRect(left, groundY, width, 6);
   graphics.fillStyle(GROUND_TILE);
   graphics.fillRect(left, groundY + 6, width, 10);
+  graphics.lineStyle(2, EDGE, 0.45);
+  graphics.strokeRect(left, groundY, width, fieldHeight - groundY);
 
   const firstTile = Math.ceil(from / 48) * 48;
   for (let worldX = firstTile; worldX < to; worldX += 48) {
     const screenX = Math.round(worldX - cameraOffset);
     if (screenX < -48 || screenX > fieldWidth) continue;
-    graphics.fillStyle(0x5267a1);
+    graphics.fillStyle(0x8651bb, 0.45);
     graphics.fillRect(screenX, groundY + 16, 2, fieldHeight - groundY - 16);
-    graphics.fillStyle(0x42558d);
+    graphics.fillStyle(0x70409e, 0.65);
     graphics.fillRect(screenX + 15, groundY + 40, 16, 3);
     graphics.fillRect(screenX + 8, groundY + 76, 9, 3);
   }
+}
+
+export function drawPit(
+  graphics: Phaser.GameObjects.Graphics,
+  from: number,
+  to: number,
+  groundY: number,
+  fieldHeight: number,
+  cameraOffset: number,
+  fieldWidth: number,
+): void {
+  const left = from - cameraOffset;
+  if (left > fieldWidth || to - cameraOffset < 0) return;
+  graphics.fillStyle(0x180e37);
+  graphics.fillRect(left, groundY + 48, to - from, fieldHeight - groundY - 48);
+  for (let x = from + 8; x < to - 6; x += 18) {
+    const screenX = x - cameraOffset;
+    graphics.fillStyle(0xff5fa8);
+    graphics.fillTriangle(screenX - 8, groundY + 48, screenX, groundY + 26, screenX + 8, groundY + 48);
+  }
+  graphics.fillStyle(0xff5fa8, 0.55);
+  graphics.fillRect(left, groundY + 48, to - from, 4);
 }
 
 export function drawHazard(graphics: Phaser.GameObjects.Graphics, x: number, groundY: number): void {
@@ -91,4 +117,13 @@ export function drawHazard(graphics: Phaser.GameObjects.Graphics, x: number, gro
   graphics.fillTriangle(left + 6, groundY - 3, left + 30, top + 8, left + 54, groundY - 3);
   graphics.fillStyle(SPIKE_LIGHT);
   graphics.fillTriangle(left + 15, groundY - 6, left + 30, top + 8, left + 29, groundY - 6);
+}
+
+export function drawJumpCue(graphics: Phaser.GameObjects.Graphics, x: number, groundY: number, active: boolean): void {
+  const color = active ? 0xffffff : 0x5de1e6;
+  graphics.fillStyle(color, active ? 0.95 : 0.68);
+  graphics.fillRect(Math.round(x - 3), Math.round(groundY - 30), 6, 30);
+  graphics.fillTriangle(x - 12, groundY - 42, x + 12, groundY - 42, x, groundY - 33);
+  graphics.lineStyle(2, color, active ? 0.8 : 0.35);
+  graphics.strokeCircle(x, groundY - 42, active ? 18 : 15);
 }
