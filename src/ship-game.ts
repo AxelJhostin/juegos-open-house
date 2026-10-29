@@ -5,8 +5,8 @@ import { drawMeteor, drawShip, type MeteorVisual } from './ship-art';
 import type { SoundCue } from './sound';
 
 const WIDTH = 960;
-type Meteor = MeteorVisual & { vy: number; spin: number; warned: boolean };
-type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): void; onSound(cue: SoundCue): void };
+type Meteor = MeteorVisual & { vy: number; spin: number; warned: boolean; passed: boolean };
+type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): void; onSound(cue: SoundCue): void; onEngine(movement: number | null): void };
 
 export class ShipGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
@@ -61,6 +61,7 @@ export class ShipGame extends Phaser.Scene {
 
   abortRound(): void {
     this.playing = false;
+    this.callbacks.onEngine(null);
     this.meteors = [];
     this.graphics?.clear();
   }
@@ -106,6 +107,7 @@ export class ShipGame extends Phaser.Scene {
     for (const meteor of this.meteors) {
       if (Math.hypot(meteor.x - this.shipX, meteor.y - shipY) < meteor.radius + 27) {
         this.playing = false;
+        this.callbacks.onEngine(null);
         this.meteors = [];
         this.callbacks.onSound('crash');
         this.callbacks.onHud(this.elapsedMs);
@@ -115,6 +117,10 @@ export class ShipGame extends Phaser.Scene {
       if (!meteor.warned && meteor.y > shipY - 155 && Math.abs(meteor.x - this.shipX) < 100) {
         meteor.warned = true;
         this.callbacks.onSound('warning');
+      }
+      if (!meteor.passed && meteor.y > shipY + meteor.radius + 28) {
+        meteor.passed = true;
+        if (Math.abs(meteor.x - this.shipX) < 175) this.callbacks.onSound('meteorPass');
       }
       if (meteor.y < this.fieldHeight + meteor.radius) survivors.push(meteor);
     }
@@ -134,8 +140,10 @@ export class ShipGame extends Phaser.Scene {
         angle: Phaser.Math.FloatBetween(-Math.PI, Math.PI),
         spin: Phaser.Math.FloatBetween(0.6, 1.1) * (Math.random() < 0.5 ? -1 : 1),
         warned: false,
+        passed: false,
       });
     }
+    this.callbacks.onEngine(Math.min(1, Math.abs(this.shipX - previousShipX) / Math.max(dt, 0.001) / 500));
     this.draw(graphics, shipY);
   }
 

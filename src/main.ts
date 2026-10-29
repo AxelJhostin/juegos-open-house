@@ -84,6 +84,7 @@ const sessions: Record<GameId, GameSession> = {
       onHud: (value) => shell.updateHud(value),
       onEnd: (value) => finishRound(value),
       onSound: (cue) => sound.play(cue),
+      onEngine: (movement) => movement === null ? sound.stopShipEngine() : sound.setShipEngine(movement),
     }),
   },
   platform: {
@@ -321,11 +322,13 @@ async function play(): Promise<void> {
 
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
+    sound.stopShipEngine();
     tracker.stop();
     stopHandDemo();
   }
 });
 window.addEventListener('pagehide', () => {
+  sound.stopShipEngine();
   tracker.stop();
   stopHandDemo();
 });

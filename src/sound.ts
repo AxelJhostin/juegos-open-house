@@ -1,5 +1,5 @@
 export type SoundCue = 'start' | 'slice' | 'level' | 'roundEnd' | 'warning' | 'crash' |
-  'jump' | 'land' | 'goal' | 'energy' | 'energyClose' | 'magic';
+  'meteorPass' | 'jump' | 'land' | 'goal' | 'energy' | 'energyClose' | 'magic';
 
 type Voice = { wave: OscillatorType; from: number; to: number; duration: number; volume: number; delay?: number };
 
@@ -9,14 +9,55 @@ export class SoundEffects {
   private master: GainNode | null = null;
   private enabled = true;
   private readonly lastPlayed = new Map<SoundCue, number>();
+  private shipEngine: { low: OscillatorNode; high: OscillatorNode; filter: BiquadFilterNode; gain: GainNode } | null = null;
 
   get isEnabled(): boolean { return this.enabled; }
 
   setEnabled(enabled: boolean): void {
     this.enabled = enabled;
+    if (!enabled) this.stopShipEngine();
     if (this.master && this.context) {
       this.master.gain.setTargetAtTime(enabled ? 0.22 : 0, this.context.currentTime, 0.015);
     }
+  }
+
+  // Un solo par de osciladores acompaña toda la partida; no se crea uno por fotograma.
+  setShipEngine(movement: number): void {
+    if (!this.enabled || !this.context || !this.master || this.context.state !== 'running') return;
+    const now = this.context.currentTime;
+    if (!this.shipEngine) {
+      const low = this.context.createOscillator();
+      const high = this.context.createOscillator();
+      const filter = this.context.createBiquadFilter();
+      const gain = this.context.createGain();
+      low.type = 'sawtooth';
+      high.type = 'triangle';
+      filter.type = 'lowpass';
+      gain.gain.value = 0;
+      low.connect(filter);
+      high.connect(filter);
+      filter.connect(gain).connect(this.master);
+      low.start();
+      high.start();
+      this.shipEngine = { low, high, filter, gain };
+    }
+    const speed = Math.min(1, Math.max(0, movement));
+    this.shipEngine.low.frequency.setTargetAtTime(62 + speed * 19, now, 0.09);
+    this.shipEngine.high.frequency.setTargetAtTime(124 + speed * 38, now, 0.09);
+    this.shipEngine.filter.frequency.setTargetAtTime(220 + speed * 130, now, 0.09);
+    this.shipEngine.gain.gain.setTargetAtTime(0.07 + speed * 0.025, now, 0.12);
+  }
+
+  stopShipEngine(): void {
+    if (!this.shipEngine || !this.context) return;
+    const { low, high, filter, gain } = this.shipEngine;
+    this.shipEngine = null;
+    const now = this.context.currentTime;
+    gain.gain.cancelScheduledValues(now);
+    gain.gain.setTargetAtTime(0.001, now, 0.035);
+    low.stop(now + 0.22);
+    high.stop(now + 0.22);
+    low.onended = () => { low.disconnect(); high.disconnect(); filter.disconnect(); gain.disconnect(); };
   }
 
   // Llamar desde un clic o pulsación permite iniciar AudioContext en navegadores que lo exigen.
@@ -38,7 +79,7 @@ export class SoundEffects {
   play(cue: SoundCue): void {
     if (!this.enabled || !this.context || !this.master || this.context.state !== 'running') return;
     const now = this.context.currentTime;
-    const minGap = cue === 'slice' ? 0.065 : cue === 'warning' ? 0.4 : 0;
+    const minGap = cue === 'slice' ? 0.065 : cue === 'warning' ? 0.4 : cue === 'meteorPass' ? 0.28 : 0;
     if (now - (this.lastPlayed.get(cue) ?? -Infinity) < minGap) return;
     this.lastPlayed.set(cue, now);
     switch (cue) {
@@ -60,6 +101,10 @@ export class SoundEffects {
         break;
       case 'warning':
         this.tone({ wave: 'square', from: 430, to: 330, duration: 0.1, volume: 0.13 });
+        break;
+      case 'meteorPass':
+        this.noise(0.16, 0.16, 850);
+        this.tone({ wave: 'triangle', from: 240, to: 115, duration: 0.16, volume: 0.1 });
         break;
       case 'crash':
         this.noise(0.27, 0.36, 420);
