@@ -38,7 +38,7 @@ Para reducir la carga, los corazones con brillo se preparan una sola vez y la de
 
 ## Estudio gestual — fase 4
 
-Desde el menú, abre **Música con gestos**. Esta experiencia adapta la interacción de [Gesture Synth de Eric Wei](https://github.com/ericwei97-cloud/gesture-synth): la mano izquierda elige el acorde con los dedos, y la derecha cambia la armonía, el volumen al subir o bajar y el timbre al inclinarse. Usa el detector local de dos manos y cuatro voces sintetizadas con Web Audio; no instala el proyecto externo ni carga su modelo o analítica. La referencia se acredita según su [licencia educativa y no comercial](https://github.com/ericwei97-cloud/gesture-synth/blob/main/LICENSE).
+Desde el menú, abre **Música con gestos**. Esta experiencia adapta la interacción de [Gesture Synth de Eric Wei](https://github.com/ericwei97-cloud/gesture-synth): la mano izquierda elige la nota base; el pulgar derecho recogido produce un acorde mayor y extendido uno menor. Los otros dedos derechos eligen posición base, inversiones o séptima; la altura regula el volumen y la inclinación cambia el timbre. La pantalla muestra las notas del acorde. Usa el detector local de dos manos y cuatro voces sintetizadas con Web Audio; no instala el proyecto externo ni carga su modelo o analítica. La referencia se acredita según su [licencia educativa y no comercial](https://github.com/ericwei97-cloud/gesture-synth/blob/main/LICENSE).
 
 **Probar con teclado** permite comprobar la experiencia sin cámara: 1–7 selecciona acorde, Q/W/E/R cambia la armonía, flechas arriba/abajo ajustan volumen, M cambia mayor/menor y Espacio silencia mientras se mantiene. La aplicación no graba música ni video. Al salir, libera la cámara y detiene el sonido.
 

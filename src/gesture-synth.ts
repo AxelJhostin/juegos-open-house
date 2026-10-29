@@ -14,6 +14,7 @@ export type GestureSynthState = {
 
 const SCALE = [0, 2, 4, 5, 7, 9, 11];
 const NAMES = ['DO', 'RE', 'MI', 'FA', 'SOL', 'LA', 'SI'];
+const CHROMATIC_NAMES = ['DO', 'DO♯', 'RE', 'RE♯', 'MI', 'FA', 'FA♯', 'SOL', 'SOL♯', 'LA', 'LA♯', 'SI'];
 const C3 = 130.8128;
 const FINGERS = [[8, 6], [12, 10], [16, 14], [20, 18]] as const;
 
@@ -57,11 +58,15 @@ export function chordNotes(degree: number, mode: ChordMode, quality: number): nu
   if (degree < 1 || degree > 7 || quality < 1 || quality > 4) return [];
   const root = frequency(C3, SCALE[degree - 1]);
   const third = frequency(root, mode === 'mayor' ? 4 : 3);
-  const fifth = frequency(root, quality === 4 && mode === 'menor' ? 6 : 7);
-  if (quality === 1) return [root, fifth, root * 2, third * 2];
+  const fifth = frequency(root, 7);
+  if (quality === 1) return [root, third, fifth, root * 2];
   if (quality === 2) return [third, fifth, root * 2, third * 2];
-  if (quality === 3) return [root, third, fifth, frequency(root, mode === 'mayor' ? 11 : 10)];
-  return [root, third, fifth, frequency(root, mode === 'mayor' ? 10 : 9)];
+  if (quality === 3) return [fifth, root * 2, third * 2, fifth * 2];
+  return [root, third, fifth, frequency(root, mode === 'mayor' ? 11 : 10)];
+}
+
+export function chordNoteNames(notes: number[]): string[] {
+  return [...new Set(notes.map((note) => CHROMATIC_NAMES[((Math.round(69 + 12 * Math.log2(note / 440)) % 12) + 12) % 12]))];
 }
 
 function selectHands(hands: HandLandmarks, labels: string[]): [HandLandmarks[number] | null, HandLandmarks[number] | null] {
@@ -97,7 +102,8 @@ export class GestureSynthMapper {
     const [left, right] = selectHands(hands, labels);
     const degree = left ? chordDegree(left) : 0;
     const quality = right ? fingerCount(right) : 0;
-    const mode: ChordMode = left && tilt(left) < -0.25 ? 'menor' : 'mayor';
+    // El pulgar derecho conmuta el modo; los otros cuatro dedos siguen eligiendo la voz.
+    const mode: ChordMode = right && thumbExtended(right) ? 'menor' : 'mayor';
     const key = degree && quality ? `${degree}-${mode}-${quality}` : '';
     if (key) this.lastSeenAt = now;
     if (key !== this.candidate) {

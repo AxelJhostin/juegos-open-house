@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { GestureSynthMapper, chordNotes, fingerCount } from '../src/gesture-synth.ts';
+import { GestureSynthMapper, chordNoteNames, chordNotes, fingerCount } from '../src/gesture-synth.ts';
 
 function hand(x: number, open: number[], thumb = false, wristY = 0.72) {
   const points = Array.from({ length: 21 }, () => ({ x, y: 0.56, z: 0 }));
@@ -56,4 +56,19 @@ test('los acordes generan notas válidas y se silencian sin mano de expresión',
   mapper.sample([hand(0.7, [0]), hand(0.3, [0])], ['Left', 'Right'], 1000);
   mapper.sample([hand(0.7, [0]), hand(0.3, [0])], ['Left', 'Right'], 1120);
   assert.equal(mapper.sample([hand(0.7, [0])], ['Left'], 1400).volume, 0);
+});
+
+test('el pulgar derecho cambia mayor y menor y se muestran las notas reales', () => {
+  const mapper = new GestureSynthMapper();
+  const left = hand(0.7, [0]);
+  const majorRight = hand(0.3, [0]);
+  const minorRight = hand(0.3, [0], true);
+  mapper.sample([left, majorRight], ['Left', 'Right'], 1000);
+  const major = mapper.sample([left, majorRight], ['Left', 'Right'], 1120);
+  assert.equal(major.name, 'DO mayor');
+  assert.deepEqual(chordNoteNames(major.notes), ['DO', 'MI', 'SOL']);
+  mapper.sample([left, minorRight], ['Left', 'Right'], 1200);
+  const minor = mapper.sample([left, minorRight], ['Left', 'Right'], 1330);
+  assert.equal(minor.name, 'DO menor');
+  assert.deepEqual(chordNoteNames(minor.notes), ['DO', 'RE♯', 'SOL']);
 });

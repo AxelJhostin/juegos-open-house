@@ -2,7 +2,7 @@ import { GAME_ORDER, GAMES, type GameDefinition, type GameId } from './game-cata
 import type { ControlMode } from './game-types';
 import { normalizePlayerName, type Records } from './records';
 import type { RainbowState } from './rainbow-gesture';
-import type { GestureSynthState } from './gesture-synth';
+import { chordNoteNames, type GestureSynthState } from './gesture-synth';
 
 type ShellEvents = {
   chooseGame(id: GameId): void;
@@ -59,6 +59,7 @@ export class AppShell {
   private readonly synthStats: HTMLElement;
   private readonly synthChord: HTMLElement;
   private readonly synthQuality: HTMLElement;
+  private readonly synthNotes: HTMLElement;
   private readonly synthVolume: HTMLElement;
   private readonly filterBoard: HTMLElement;
   private readonly filterStage: HTMLElement;
@@ -262,14 +263,14 @@ export class AppShell {
             <div id="synth-stage" class="synth-stage">
               <video id="synth-video" autoplay playsinline muted aria-label="Vista local de las manos para producir música"></video>
               <canvas id="synth-canvas" aria-hidden="true"></canvas>
-              <div class="synth-live-readout"><span>ACORDE ACTUAL</span><strong id="synth-chord">—</strong><small id="synth-quality">Levanta ambas manos</small></div>
+              <div class="synth-live-readout"><span>ACORDE ACTUAL</span><strong id="synth-chord">—</strong><small id="synth-quality">Levanta ambas manos</small><small id="synth-notes">Notas: —</small></div>
               <div id="synth-placeholder" class="synth-placeholder"><span aria-hidden="true">♫</span><strong>Tu cámara se convierte en instrumento</strong><p>Activa la cámara o prueba con el teclado.</p></div>
             </div>
             <div class="status-row"><p id="synth-status" role="status" aria-live="polite">Cámara apagada</p><p id="synth-stats">Detección: —</p></div>
           </div>
           <aside class="synth-sidebar" aria-label="Controles del instrumento gestual">
             <div class="side-panel"><p class="side-kicker">01 / ENTRA</p><button id="synth-start" type="button">Activar cámara y sonido</button><button id="synth-keyboard" type="button">Probar con teclado</button><button id="synth-stop" type="button" hidden>Detener cámara</button><p>El video y las notas se procesan aquí; no se guardan ni se transmiten.</p></div>
-            <div class="side-panel"><p class="side-kicker">02 / TOCA</p><strong>Izquierda · acorde</strong><p>Muestra de uno a cinco dedos para elegir DO, RE, MI, FA o SOL. Índice y meñique forman LA; añade pulgar para SI. Inclina la mano para cambiar a menor.</p><strong>Derecha · expresión</strong><p>Levanta de uno a cuatro dedos para variar la armonía. Sube la mano para más volumen; inclínala para cambiar el timbre.</p><div class="synth-meter"><span>VOLUMEN</span><div><i id="synth-volume"></i></div></div></div>
+            <div class="side-panel"><p class="side-kicker">02 / TOCA</p><strong>Izquierda · nota base</strong><p>Muestra de uno a cinco dedos para elegir DO, RE, MI, FA o SOL. Índice y meñique forman LA; añade pulgar para SI.</p><strong>Derecha · acorde y expresión</strong><p>Pulgar recogido: acorde mayor. Pulgar extendido: menor. Los otros dedos (uno a cuatro) eligen la inversión o séptima. Sube la mano para más volumen; inclínala para cambiar el timbre.</p><div class="synth-meter"><span>VOLUMEN</span><div><i id="synth-volume"></i></div></div></div>
             <div class="side-panel"><p class="side-kicker">03 / SIN CÁMARA</p><p>Teclas 1–7: acorde · Q/W/E/R: armonía · ↑/↓: volumen · M: mayor/menor · Espacio: silencio.</p><small>Inspirado en <a href="https://github.com/ericwei97-cloud/gesture-synth" target="_blank" rel="noopener noreferrer">Gesture Synth de Eric Wei</a>, usado con crédito para esta demo educativa.</small></div>
           </aside>
         </div>
@@ -353,6 +354,7 @@ export class AppShell {
     this.synthStats = required(root, '#synth-stats');
     this.synthChord = required(root, '#synth-chord');
     this.synthQuality = required(root, '#synth-quality');
+    this.synthNotes = required(root, '#synth-notes');
     this.synthVolume = required(root, '#synth-volume');
     this.filterBoard = required(root, '#filter-board');
     this.filterStage = required(root, '#filter-stage');
@@ -596,9 +598,11 @@ export class AppShell {
   setSynthState(state: GestureSynthState | null): void {
     const chord = state?.name ?? '—';
     if (this.synthChord.textContent !== chord) this.synthChord.textContent = chord;
-    const labels = ['', 'Acorde abierto', 'Primera inversión', 'Acorde con séptima', 'Acorde intenso'];
+    const labels = ['', 'Posición base', 'Primera inversión', 'Segunda inversión', 'Con séptima'];
     const quality = state?.quality ? labels[state.quality] : 'Levanta ambas manos';
     if (this.synthQuality.textContent !== quality) this.synthQuality.textContent = quality;
+    const notes = state?.notes.length ? `Notas: ${chordNoteNames(state.notes).join(' · ')}` : 'Notas: —';
+    if (this.synthNotes.textContent !== notes) this.synthNotes.textContent = notes;
     this.synthVolume.style.width = `${Math.round((state?.volume ?? 0) * 100)}%`;
   }
 
