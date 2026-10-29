@@ -2,11 +2,13 @@ import { GAME_ORDER, GAMES, type GameDefinition, type GameId } from './game-cata
 import type { ControlMode } from './game-types';
 import { normalizePlayerName, type Records } from './records';
 import type { RainbowState } from './rainbow-gesture';
+import type { GestureSynthState } from './gesture-synth';
 
 type ShellEvents = {
   chooseGame(id: GameId): void;
   openHandDemo(): void;
   openFilterRoom(): void;
+  openGestureSynth(): void;
   returnHome(): void;
   play(): void;
   stopCamera(): void;
@@ -19,6 +21,9 @@ type ShellEvents = {
   poseModeChanged(active: boolean): void;
   startFilterRoom(): void;
   stopFilterRoom(): void;
+  startGestureSynth(): void;
+  startGestureSynthKeyboard(): void;
+  stopGestureSynth(): void;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -34,11 +39,27 @@ export class AppShell {
   readonly handDemoCanvas: HTMLCanvasElement;
   readonly filterVideo: HTMLVideoElement;
   readonly filterCanvas: HTMLCanvasElement;
+  readonly synthVideo: HTMLVideoElement;
+  readonly synthCanvas: HTMLCanvasElement;
   private readonly root: HTMLElement;
   private readonly home: HTMLElement;
   private readonly panel: HTMLElement;
   private readonly handDemo: HTMLElement;
   private readonly filterRoom: HTMLElement;
+  private readonly synthRoom: HTMLElement;
+  private readonly synthBoard: HTMLElement;
+  private readonly synthStage: HTMLElement;
+  private readonly synthStart: HTMLButtonElement;
+  private readonly synthKeyboard: HTMLButtonElement;
+  private readonly synthStop: HTMLButtonElement;
+  private readonly synthFullscreen: HTMLButtonElement;
+  private readonly synthFullscreenExit: HTMLButtonElement;
+  private readonly synthPlaceholder: HTMLElement;
+  private readonly synthStatus: HTMLElement;
+  private readonly synthStats: HTMLElement;
+  private readonly synthChord: HTMLElement;
+  private readonly synthQuality: HTMLElement;
+  private readonly synthVolume: HTMLElement;
   private readonly filterBoard: HTMLElement;
   private readonly filterStage: HTMLElement;
   private readonly filterStart: HTMLButtonElement;
@@ -123,10 +144,11 @@ export class AppShell {
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
             <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
-            <p class="home-intro">Tres juegos y una experiencia para descubrir los puntos del cuerpo. Elige tu desafío.</p>
-            <div class="hero-facts"><span><b>03</b> JUEGOS + MAPA CORPORAL</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+            <p class="home-intro">Tres juegos y experiencias con cámara para descubrir movimiento, gestos y música. Elige por dónde empezar.</p>
+            <div class="hero-facts"><span><b>03</b> JUEGOS + EXPERIENCIAS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
             <button id="open-hand-demo" class="hand-demo-link" type="button"><span>✦ MIRA CÓMO FUNCIONA LA IA</span><span>Ver los puntos de tus manos ↗</span></button>
             <button id="open-filter-room" class="hand-demo-link filter-link" type="button"><span>◈ MAPA CORPORAL</span><span>Descubre los puntos de hasta tres personas ↗</span></button>
+            <button id="open-gesture-synth" class="hand-demo-link synth-link" type="button"><span>♫ MÚSICA CON GESTOS</span><span>Haz sonar acordes con tus manos ↗</span></button>
           </div>
           <div class="hero-display" aria-hidden="true">
             <div class="display-top"><span>PP // SEÑAL ACTIVA</span><span>● ● ●</span></div>
@@ -231,6 +253,27 @@ export class AppShell {
           </aside>
         </div>
       </section>
+      <section id="synth-room" class="synth-room" aria-labelledby="synth-title" hidden>
+        <div class="game-topbar"><button id="synth-menu" class="menu-button" type="button">← Menú principal</button><span class="game-brand">P / P <span>OPEN HOUSE // MÚSICA CON GESTOS</span></span><button id="synth-fullscreen" class="sound-toggle" type="button">⛶ Ampliar cámara</button><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button></div>
+        <header class="synth-header"><p class="eyebrow">PULSO PIXEL // INSTRUMENTO EN VIVO</p><h1 id="synth-title">ESTUDIO GESTUAL</h1><p>Dos manos transforman gestos en acordes. La izquierda elige la nota; la derecha cambia su voz, volumen y color.</p></header>
+        <div class="synth-layout">
+          <div id="synth-board" class="synth-board">
+            <div class="board-topline"><span>♫ CÁMARA Y SONIDO</span><span>GESTURE SYNTH · ADAPTACIÓN EDUCATIVA</span><button id="synth-fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
+            <div id="synth-stage" class="synth-stage">
+              <video id="synth-video" autoplay playsinline muted aria-label="Vista local de las manos para producir música"></video>
+              <canvas id="synth-canvas" aria-hidden="true"></canvas>
+              <div class="synth-live-readout"><span>ACORDE ACTUAL</span><strong id="synth-chord">—</strong><small id="synth-quality">Levanta ambas manos</small></div>
+              <div id="synth-placeholder" class="synth-placeholder"><span aria-hidden="true">♫</span><strong>Tu cámara se convierte en instrumento</strong><p>Activa la cámara o prueba con el teclado.</p></div>
+            </div>
+            <div class="status-row"><p id="synth-status" role="status" aria-live="polite">Cámara apagada</p><p id="synth-stats">Detección: —</p></div>
+          </div>
+          <aside class="synth-sidebar" aria-label="Controles del instrumento gestual">
+            <div class="side-panel"><p class="side-kicker">01 / ENTRA</p><button id="synth-start" type="button">Activar cámara y sonido</button><button id="synth-keyboard" type="button">Probar con teclado</button><button id="synth-stop" type="button" hidden>Detener cámara</button><p>El video y las notas se procesan aquí; no se guardan ni se transmiten.</p></div>
+            <div class="side-panel"><p class="side-kicker">02 / TOCA</p><strong>Izquierda · acorde</strong><p>Muestra de uno a cinco dedos para elegir DO, RE, MI, FA o SOL. Índice y meñique forman LA; añade pulgar para SI. Inclina la mano para cambiar a menor.</p><strong>Derecha · expresión</strong><p>Levanta de uno a cuatro dedos para variar la armonía. Sube la mano para más volumen; inclínala para cambiar el timbre.</p><div class="synth-meter"><span>VOLUMEN</span><div><i id="synth-volume"></i></div></div></div>
+            <div class="side-panel"><p class="side-kicker">03 / SIN CÁMARA</p><p>Teclas 1–7: acorde · Q/W/E/R: armonía · ↑/↓: volumen · M: mayor/menor · Espacio: silencio.</p><small>Inspirado en <a href="https://github.com/ericwei97-cloud/gesture-synth" target="_blank" rel="noopener noreferrer">Gesture Synth de Eric Wei</a>, usado con crédito para esta demo educativa.</small></div>
+          </aside>
+        </div>
+      </section>
       <section id="game-panel" class="panel" aria-labelledby="title" hidden>
         <div class="game-topbar">
           <button id="menu-button" class="menu-button" type="button">← Menú principal</button>
@@ -291,10 +334,26 @@ export class AppShell {
     this.handDemoCanvas = required(root, '#hand-demo-canvas');
     this.filterVideo = required(root, '#filter-video');
     this.filterCanvas = required(root, '#filter-canvas');
+    this.synthVideo = required(root, '#synth-video');
+    this.synthCanvas = required(root, '#synth-canvas');
     this.home = required(root, '#home');
     this.panel = required(root, '#game-panel');
     this.handDemo = required(root, '#hand-demo');
     this.filterRoom = required(root, '#filter-room');
+    this.synthRoom = required(root, '#synth-room');
+    this.synthBoard = required(root, '#synth-board');
+    this.synthStage = required(root, '#synth-stage');
+    this.synthStart = required(root, '#synth-start');
+    this.synthKeyboard = required(root, '#synth-keyboard');
+    this.synthStop = required(root, '#synth-stop');
+    this.synthFullscreen = required(root, '#synth-fullscreen');
+    this.synthFullscreenExit = required(root, '#synth-fullscreen-exit');
+    this.synthPlaceholder = required(root, '#synth-placeholder');
+    this.synthStatus = required(root, '#synth-status');
+    this.synthStats = required(root, '#synth-stats');
+    this.synthChord = required(root, '#synth-chord');
+    this.synthQuality = required(root, '#synth-quality');
+    this.synthVolume = required(root, '#synth-volume');
     this.filterBoard = required(root, '#filter-board');
     this.filterStage = required(root, '#filter-stage');
     this.filterStart = required(root, '#filter-start');
@@ -365,6 +424,13 @@ export class AppShell {
     }
     required<HTMLButtonElement>(root, '#open-hand-demo').addEventListener('click', events.openHandDemo);
     required<HTMLButtonElement>(root, '#open-filter-room').addEventListener('click', events.openFilterRoom);
+    required<HTMLButtonElement>(root, '#open-gesture-synth').addEventListener('click', events.openGestureSynth);
+    required<HTMLButtonElement>(root, '#synth-menu').addEventListener('click', events.returnHome);
+    this.synthStart.addEventListener('click', events.startGestureSynth);
+    this.synthKeyboard.addEventListener('click', events.startGestureSynthKeyboard);
+    this.synthStop.addEventListener('click', events.stopGestureSynth);
+    this.synthFullscreen.addEventListener('click', () => { void this.toggleFullscreen(this.synthBoard); });
+    this.synthFullscreenExit.addEventListener('click', () => { void document.exitFullscreen(); });
     required<HTMLButtonElement>(root, '#filter-menu').addEventListener('click', events.returnHome);
     this.filterStart.addEventListener('click', events.startFilterRoom);
     this.filterStop.addEventListener('click', events.stopFilterRoom);
@@ -384,6 +450,7 @@ export class AppShell {
     this.fullscreenButton.hidden = !document.fullscreenEnabled;
     this.handDemoFullscreenButton.hidden = !document.fullscreenEnabled;
     this.filterFullscreen.hidden = !document.fullscreenEnabled;
+    this.synthFullscreen.hidden = !document.fullscreenEnabled;
     document.addEventListener('fullscreenchange', () => {
       this.updateFullscreenButton();
       if (document.fullscreenElement !== this.handDemoBoard && this.isPoseMode) {
@@ -413,6 +480,7 @@ export class AppShell {
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
   get isFilterVisible(): boolean { return !this.filterRoom.hidden; }
+  get isSynthVisible(): boolean { return !this.synthRoom.hidden; }
   get isPoseMode(): boolean { return this.handDemoBoard.classList.contains('pose-mode'); }
 
   private async toggleFullscreen(target: HTMLElement): Promise<void> {
@@ -421,13 +489,15 @@ export class AppShell {
       else await target.requestFullscreen();
     } catch {
       const button = target === this.gameBoard ? this.fullscreenButton :
-        target === this.handDemoBoard ? this.handDemoFullscreenButton : this.filterFullscreen;
+        target === this.handDemoBoard ? this.handDemoFullscreenButton :
+          target === this.filterBoard ? this.filterFullscreen : this.synthFullscreen;
       button.textContent = 'Pantalla completa no disponible';
     }
   }
 
   exitFullscreen(): void {
-    if (document.fullscreenElement === this.gameBoard || document.fullscreenElement === this.handDemoBoard || document.fullscreenElement === this.filterBoard) {
+    if (document.fullscreenElement === this.gameBoard || document.fullscreenElement === this.handDemoBoard ||
+      document.fullscreenElement === this.filterBoard || document.fullscreenElement === this.synthBoard) {
       void document.exitFullscreen();
     }
   }
@@ -436,15 +506,18 @@ export class AppShell {
     const gameActive = document.fullscreenElement === this.gameBoard;
     const demoActive = document.fullscreenElement === this.handDemoBoard;
     const filterActive = document.fullscreenElement === this.filterBoard;
+    const synthActive = document.fullscreenElement === this.synthBoard;
     this.fullscreenButton.textContent = gameActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar juego';
     this.handDemoFullscreenButton.textContent = demoActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
     this.fullscreenButton.setAttribute('aria-pressed', String(gameActive));
     this.handDemoFullscreenButton.setAttribute('aria-pressed', String(demoActive));
     this.filterFullscreen.textContent = filterActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
+    this.synthFullscreen.textContent = synthActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
     this.filterFullscreen.setAttribute('aria-pressed', String(filterActive));
     this.fullscreenExitButton.hidden = !gameActive;
     this.handDemoFullscreenExit.hidden = !demoActive;
     this.filterFullscreenExit.hidden = !filterActive;
+    this.synthFullscreenExit.hidden = !synthActive;
   }
 
   enterPoseMode(): void {
@@ -477,14 +550,67 @@ export class AppShell {
     }
   }
 
+  showSynthRoom(): void {
+    delete this.root.dataset.game;
+    this.root.classList.remove('home-screen', 'hand-demo-screen', 'filter-screen');
+    this.root.classList.add('synth-screen');
+    this.home.hidden = true;
+    this.panel.hidden = true;
+    this.handDemo.hidden = true;
+    this.filterRoom.hidden = true;
+    this.synthRoom.hidden = false;
+    this.setSynthActive(false);
+    this.setSynthStatus('Cámara apagada · puedes probar con teclado');
+    this.setSynthState(null);
+    this.synthStats.textContent = 'Detección: —';
+  }
+
+  setSynthLaunching(launching: boolean): void { this.synthStart.disabled = launching; }
+  setSynthActive(active: boolean): void {
+    this.synthStage.classList.toggle('active', active);
+    this.synthStage.classList.remove('keyboard-active');
+    this.synthPlaceholder.hidden = active;
+    this.synthStart.hidden = active;
+    this.synthKeyboard.hidden = active;
+    this.synthStop.hidden = !active;
+  }
+  setSynthKeyboardActive(): void {
+    this.synthStage.classList.remove('active');
+    this.synthStage.classList.add('keyboard-active');
+    this.synthPlaceholder.hidden = true;
+    this.synthStart.hidden = false;
+    this.synthKeyboard.hidden = true;
+    this.synthStop.hidden = true;
+  }
+  setSynthStatus(message: string): void { if (this.synthStatus.textContent !== message) this.synthStatus.textContent = message; }
+  setSynthStats(fps: number, duration: number): void {
+    this.synthStats.textContent = `Detección: ${fps} fps · ${duration.toFixed(0)} ms por imagen`;
+  }
+  clearSynthStats(): void { this.synthStats.textContent = 'Detección: —'; }
+  setSynthVideoSize(width: number, height: number): void {
+    this.synthStage.style.aspectRatio = `${width} / ${height}`;
+    this.synthBoard.style.setProperty('--surface-ratio', String(width / height));
+    this.synthCanvas.width = width;
+    this.synthCanvas.height = height;
+  }
+  setSynthState(state: GestureSynthState | null): void {
+    const chord = state?.name ?? '—';
+    if (this.synthChord.textContent !== chord) this.synthChord.textContent = chord;
+    const labels = ['', 'Acorde abierto', 'Primera inversión', 'Acorde con séptima', 'Acorde intenso'];
+    const quality = state?.quality ? labels[state.quality] : 'Levanta ambas manos';
+    if (this.synthQuality.textContent !== quality) this.synthQuality.textContent = quality;
+    this.synthVolume.style.width = `${Math.round((state?.volume ?? 0) * 100)}%`;
+  }
+
   showFilterRoom(): void {
     delete this.root.dataset.game;
-    this.root.classList.remove('home-screen', 'hand-demo-screen');
+    this.root.classList.remove('home-screen', 'hand-demo-screen', 'synth-screen');
     this.root.classList.add('filter-screen');
     this.home.hidden = true;
     this.panel.hidden = true;
     this.handDemo.hidden = true;
     this.filterRoom.hidden = false;
+    this.synthRoom.hidden = true;
     this.setFilterActive(false);
     this.setFilterStatus('Cámara apagada');
     this.setFilterCount(0);
@@ -520,12 +646,14 @@ export class AppShell {
   }
   showHandDemo(): void {
     delete this.root.dataset.game;
-    this.root.classList.remove('home-screen');
+    this.root.classList.remove('home-screen', 'synth-screen');
     this.root.classList.add('hand-demo-screen');
     this.home.hidden = true;
     this.panel.hidden = true;
     this.filterRoom.hidden = true;
+    this.synthRoom.hidden = true;
     this.root.classList.remove('filter-screen');
+    this.root.classList.remove('synth-screen');
     this.handDemo.hidden = false;
     this.handDemoStage.style.aspectRatio = '4 / 3';
     this.setHandDemoActive(false);
@@ -634,6 +762,7 @@ export class AppShell {
     this.root.classList.remove('home-screen');
     this.root.classList.remove('hand-demo-screen');
     this.root.classList.remove('filter-screen');
+    this.root.classList.remove('synth-screen');
     this.panel.dataset.game = id;
     this.mouseOption.hidden = !game.controls.mouse;
     this.mouseOption.disabled = !game.controls.mouse;
@@ -666,6 +795,7 @@ export class AppShell {
     this.home.hidden = true;
     this.handDemo.hidden = true;
     this.filterRoom.hidden = true;
+    this.synthRoom.hidden = true;
     this.panel.hidden = false;
   }
 
@@ -675,12 +805,14 @@ export class AppShell {
     this.root.classList.add('home-screen');
     this.root.classList.remove('hand-demo-screen');
     this.root.classList.remove('filter-screen');
+    this.root.classList.remove('synth-screen');
     this.stage.classList.remove('playing');
     this.nameEntry.hidden = true;
     this.modeSelect.disabled = false;
     this.panel.hidden = true;
     this.handDemo.hidden = true;
     this.filterRoom.hidden = true;
+    this.synthRoom.hidden = true;
     this.home.hidden = false;
   }
 

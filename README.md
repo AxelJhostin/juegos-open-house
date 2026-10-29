@@ -36,6 +36,12 @@ Una tercera seña, el corazón formado con pulgar e índice y los otros dedos do
 **Arco Prisma:** levanta dos manos abiertas en la parte alta de la cámara, júntalas un momento y sepáralas hacia los lados. Un arcoíris original se despliega entre ellas, las sigue mientras permanecen abiertas y se desvanece al bajarlas. Funciona también en Modo pose y tiene un sonido breve generado en el navegador.
 Para reducir la carga, los corazones con brillo se preparan una sola vez y la detección de esta pantalla se limita a 30 imágenes por segundo; los controles de los juegos conservan su frecuencia anterior.
 
+## Estudio gestual — fase 4
+
+Desde el menú, abre **Música con gestos**. Esta experiencia adapta la interacción de [Gesture Synth de Eric Wei](https://github.com/ericwei97-cloud/gesture-synth): la mano izquierda elige el acorde con los dedos, y la derecha cambia la armonía, el volumen al subir o bajar y el timbre al inclinarse. Usa el detector local de dos manos y cuatro voces sintetizadas con Web Audio; no instala el proyecto externo ni carga su modelo o analítica. La referencia se acredita según su [licencia educativa y no comercial](https://github.com/ericwei97-cloud/gesture-synth/blob/main/LICENSE).
+
+**Probar con teclado** permite comprobar la experiencia sin cámara: 1–7 selecciona acorde, Q/W/E/R cambia la armonía, flechas arriba/abajo ajustan volumen, M cambia mayor/menor y Espacio silencia mientras se mantiene. La aplicación no graba música ni video. Al salir, libera la cámara y detiene el sonido.
+
 ## Mapa corporal — fase 4
 
 Desde el menú, entra en **Mapa corporal** y pulsa **Activar cámara**. El detector corporal local puede seguir hasta tres personas a la vez y dibuja los 33 puntos estimados de cada una, junto con sus conexiones. Encima aparecen los 21 puntos detallados de cada mano detectada, hasta seis manos, en amarillo. Todo usa la misma cámara y se procesa localmente. Para ver piernas y pies, aléjate hasta que todo el cuerpo entre en la imagen.

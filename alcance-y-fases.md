@@ -104,6 +104,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
 - Añadir el tercer gesto acordado en la pantalla de manos: un corazón con pulgar e índice y los demás dedos doblados activa una lluvia de corazones rosas, que termina suavemente al soltarlo.
 - Añadir el cuarto gesto acordado en la pantalla de manos: dos palmas abiertas y elevadas se juntan y luego se separan para desplegar un arcoíris animado original entre ellas, también en Modo pose.
+- **Ajuste acordado:** añadir una pantalla musical inspirada únicamente en Gesture Synth: una mano elige el acorde y la otra modula armonía, volumen y timbre. Reutiliza el detector y Web Audio locales, ofrece teclado alternativo y cita el proyecto de referencia. No incorpora el piano virtual ni servicios externos.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba. En Nave, permitir también el movimiento vertical con la mano y con flechas o WASD, manteniendo la supervivencia hasta el primer choque.

@@ -7,7 +7,7 @@ export type HandLandmarks = NormalizedLandmark[][];
 type Callbacks = {
   onState(message: string, active: boolean): void;
   onPoints(points: HandSample[]): void;
-  onLandmarks?(hands: HandLandmarks): void;
+  onLandmarks?(hands: HandLandmarks, handedness?: string[]): void;
   onStats(fps: number, durationMs: number): void;
 };
 
@@ -110,7 +110,8 @@ export class HandTracker {
         this.lastDetectionAt = started;
         const result = this.landmarker.detectForVideo(this.video, started);
         const duration = performance.now() - started;
-        this.callbacks.onLandmarks?.(result.landmarks);
+        this.callbacks.onLandmarks?.(result.landmarks,
+          result.handedness.map((categories) => categories[0]?.categoryName ?? ''));
         const points = result.landmarks.flatMap((hand) => {
           const tip = hand[8]; // Punto 8: punta del índice de cada mano.
           return tip ? [{ x: tip.x, y: tip.y, pinchRatio: handPinchRatio(hand, this.video.videoWidth, this.video.videoHeight) }] : [];
