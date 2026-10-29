@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { handPinchRatio, PinchJumpControl } from '../src/pinch-jump.ts';
+import { handPinchRatio, HeldPinchJumpControl, PinchJumpControl } from '../src/pinch-jump.ts';
 
 test('normaliza la pinza al tamaño de la mano y la proporción del video', () => {
   const hand = Array.from({ length: 21 }, () => ({ x: 0, y: 0 }));
@@ -24,4 +24,16 @@ test('salta una vez por pinza y exige abrir antes de repetir', () => {
   assert.equal(control.sample(0.35).jump, true);
   assert.equal(control.sample(null).ready, false);
   assert.equal(control.sample(0.3).jump, false);
+});
+
+test('Plataformas mantiene la pinza hasta abrir la mano o perderla', () => {
+  const control = new HeldPinchJumpControl();
+  assert.deepEqual(control.sample(0.3), { pressed: true, held: true });
+  assert.deepEqual(control.sample(0.2), { pressed: false, held: true });
+  assert.deepEqual(control.sample(0.55), { pressed: false, held: true });
+  assert.equal(control.isHeld, true);
+  assert.deepEqual(control.sample(0.75), { pressed: false, held: false });
+  assert.deepEqual(control.sample(0.3), { pressed: true, held: true });
+  assert.deepEqual(control.sample(null), { pressed: false, held: false });
+  assert.equal(control.isHeld, false);
 });

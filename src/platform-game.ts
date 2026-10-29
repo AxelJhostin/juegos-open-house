@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import type { HandSample } from './tracking';
 import type { ControlMode } from './game-types';
-import { PinchJumpControl } from './pinch-jump';
+import { HeldPinchJumpControl } from './pinch-jump';
 import { drawBackdrop, drawCube, drawHazard, drawJumpCue, drawPit, drawPlatform } from './platform-art';
 import { PLATFORM_LEVEL, PLATFORM_SPEED, platformHeightAt } from './platform-level';
 import type { SoundCue } from './sound';
@@ -22,7 +22,7 @@ export class PlatformGame extends Phaser.Scene {
   private vy = 0;
   private cameraOffset = 0;
   private cameraPoint: HandSample | null = null;
-  private pinch = new PinchJumpControl();
+  private pinch = new HeldPinchJumpControl();
   private jumpQueued = false;
   private jumpBuffer = 0;
   private coyote = 0;
@@ -36,7 +36,7 @@ export class PlatformGame extends Phaser.Scene {
 
   get isPlaying(): boolean { return this.playing; }
   get controlMode(): ControlMode { return this.mode; }
-  get gestureReady(): boolean { return this.pinch.isReady; }
+  get gestureHeld(): boolean { return this.pinch.isHeld; }
 
   create(): void {
     this.graphics = this.add.graphics();
@@ -90,7 +90,7 @@ export class PlatformGame extends Phaser.Scene {
     const point = points.reduce<HandSample | null>((nearest, candidate) =>
       !nearest || (this.cameraPoint && Math.abs(candidate.x - this.cameraPoint.x) < Math.abs(nearest.x - this.cameraPoint.x))
         ? candidate : nearest, null);
-    if (this.pinch.sample(point?.pinchRatio ?? null).jump) this.jumpQueued = true;
+    if (this.pinch.sample(point?.pinchRatio ?? null).pressed) this.jumpQueued = true;
     this.cameraPoint = point;
   }
 
@@ -108,11 +108,12 @@ export class PlatformGame extends Phaser.Scene {
     const keys = this.keys;
     const keyJump = keys ? Phaser.Input.Keyboard.JustDown(keys.space) ||
       Phaser.Input.Keyboard.JustDown(keys.up) || Phaser.Input.Keyboard.JustDown(keys.w) : false;
+    const keyHeld = keys ? keys.space.isDown || keys.up.isDown || keys.w.isDown : false;
     if (keyJump || this.jumpQueued) this.jumpBuffer = 0.14;
     this.jumpQueued = false;
     this.jumpBuffer = Math.max(0, this.jumpBuffer - dt);
     this.coyote = Math.max(0, this.coyote - dt);
-    if (this.jumpBuffer > 0 && this.coyote > 0) {
+    if ((this.jumpBuffer > 0 && this.coyote > 0) || ((keyHeld || this.pinch.isHeld) && this.grounded)) {
       this.vy = JUMP_SPEED;
       this.grounded = false;
       this.coyote = 0;

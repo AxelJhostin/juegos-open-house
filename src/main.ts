@@ -101,7 +101,7 @@ const sessions: Record<GameId, GameSession> = {
       onSound: (cue) => sound.play(cue),
       onMusic: (elapsed) => elapsed === null ? sound.stopPlatformMusic() : sound.updatePlatformMusic(elapsed),
     }),
-    cameraHint: () => (sessions.platform.scene as PlatformGame).gestureReady ? ' · pinza lista' : ' · separa los dedos',
+    cameraHint: () => (sessions.platform.scene as PlatformGame).gestureHeld ? ' · pinza mantenida' : ' · junta los dedos',
   },
 };
 

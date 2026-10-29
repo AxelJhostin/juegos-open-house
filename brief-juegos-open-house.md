@@ -43,8 +43,9 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 - Fruta dura alrededor de 45 segundos. Plataformas tiene intentos cortos que terminan al chocar, caer o llegar a la meta. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** usar hasta dos manos con el mismo detector local. Nave y Plataformas admiten una; Fruta acepta uno o dos índices.
 - **Nave:** la posición del índice en la cámara dirige la nave en dos ejes.
-- **Plataformas:** avance automático y una pinza de pulgar e índice para saltar; hay que separar los dedos antes de repetir el salto.
-- **Fruta:** una trayectoria rápida del dedo dibuja el corte; el segmento entre posiciones consecutivas del dedo debe poder cortar frutas aunque la mano se mueva entre fotogramas.
+- **Plataformas:** avance automático y una pinza de pulgar e índice para saltar; mantener la pinza repite el salto al aterrizar, y separarlos lo detiene. Mantener la tecla de salto funciona igual.
+- **Fruta:** cada índice deja una estela luminosa de color propio al moverse; una trayectoria rápida produce el corte. El segmento entre posiciones consecutivas debe poder cortar frutas aunque la mano se mueva entre fotogramas.
+- En Fruta, la común vale 10 puntos, una dorada ocasional vale 30 y una morada ocasional resta 20 sin bajar el marcador de cero. Las especiales tienen símbolos propios y se separan por al menos dos lanzamientos normales. Durante la fase 4 los lanzamientos son un poco más frecuentes, rápidos y altos.
 - **Alternativas:** flechas o WASD para mover la nave; espacio, W o flecha arriba para saltar en Plataformas; arrastrar con el mouse para rebanar.
 - Los tres mejores resultados de cada juego muestran un nombre o apodo corto, introducido al entrar en la tabla. Todo se guarda solo en este navegador.
 - Mostrar una guía breve de colocación de la mano y una indicación visible de que el seguimiento está activo.

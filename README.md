@@ -42,12 +42,13 @@ Desde el menú, entra en **Mapa corporal** y pulsa **Activar cámara**. El detec
 
 ## Prototipo de rebanar fruta
 
-- Elige **Mouse**, **Teclado** o **Cámara** y pulsa **Empezar partida**. Cada ronda dura 45 segundos; cada fruta cortada suma 10 puntos. Al terminar puedes repetir.
+- Elige **Mouse**, **Teclado** o **Cámara** y pulsa **Empezar partida**. Cada ronda dura 45 segundos. La fruta común suma 10 puntos, la dorada con ✦ suma 30 y la morada con ✕ resta 20, sin bajar de cero. Al terminar puedes repetir.
 - Mouse: arrastra sobre las frutas. Teclado: mueve el círculo con flechas o WASD y mantén Espacio para cortar. Cámara: mueve uno o ambos índices con rapidez a través de las frutas.
 - La colisión comprueba todo el segmento entre dos posiciones consecutivas. Si el seguimiento pierde la mano, se reinicia ese segmento para evitar un corte falso al reaparecer.
 - La cámara se solicita solo al elegir ese control. Si se detiene durante la ronda, el teclado toma el control. También se apaga al cambiar de pestaña o cerrar la página.
 - Al activar la cámara, el tablero toma la proporción real del video. La fruta aparece con su centro en la línea inferior, sube casi hasta la línea superior y vuelve a bajar. Cada índice tiene su propio cursor y trayectoria; las coordenadas se convierten usando las posiciones reales del video y del canvas en pantalla.
-- La ronda empieza en nivel 1 y pasa automáticamente a nivel 2 después de 20 segundos: las frutas se mueven más rápido y aparecen con más frecuencia.
+- La ronda empieza en nivel 1 y pasa automáticamente a nivel 2 después de 20 segundos: las frutas se mueven más rápido y aparecen con más frecuencia. En el pulido de fase 4 se aumentaron ligeramente la frecuencia, la velocidad y la altura de todos los lanzamientos. Las dos frutas especiales aparecen ocasionalmente, con al menos dos lanzamientos normales entre ellas.
+- En modo cámara, cada índice deja una estela luminosa distinta: turquesa y rosa. La estela muestra también movimientos lentos; el corte sigue requiriendo un movimiento rápido. Mouse y teclado usan la estela turquesa.
 - Al terminar se guarda el número de partidas y las tres mejores puntuaciones en el almacenamiento local de este navegador. Si una puntuación entra en la tabla, se pide un nombre o apodo corto. Los récords previos sin nombre aparecen como **ANÓNIMO**. No se guardan imágenes ni video.
 
 El video y las posiciones se procesan solo en memoria del navegador. No se guardan ni se transmiten. El modelo y los archivos WebAssembly se sirven desde `public/mediapipe/`.
@@ -67,11 +68,11 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 
 ## Plataformas — fase 3
 
-- El personaje corre automáticamente por un recorrido provisional de huecos, obstáculos y meta. Con teclado se salta con Espacio, W o flecha arriba. Con cámara se juntan pulgar e índice para saltar y se separan antes de repetir.
+- El personaje corre automáticamente entre huecos, obstáculos y la meta. Con teclado se salta con Espacio, W o flecha arriba; con cámara se juntan pulgar e índice. Mantener la tecla o la pinza repite el salto al aterrizar; soltarlas detiene la repetición. Una pulsación breve produce un solo salto.
 - El primer choque o caída termina el intento. La puntuación es el porcentaje recorrido; llegar a la meta da 100 %. Se guardan las tres mejores marcas con nombre o apodo.
 - Los puntajes del prototipo anterior permanecen en el navegador bajo otra clave. La tabla de porcentaje empieza desde cero porque ambas puntuaciones no son comparables.
 
-**Comprobado durante la fase 3:** el personaje avanza solo, un choque termina el intento y el recorrido inicial podía superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. El usuario probó la pinza con la cámara real y confirmó que el salto se siente cómodo; alguna pinza puede perderse ocasionalmente, por lo que se mantiene el ajuste actual.
+**Comprobado durante la fase 3:** el personaje avanza solo, un choque termina el intento y el recorrido inicial podía superarse con ocho saltos de teclado hasta el 100 %. La tabla nueva guarda el porcentaje. El usuario probó la pinza con la cámara real y confirmó que el salto se siente cómodo. La repetición al mantenerla es un ajuste posterior de la fase 4.
 
 **Pulido de fase 4:** el recorrido dura unos 30 segundos y tiene 20 marcas de salto. Alterna picos, columnas elevadas, descensos y huecos con peligro visible; el tramo final exige saltar cada dos pulsos. La pieza instrumental original **Pulso de Acero** usa batería electrónica, bajo y sintetizadores con carácter rock a 128 BPM. Cada marca coincide con un acento musical y tiene una señal visible para jugar sin sonido. La música se genera localmente con Web Audio y se detiene al terminar o salir.
 
@@ -84,7 +85,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - `src/game-shell.css` presenta las pantallas de juego: tablero, controles, marcador, instrucciones y récords. Cada juego hereda una variante visual sin cambiar sus reglas ni el canvas.
 - `src/game-themes.css` contiene las variables visuales de cada tarjeta y de toda la pantalla exterior del juego: fondo, texto, botones, panel y superposición. Cambiar un tema aquí no modifica los dibujos del canvas.
 - `src/fruit-game.ts`, `src/ship-game.ts` y `src/platform-game.ts` contienen cada mecánica. Las tres escenas cumplen el contrato de `src/game-types.ts`.
-- `src/fruit-art.ts` dibuja manzana, pera, cítrico y fresa en bloques, cada una con una paleta propia. Estos colores pertenecen solo a Fruta; el arte está separado del radio de colisión y de las reglas del corte.
+- `src/fruit-art.ts` dibuja manzana, pera, cítrico, fresa y las dos frutas especiales en bloques, cada una con una paleta propia. `src/fruit-rules.ts` define sus puntos y la separación entre apariciones. El arte está separado del radio de colisión y de las reglas del corte.
 - `src/ship-art.ts` dibuja la nave y tres variantes de meteorito en bloques. La llama pulsa, la nave se inclina al moverse y los meteoritos giran; son animaciones visuales sobre las posiciones y colisiones de `src/ship-game.ts`.
 - `src/platform-art.ts` dibuja el bloque, los picos y el suelo geométrico de Plataformas. El bloque gira durante el salto; la física y las colisiones permanecen en `src/platform-game.ts`.
 - `src/platform-level.ts` define el recorrido y los pulsos de Plataformas; `src/sound.ts` usa esos mismos pulsos para la música original.

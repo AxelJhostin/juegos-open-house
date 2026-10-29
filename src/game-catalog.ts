@@ -38,9 +38,9 @@ export const GAMES = {
     controls: {
       mouse: 'Arrastra el mouse a través de las frutas para cortarlas.',
       keyboard: 'Mueve el círculo con flechas o WASD. Mantén Espacio para cortar al moverte.',
-      camera: 'Mueve uno o ambos índices a través de las frutas. Cada mano corta por separado.',
+      camera: 'Mueve uno o ambos índices a través de las frutas. Cada dedo deja una estela de color distinto y corta por separado.',
     },
-    intro: { title: 'Corta las frutas', text: 'Tienes 45 segundos. Cada fruta suma 10 puntos. Tras 20 segundos empieza el nivel 2.' },
+    intro: { title: 'Corta las frutas', text: 'Tienes 45 segundos. Fruta común +10, dorada ✦ +30 y morada ✕ −20. Tras 20 segundos empieza el nivel 2.' },
     hud: { label: 'Puntos', unit: '', initial: 0, countdown: 45, extraLabel: 'Nivel', extra: 1 },
     records: { key: 'pulso-pixel-fruta-records-v1', field: 'score', includeZero: false },
     recordsTitle: 'Mejores puntuaciones',
@@ -77,8 +77,8 @@ export const GAMES = {
     summary: 'Salta al pulso entre columnas, picos y huecos de un recorrido techno rock.',
     callToAction: 'Jugar plataformas →',
     controls: {
-      keyboard: 'El bloque avanza solo. Salta con Espacio, W o ↑ cuando la marca luminosa pasa bajo él. La música también marca el pulso.',
-      camera: 'Junta pulgar e índice cuando la marca luminosa pasa bajo el bloque; sepáralos antes del siguiente salto. Espacio también funciona.',
+      keyboard: 'El bloque avanza solo. Salta con Espacio, W o ↑; si mantienes la tecla, volverá a saltar al aterrizar. Las marcas y la música guían el pulso.',
+      camera: 'Junta pulgar e índice para saltar. Si mantienes la pinza, volverá a saltar al aterrizar; suéltala para detener los saltos. Espacio también funciona.',
     },
     intro: { title: 'Salta al pulso', text: 'Sigue Pulso de Acero: cada marca y acento musical anuncian un salto. Sube columnas, cruza huecos y esquiva picos; el final acelera.' },
     hud: { label: 'Progreso', unit: '%', initial: 0 },

@@ -34,3 +34,23 @@ export class PinchJumpControl {
     return { jump: false, ready: this.ready };
   }
 }
+
+// Plataformas conserva la pinza mientras los dedos siguen juntos; la histéresis
+// evita que un pequeño temblor del detector la suelte entre fotogramas.
+export class HeldPinchJumpControl {
+  private held = false;
+
+  get isHeld(): boolean { return this.held; }
+
+  reset(): void { this.held = false; }
+
+  sample(ratio: number | null): { pressed: boolean; held: boolean } {
+    if (ratio === null || !Number.isFinite(ratio)) this.held = false;
+    else if (ratio <= 0.42) {
+      const pressed = !this.held;
+      this.held = true;
+      return { pressed, held: true };
+    } else if (ratio >= 0.7) this.held = false;
+    return { pressed: false, held: this.held };
+  }
+}
