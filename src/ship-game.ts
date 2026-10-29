@@ -10,11 +10,12 @@ type Callbacks = { onHud(elapsedMs: number): void; onEnd(elapsedMs: number): voi
 
 export class ShipGame extends Phaser.Scene {
   private graphics?: Phaser.GameObjects.Graphics;
-  private keys?: Record<'left' | 'right' | 'a' | 'd', Phaser.Input.Keyboard.Key>;
+  private keys?: Record<'left' | 'right' | 'up' | 'down' | 'a' | 'd' | 'w' | 's', Phaser.Input.Keyboard.Key>;
   private fieldHeight = 540;
   private shipX = WIDTH / 2;
+  private shipY = this.fieldHeight * 0.84;
   private shipBank = 0;
-  private cameraX: number | null = null;
+  private cameraPoint: Point | null = null;
   private meteors: Meteor[] = [];
   private playing = false;
   private mode: ControlMode = 'keyboard';
@@ -34,19 +35,25 @@ export class ShipGame extends Phaser.Scene {
     const codes = Phaser.Input.Keyboard.KeyCodes;
     this.keys = {
       left: keyboard.addKey(codes.LEFT), right: keyboard.addKey(codes.RIGHT),
+      up: keyboard.addKey(codes.UP), down: keyboard.addKey(codes.DOWN),
       a: keyboard.addKey(codes.A), d: keyboard.addKey(codes.D),
+      w: keyboard.addKey(codes.W), s: keyboard.addKey(codes.S),
     };
-    keyboard.addCapture([codes.LEFT, codes.RIGHT]);
+    keyboard.addCapture([codes.LEFT, codes.RIGHT, codes.UP, codes.DOWN]);
   }
 
-  setFieldHeight(height: number): void { this.fieldHeight = height; }
+  setFieldHeight(height: number): void {
+    this.fieldHeight = height;
+    this.shipY = Phaser.Math.Clamp(this.shipY, 56, height - 56);
+  }
 
   startRound(mode: ControlMode): void {
     this.mode = mode;
     this.playing = true;
     this.shipX = WIDTH / 2;
+    this.shipY = this.fieldHeight * 0.84;
     this.shipBank = 0;
-    this.cameraX = null;
+    this.cameraPoint = null;
     this.meteors = [];
     this.elapsedMs = 0;
     this.tenthShown = 0;
@@ -56,7 +63,7 @@ export class ShipGame extends Phaser.Scene {
 
   switchToKeyboard(): void {
     this.mode = 'keyboard';
-    this.cameraX = null;
+    this.cameraPoint = null;
   }
 
   abortRound(): void {
@@ -69,8 +76,9 @@ export class ShipGame extends Phaser.Scene {
   setCameraPoints(points: Point[]): void {
     if (!this.playing || this.mode !== 'camera') return;
     const nearest = points.reduce<Point | null>((best, point) =>
-      !best || Math.abs(point.x - (this.cameraX ?? this.shipX)) < Math.abs(best.x - (this.cameraX ?? this.shipX)) ? point : best, null);
-    this.cameraX = nearest?.x ?? null;
+      !best || Math.hypot(point.x - (this.cameraPoint?.x ?? this.shipX), point.y - (this.cameraPoint?.y ?? this.shipY)) <
+        Math.hypot(best.x - (this.cameraPoint?.x ?? this.shipX), best.y - (this.cameraPoint?.y ?? this.shipY)) ? point : best, null);
+    this.cameraPoint = nearest;
   }
 
   update(_time: number, delta: number): void {
@@ -88,24 +96,30 @@ export class ShipGame extends Phaser.Scene {
       this.callbacks.onHud(this.elapsedMs);
     }
     const previousShipX = this.shipX;
-    if (this.mode === 'camera' && this.cameraX !== null) {
-      this.shipX += (this.cameraX - this.shipX) * Math.min(1, dt * 12);
+    const previousShipY = this.shipY;
+    if (this.mode === 'camera' && this.cameraPoint) {
+      const smoothing = Math.min(1, dt * 12);
+      this.shipX += (this.cameraPoint.x - this.shipX) * smoothing;
+      this.shipY += (this.cameraPoint.y - this.shipY) * smoothing;
     } else if (this.keys) {
-      const axis = Number(this.keys.right.isDown || this.keys.d.isDown) - Number(this.keys.left.isDown || this.keys.a.isDown);
-      this.shipX += axis * 500 * dt;
+      const axisX = Number(this.keys.right.isDown || this.keys.d.isDown) - Number(this.keys.left.isDown || this.keys.a.isDown);
+      const axisY = Number(this.keys.down.isDown || this.keys.s.isDown) - Number(this.keys.up.isDown || this.keys.w.isDown);
+      const length = Math.hypot(axisX, axisY) || 1;
+      this.shipX += axisX / length * 500 * dt;
+      this.shipY += axisY / length * 500 * dt;
     }
     this.shipX = Phaser.Math.Clamp(this.shipX, 36, WIDTH - 36);
+    this.shipY = Phaser.Math.Clamp(this.shipY, 56, this.fieldHeight - 56);
     const targetBank = dt > 0 ? Phaser.Math.Clamp((this.shipX - previousShipX) / dt / 500, -1, 1) * 0.1 : 0;
     this.shipBank += (targetBank - this.shipBank) * Math.min(1, dt * 10);
 
-    const shipY = this.fieldHeight * 0.84;
     for (const meteor of this.meteors) {
       meteor.y += meteor.vy * dt;
       meteor.angle += meteor.spin * dt;
     }
     const survivors: Meteor[] = [];
     for (const meteor of this.meteors) {
-      if (Math.hypot(meteor.x - this.shipX, meteor.y - shipY) < meteor.radius + 27) {
+      if (Math.hypot(meteor.x - this.shipX, meteor.y - this.shipY) < meteor.radius + 27) {
         this.playing = false;
         this.callbacks.onEngine(null);
         this.meteors = [];
@@ -114,11 +128,11 @@ export class ShipGame extends Phaser.Scene {
         this.callbacks.onEnd(Math.floor(this.elapsedMs));
         return;
       }
-      if (!meteor.warned && meteor.y > shipY - 155 && Math.abs(meteor.x - this.shipX) < 100) {
+      if (!meteor.warned && meteor.y < this.shipY && meteor.y > this.shipY - 155 && Math.abs(meteor.x - this.shipX) < 100) {
         meteor.warned = true;
         this.callbacks.onSound('warning');
       }
-      if (!meteor.passed && meteor.y > shipY + meteor.radius + 28) {
+      if (!meteor.passed && meteor.y > this.shipY + meteor.radius + 28) {
         meteor.passed = true;
         if (Math.abs(meteor.x - this.shipX) < 175) this.callbacks.onSound('meteorPass');
       }
@@ -143,12 +157,12 @@ export class ShipGame extends Phaser.Scene {
         passed: false,
       });
     }
-    this.callbacks.onEngine(Math.min(1, Math.abs(this.shipX - previousShipX) / Math.max(dt, 0.001) / 500));
-    this.draw(graphics, shipY);
+    this.callbacks.onEngine(Math.min(1, Math.hypot(this.shipX - previousShipX, this.shipY - previousShipY) / Math.max(dt, 0.001) / 500));
+    this.draw(graphics);
   }
 
-  private draw(graphics: Phaser.GameObjects.Graphics, shipY: number): void {
+  private draw(graphics: Phaser.GameObjects.Graphics): void {
     for (const meteor of this.meteors) drawMeteor(graphics, meteor);
-    drawShip(graphics, this.shipX, shipY, this.shipBank, this.elapsedMs / 1000);
+    drawShip(graphics, this.shipX, this.shipY, this.shipBank, this.elapsedMs / 1000);
   }
 }

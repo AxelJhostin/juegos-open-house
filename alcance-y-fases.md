@@ -23,14 +23,14 @@ La meta es una demo pequeña, clara y entretenida que podamos explicar y mantene
 
 ### Juegos
 
-1. **Nave:** movimiento lateral para esquivar meteoritos, hasta el primer choque; el tiempo sobrevivido es la puntuación. Los meteoritos aumentan en velocidad y frecuencia.
+1. **Nave:** movimiento en cuatro direcciones para esquivar meteoritos, hasta el primer choque; el tiempo sobrevivido es la puntuación. Los meteoritos aumentan en velocidad y frecuencia.
 2. **Plataformas:** avance automático por un recorrido lineal corto; una pinza o tecla activa el salto. El primer choque o caída termina el intento y se registra el porcentaje recorrido. Personaje y escenario originales. Sin objetos recolectables, jefes ni mundos adicionales.
 3. **Rebanar fruta:** ronda de tiempo limitado; la trayectoria del dedo corta frutas, suma puntos y puede crear combos. Se puede añadir una bomba como peligro. Sin niveles, tienda, desbloqueos ni campaña.
 
 ### Controles
 
-- Teclado: flechas o A/D para mover Nave; Espacio, W o flecha arriba para saltar en Plataformas. Instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
-- Cámara: Nave usa movimiento horizontal; Plataformas salta al juntar pulgar e índice y exige separarlos antes del siguiente salto; Rebanar fruta usa la trayectoria de uno o dos índices.
+- Teclado: flechas o WASD para mover Nave; Espacio, W o flecha arriba para saltar en Plataformas. Instrucciones visibles para empezar y repetir. No añadir menús de pausa si no hacen falta para la demo.
+- Cámara: Nave sigue el índice en horizontal y vertical; Plataformas salta al juntar pulgar e índice y exige separarlos antes del siguiente salto; Rebanar fruta usa la trayectoria de uno o dos índices.
 - Mouse: arrastrar para rebanar fruta.
 - Detectar hasta dos manos con el mismo modelo local. La lógica de cada juego decide si necesita una o ambas.
 - Mantener los controles alternativos aunque el modo cámara funcione.
@@ -105,7 +105,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Añadir el tercer gesto acordado en la pantalla de manos: un corazón con pulgar e índice y los demás dedos doblados activa una lluvia de corazones rosas, que termina suavemente al soltarlo.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
-- Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.
+- Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba. En Nave, permitir también el movimiento vertical con la mano y con flechas o WASD, manteniendo la supervivencia hasta el primer choque.
 - Probar con varias personas que no conocen el proyecto: observar si entienden cómo empezar y si quieren volver a jugar.
 - Verificar la demo en la laptop, el navegador y la pantalla que se usarán en el evento; verificar modo sin internet.
 - **Ajuste acordado:** ofrecer Modo pose en la pantalla de gestos, con cámara y animaciones a pantalla completa para que estudiantes fotografíen la pantalla con sus propios teléfonos. La aplicación no toma ni guarda fotos.

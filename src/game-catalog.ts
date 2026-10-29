@@ -57,8 +57,8 @@ export const GAMES = {
     summary: 'Esquiva meteoritos. Cada segundo que sobrevives cuenta.',
     callToAction: 'Jugar nave →',
     controls: {
-      keyboard: 'Mueve la nave con A/D o las flechas. Evita los meteoritos: el primer choque termina la partida.',
-      camera: 'Mueve una mano de izquierda a derecha para esquivar meteoritos. El primer choque termina la partida.',
+      keyboard: 'Mueve la nave en cuatro direcciones con WASD o las flechas. Evita los meteoritos: el primer choque termina la partida.',
+      camera: 'Mueve una mano a los lados, arriba y abajo para dirigir la nave. El primer choque termina la partida.',
     },
     intro: { title: 'Sobrevive', text: 'Esquiva meteoritos hasta el primer choque. Cada vez caen más y más rápido; tu tiempo es la puntuación.' },
     hud: { label: 'Tiempo', unit: 's', initial: 0 },

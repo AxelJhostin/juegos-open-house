@@ -58,7 +58,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 
 ## Nave espacial — fase 3
 
-- Elige **Nave** y **Teclado** o **Cámara**. Con teclado mueve la nave con A/D o flechas; con cámara mueve una mano horizontalmente.
+- Elige **Nave** y **Teclado** o **Cámara**. Con teclado mueve la nave en cuatro direcciones con WASD o flechas; con cámara mueve una mano a los lados, arriba y abajo. La nave permanece dentro del campo de juego.
 - Esquiva los meteoritos: el primer choque termina la partida. El tiempo sobrevivido es la puntuación; los meteoritos caen más rápido y con mayor frecuencia a medida que sobrevives.
 - Los tres mejores tiempos aparecen con nombre o apodo corto en una tabla local de estilo arcade. Si un tiempo entra en la tabla, puedes escribir hasta 10 caracteres. No se requiere cuenta y nada se envía a un servidor.
 - La tabla de tiempos empieza desde cero porque los puntos de la versión anterior no se pueden comparar con segundos. Las figuras siguen siendo provisionales.
