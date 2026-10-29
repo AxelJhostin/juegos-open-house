@@ -102,6 +102,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Añadir la pantalla explicativa acordada para visualizar los 21 puntos de una o dos manos con el detector existente, con activación y apagado explícitos de la cámara.
 - Mostrar en esa pantalla una técnica visual original activada solo por la postura acordada de dos manos, con la esfera centrada entre ambas, como demostración de detección de gestos.
 - Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
+- Añadir el tercer gesto acordado en la pantalla de manos: un corazón con pulgar e índice y los demás dedos doblados activa una lluvia de corazones rosas, que termina suavemente al soltarlo.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
 - Ajustar rangos de movimiento, calibración, dificultad y duración a partir de partidas de prueba.
@@ -109,6 +110,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Verificar la demo en la laptop, el navegador y la pantalla que se usarán en el evento; verificar modo sin internet.
 - **Ajuste acordado:** ofrecer Modo pose en la pantalla de gestos, con cámara y animaciones a pantalla completa para que estudiantes fotografíen la pantalla con sus propios teléfonos. La aplicación no toma ni guarda fotos.
 - **Ajuste acordado:** dar a Plataformas un recorrido más variado y una pieza instrumental original de techno rock. Los acentos musicales y las marcas visibles guían los saltos; se conserva la alternativa sin sonido.
+- **Ajuste acordado:** dejar la experiencia adicional como **Mapa corporal**. Seguir hasta tres cuerpos con un modelo local y dibujar los 33 puntos estimados y sus conexiones sobre cada persona; añadir encima los 21 puntos detallados de cada mano detectada, hasta seis manos. Permitir ampliar solo la superficie de cámara y puntos; no capturar, guardar ni transmitir fotos o video. Los filtros creativos se retiran por ahora y se decidirán después.
 
 **Salida:** los tres juegos se entienden sin explicación larga, no hay fallos que impidan jugar y una partida puede repetirse con rapidez.
 

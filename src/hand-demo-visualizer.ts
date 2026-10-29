@@ -5,6 +5,8 @@ import { drawEnergyOrb } from './hand-energy-art';
 import { drawMagicSeal } from './magic-art';
 import { drawHandLandmarks } from './hand-landmark-art';
 import { assignHandSlots, type HandSlots } from './hand-slots';
+import { heartPoseFromHands, type HeartPose } from './heart-gesture';
+import { HeartRainEffect } from './heart-rain-art';
 import type { SoundCue } from './sound';
 
 type EnergyState = 'idle' | 'charging' | 'active';
@@ -54,12 +56,21 @@ export class HandDemoVisualizer {
   private previousMagicLocations: HandSlots = [null, null];
   private lastMagicActive = -1;
   private lastMagicCharging = -1;
+  private heartPose: HeartPose | null = null;
+  private lastHeartAt = 0;
+  private heartSince = 0;
+  private heartX = 0;
+  private heartY = 0;
+  private heartWasActive = false;
+  private lastHeartState = '';
+  private readonly heartRain = new HeartRainEffect();
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onEnergy: (state: EnergyState, percent: number) => void,
     private readonly onMagic: (active: number, charging: number) => void,
+    private readonly onHeart: (state: 'idle' | 'charging' | 'active') => void,
     private readonly onSound: (cue: SoundCue) => void,
   ) {}
 
@@ -91,9 +102,16 @@ export class HandDemoVisualizer {
     this.previousMagicLocations = [null, null];
     this.lastMagicActive = -1;
     this.lastMagicCharging = -1;
+    this.heartPose = null;
+    this.lastHeartAt = 0;
+    this.heartSince = 0;
+    this.heartWasActive = false;
+    this.lastHeartState = '';
+    this.heartRain.reset();
     this.canvas.getContext('2d')?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.onEnergy('idle', 0);
     this.onMagic(0, 0);
+    this.onHeart('idle');
   }
 
   setLandmarks(hands: HandLandmarks): void {
@@ -102,8 +120,15 @@ export class HandDemoVisualizer {
     this.hands = hands;
     this.lastLandmarksAt = now;
     const aspectRatio = this.canvas.width / Math.max(1, this.canvas.height);
+    const heart = heartPoseFromHands(hands, aspectRatio);
+    if (heart) {
+      if (now - this.lastHeartAt > LOST_GRACE_MS) this.heartSince = now;
+      this.lastHeartAt = now;
+      this.heartPose = heart;
+    }
     const pose = energyPoseFromHands(hands, aspectRatio);
     if (pose) {
+      this.heartPose = null;
       if (now - this.lastPoseAt > LOST_GRACE_MS) this.poseSince = now;
       this.lastPoseAt = now;
       this.pose = pose;
@@ -227,6 +252,29 @@ export class HandDemoVisualizer {
       drawMagicSeal(context, { x: slot.x, y: slot.y, radius: slot.radius, charge: slot.charge, burst: slot.burst },
         this.reduceMotion ? 0 : now + index * 730);
     }
+    const heartHolding = visible && this.heartPose !== null && now - this.lastHeartAt < LOST_GRACE_MS;
+    const heartReady = heartHolding && now - this.heartSince >= 330;
+    if (heartHolding && this.heartPose) {
+      const targetX = (1 - this.heartPose.x) * this.canvas.width;
+      const targetY = this.heartPose.y * this.canvas.height;
+      const follow = 1 - Math.exp(-dt / 45);
+      if (!this.heartWasActive && now - this.heartSince < 60) {
+        this.heartX = targetX;
+        this.heartY = targetY;
+      } else {
+        this.heartX += (targetX - this.heartX) * follow;
+        this.heartY += (targetY - this.heartY) * follow;
+      }
+    }
+    if (heartReady && !this.heartWasActive) this.onSound('heart');
+    this.heartWasActive = heartReady;
+    this.heartRain.draw(context, heartReady, { x: this.heartX, y: this.heartY }, dt, now, this.reduceMotion);
+    const heartState = heartReady ? 'active' : heartHolding ? 'charging' : 'idle';
+    if (heartState !== this.lastHeartState) {
+      this.onHeart(heartState);
+      this.lastHeartState = heartState;
+    }
+    if (!heartHolding) this.heartPose = null;
     if (visible && !this.poseMode) drawHandLandmarks(this.canvas, this.hands, false);
 
     const state: EnergyState = active ? 'active' : holding ? 'charging' : 'idle';

@@ -5,6 +5,7 @@ import { normalizePlayerName, type Records } from './records';
 type ShellEvents = {
   chooseGame(id: GameId): void;
   openHandDemo(): void;
+  openFilterRoom(): void;
   returnHome(): void;
   play(): void;
   stopCamera(): void;
@@ -15,6 +16,8 @@ type ShellEvents = {
   changeControlMode(mode: ControlMode): void;
   togglePoseMode(): void;
   poseModeChanged(active: boolean): void;
+  startFilterRoom(): void;
+  stopFilterRoom(): void;
 };
 
 function required<T extends Element>(root: ParentNode, selector: string): T {
@@ -28,10 +31,24 @@ export class AppShell {
   readonly video: HTMLVideoElement;
   readonly handDemoVideo: HTMLVideoElement;
   readonly handDemoCanvas: HTMLCanvasElement;
+  readonly filterVideo: HTMLVideoElement;
+  readonly filterCanvas: HTMLCanvasElement;
   private readonly root: HTMLElement;
   private readonly home: HTMLElement;
   private readonly panel: HTMLElement;
   private readonly handDemo: HTMLElement;
+  private readonly filterRoom: HTMLElement;
+  private readonly filterBoard: HTMLElement;
+  private readonly filterStage: HTMLElement;
+  private readonly filterStart: HTMLButtonElement;
+  private readonly filterStop: HTMLButtonElement;
+  private readonly filterFullscreen: HTMLButtonElement;
+  private readonly filterFullscreenExit: HTMLButtonElement;
+  private readonly filterPlaceholder: HTMLElement;
+  private readonly filterStatus: HTMLElement;
+  private readonly filterStats: HTMLElement;
+  private readonly filterCount: HTMLElement;
+  private readonly bodyHandCount: HTMLElement;
   private readonly handDemoStage: HTMLElement;
   private readonly handDemoBoard: HTMLElement;
   private readonly handDemoFullscreenButton: HTMLButtonElement;
@@ -47,6 +64,7 @@ export class AppShell {
   private readonly handDemoEnergyFill: HTMLElement;
   private readonly handDemoEnergyProgress: HTMLElement;
   private readonly handDemoMagicStatus: HTMLElement;
+  private readonly handDemoHeartStatus: HTMLElement;
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
@@ -103,9 +121,10 @@ export class AppShell {
           <div class="hero-copy">
             <p class="hero-kicker"><span>01</span> EL MOVIMIENTO EMPIEZA AQUÍ</p>
             <h1 id="home-title"><span>PULSO</span><span>PIXEL<span class="hero-dot">.</span></span></h1>
-            <p class="home-intro">Tres retos para jugar con cámara o teclado. Elige tu desafío.</p>
-            <div class="hero-facts"><span><b>03</b> EXPERIENCIAS</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
+            <p class="home-intro">Tres juegos y una experiencia para descubrir los puntos del cuerpo. Elige tu desafío.</p>
+            <div class="hero-facts"><span><b>03</b> JUEGOS + MAPA CORPORAL</span><span>CÁMARA LOCAL</span><span>TECLADO DISPONIBLE</span></div>
             <button id="open-hand-demo" class="hand-demo-link" type="button"><span>✦ MIRA CÓMO FUNCIONA LA IA</span><span>Ver los puntos de tus manos ↗</span></button>
+            <button id="open-filter-room" class="hand-demo-link filter-link" type="button"><span>◈ MAPA CORPORAL</span><span>Descubre los puntos de hasta tres personas ↗</span></button>
           </div>
           <div class="hero-display" aria-hidden="true">
             <div class="display-top"><span>PP // SEÑAL ACTIVA</span><span>● ● ●</span></div>
@@ -171,7 +190,35 @@ export class AppShell {
               <div class="magic-hand-guide" aria-hidden="true"><span>ÍNDICE <b>↑</b></span><span>MEDIO <b>↓</b></span><span>ANULAR <b>↓</b></span><span>MEÑIQUE <b>↑</b></span></div>
               <p id="hand-demo-magic-status" class="magic-status" role="status" aria-live="polite">Haz el gesto con una o dos manos</p>
             </div>
+            <div class="side-panel hand-demo-heart">
+              <p class="side-kicker">05 / TERCER GESTO</p>
+              <strong>LLUVIA DE CORAZONES</strong>
+              <p>Con una mano, junta las puntas del pulgar y del índice formando un pequeño corazón. Dobla los otros tres dedos y mantén la seña un momento.</p>
+              <div class="heart-hand-guide" aria-hidden="true"><span>PULGAR + ÍNDICE <b>♡</b></span><span>OTROS DEDOS <b>↘</b></span></div>
+              <p id="hand-demo-heart-status" class="heart-status" role="status" aria-live="polite">Forma un corazón con los dedos</p>
+            </div>
             <p class="privacy">La IA estima posiciones, no identifica personas. El video se procesa aquí; no se guarda ni se transmite.</p>
+          </aside>
+        </div>
+      </section>
+      <section id="filter-room" class="filter-room" aria-labelledby="filter-title" hidden>
+        <div class="game-topbar"><button id="filter-menu" class="menu-button" type="button">← Menú principal</button><span class="game-brand">P / P <span>OPEN HOUSE // MAPA CORPORAL</span></span><button id="filter-fullscreen" class="sound-toggle" type="button">⛶ Ampliar cámara</button></div>
+        <header class="filter-header"><p class="eyebrow">PULSO PIXEL // UNA EXPERIENCIA EN VIVO</p><h1 id="filter-title">MAPA CORPORAL</h1><p>Primero observa los 33 puntos del cuerpo. Las manos muestran además 21 puntos detallados cada una.</p></header>
+        <div class="filter-layout">
+          <div id="filter-board" class="filter-board">
+            <div class="board-topline"><span>◈ CÁMARA Y PUNTOS</span><span id="filter-board-name">33 CUERPO · 21 MANO</span><button id="filter-fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
+            <div id="filter-stage" class="filter-stage">
+              <video id="filter-video" autoplay playsinline muted aria-label="Vista local de hasta tres personas con puntos corporales"></video>
+              <canvas id="filter-canvas" aria-hidden="true"></canvas>
+              <div id="filter-placeholder" class="filter-placeholder"><span aria-hidden="true">◈</span><strong>Activa la cámara para entrar</strong><p>Colócate a una distancia que muestre el cuerpo y la cara. No tomamos fotos.</p></div>
+              <div class="filter-caption" aria-hidden="true">PULSO PIXEL ◈ OPEN HOUSE</div>
+            </div>
+            <div class="status-row"><p id="filter-status" role="status" aria-live="polite">Cámara apagada</p><p id="filter-stats">Detección: —</p></div>
+          </div>
+          <aside class="filter-sidebar" aria-label="Controles del mapa corporal">
+            <div class="side-panel"><p class="side-kicker">01 / ACTIVA LA CÁMARA</p><button id="filter-start" type="button">Activar cámara</button><button id="filter-stop" type="button" hidden>Detener cámara</button><p id="filter-count" class="filter-count">0 personas detectadas</p></div>
+            <div class="side-panel"><p class="side-kicker">02 / OBSERVA LOS PUNTOS</p><strong>33 cuerpo · 21 por mano</strong><p id="body-hand-count">0 manos detectadas · máximo 6</p><p>Los puntos del cuerpo tienen un color por persona; los de las manos son amarillos. Aléjate para mostrar piernas y pies.</p></div>
+            <p class="privacy">La cámara se procesa aquí. La app no toma, guarda ni transmite fotos o video.</p>
           </aside>
         </div>
       </section>
@@ -233,9 +280,23 @@ export class AppShell {
     this.video = required(root, '#camera-video');
     this.handDemoVideo = required(root, '#hand-demo-video');
     this.handDemoCanvas = required(root, '#hand-demo-canvas');
+    this.filterVideo = required(root, '#filter-video');
+    this.filterCanvas = required(root, '#filter-canvas');
     this.home = required(root, '#home');
     this.panel = required(root, '#game-panel');
     this.handDemo = required(root, '#hand-demo');
+    this.filterRoom = required(root, '#filter-room');
+    this.filterBoard = required(root, '#filter-board');
+    this.filterStage = required(root, '#filter-stage');
+    this.filterStart = required(root, '#filter-start');
+    this.filterStop = required(root, '#filter-stop');
+    this.filterFullscreen = required(root, '#filter-fullscreen');
+    this.filterFullscreenExit = required(root, '#filter-fullscreen-exit');
+    this.filterPlaceholder = required(root, '#filter-placeholder');
+    this.filterStatus = required(root, '#filter-status');
+    this.filterStats = required(root, '#filter-stats');
+    this.filterCount = required(root, '#filter-count');
+    this.bodyHandCount = required(root, '#body-hand-count');
     this.handDemoStage = required(root, '#hand-demo-stage');
     this.handDemoBoard = required(root, '#hand-demo-board');
     this.handDemoFullscreenButton = required(root, '#hand-demo-fullscreen');
@@ -251,6 +312,7 @@ export class AppShell {
     this.handDemoEnergyFill = required(root, '#hand-demo-energy-fill');
     this.handDemoEnergyProgress = required(root, '#hand-demo-energy-progress');
     this.handDemoMagicStatus = required(root, '#hand-demo-magic-status');
+    this.handDemoHeartStatus = required(root, '#hand-demo-heart-status');
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
@@ -292,6 +354,12 @@ export class AppShell {
       card.addEventListener('click', () => events.chooseGame(card.dataset.game as GameId));
     }
     required<HTMLButtonElement>(root, '#open-hand-demo').addEventListener('click', events.openHandDemo);
+    required<HTMLButtonElement>(root, '#open-filter-room').addEventListener('click', events.openFilterRoom);
+    required<HTMLButtonElement>(root, '#filter-menu').addEventListener('click', events.returnHome);
+    this.filterStart.addEventListener('click', events.startFilterRoom);
+    this.filterStop.addEventListener('click', events.stopFilterRoom);
+    this.filterFullscreen.addEventListener('click', () => { void this.toggleFullscreen(this.filterBoard); });
+    this.filterFullscreenExit.addEventListener('click', () => { void document.exitFullscreen(); });
     required<HTMLButtonElement>(root, '#hand-demo-menu').addEventListener('click', events.returnHome);
     this.handDemoStart.addEventListener('click', events.startHandDemo);
     this.handDemoStop.addEventListener('click', events.stopHandDemo);
@@ -305,6 +373,7 @@ export class AppShell {
     this.fullscreenExitButton.addEventListener('click', () => { void document.exitFullscreen(); });
     this.fullscreenButton.hidden = !document.fullscreenEnabled;
     this.handDemoFullscreenButton.hidden = !document.fullscreenEnabled;
+    this.filterFullscreen.hidden = !document.fullscreenEnabled;
     document.addEventListener('fullscreenchange', () => {
       this.updateFullscreenButton();
       if (document.fullscreenElement !== this.handDemoBoard && this.isPoseMode) {
@@ -333,6 +402,7 @@ export class AppShell {
   get controlMode(): ControlMode { return this.modeSelect.value as ControlMode; }
   get isGameVisible(): boolean { return !this.panel.hidden; }
   get isHandDemoVisible(): boolean { return !this.handDemo.hidden; }
+  get isFilterVisible(): boolean { return !this.filterRoom.hidden; }
   get isPoseMode(): boolean { return this.handDemoBoard.classList.contains('pose-mode'); }
 
   private async toggleFullscreen(target: HTMLElement): Promise<void> {
@@ -340,13 +410,14 @@ export class AppShell {
       if (document.fullscreenElement === target) await document.exitFullscreen();
       else await target.requestFullscreen();
     } catch {
-      const button = target === this.gameBoard ? this.fullscreenButton : this.handDemoFullscreenButton;
+      const button = target === this.gameBoard ? this.fullscreenButton :
+        target === this.handDemoBoard ? this.handDemoFullscreenButton : this.filterFullscreen;
       button.textContent = 'Pantalla completa no disponible';
     }
   }
 
   exitFullscreen(): void {
-    if (document.fullscreenElement === this.gameBoard || document.fullscreenElement === this.handDemoBoard) {
+    if (document.fullscreenElement === this.gameBoard || document.fullscreenElement === this.handDemoBoard || document.fullscreenElement === this.filterBoard) {
       void document.exitFullscreen();
     }
   }
@@ -354,12 +425,16 @@ export class AppShell {
   private updateFullscreenButton(): void {
     const gameActive = document.fullscreenElement === this.gameBoard;
     const demoActive = document.fullscreenElement === this.handDemoBoard;
+    const filterActive = document.fullscreenElement === this.filterBoard;
     this.fullscreenButton.textContent = gameActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar juego';
     this.handDemoFullscreenButton.textContent = demoActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
     this.fullscreenButton.setAttribute('aria-pressed', String(gameActive));
     this.handDemoFullscreenButton.setAttribute('aria-pressed', String(demoActive));
+    this.filterFullscreen.textContent = filterActive ? '⛶ Salir de pantalla completa' : '⛶ Ampliar cámara';
+    this.filterFullscreen.setAttribute('aria-pressed', String(filterActive));
     this.fullscreenExitButton.hidden = !gameActive;
     this.handDemoFullscreenExit.hidden = !demoActive;
+    this.filterFullscreenExit.hidden = !filterActive;
   }
 
   enterPoseMode(): void {
@@ -392,12 +467,55 @@ export class AppShell {
     }
   }
 
+  showFilterRoom(): void {
+    delete this.root.dataset.game;
+    this.root.classList.remove('home-screen', 'hand-demo-screen');
+    this.root.classList.add('filter-screen');
+    this.home.hidden = true;
+    this.panel.hidden = true;
+    this.handDemo.hidden = true;
+    this.filterRoom.hidden = false;
+    this.setFilterActive(false);
+    this.setFilterStatus('Cámara apagada');
+    this.setFilterCount(0);
+    this.setBodyHandCount(0);
+    this.filterStats.textContent = 'Detección: —';
+  }
+
+  setFilterActive(active: boolean): void {
+    this.filterStage.classList.toggle('active', active);
+    this.filterPlaceholder.hidden = active;
+    this.filterStart.hidden = active;
+    this.filterStop.hidden = !active;
+  }
+
+  setFilterLaunching(launching: boolean): void { this.filterStart.disabled = launching; }
+  setFilterStatus(message: string): void { this.filterStatus.textContent = message; }
+  setFilterCount(count: number): void {
+    this.filterCount.textContent = `${count} ${count === 1 ? 'persona detectada' : 'personas detectadas'} · máximo 3`;
+  }
+  setBodyHandCount(count: number): void {
+    this.bodyHandCount.textContent = `${count} ${count === 1 ? 'mano detectada' : 'manos detectadas'} · máximo 6`;
+  }
+  setFilterStats(fps: number, duration: number): void {
+    this.filterStats.textContent = `Detección: ${fps} fps · ${duration.toFixed(0)} ms por imagen`;
+  }
+  clearFilterStats(): void { this.filterStats.textContent = 'Detección: —'; }
+  setFilterVideoSize(width: number, height: number): void {
+    this.filterStage.style.aspectRatio = `${width} / ${height}`;
+    this.filterBoard.style.setProperty('--surface-ratio', String(width / height));
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    this.filterCanvas.width = Math.round(width * pixelRatio);
+    this.filterCanvas.height = Math.round(height * pixelRatio);
+  }
   showHandDemo(): void {
     delete this.root.dataset.game;
     this.root.classList.remove('home-screen');
     this.root.classList.add('hand-demo-screen');
     this.home.hidden = true;
     this.panel.hidden = true;
+    this.filterRoom.hidden = true;
+    this.root.classList.remove('filter-screen');
     this.handDemo.hidden = false;
     this.handDemoStage.style.aspectRatio = '4 / 3';
     this.setHandDemoActive(false);
@@ -485,12 +603,19 @@ export class AppShell {
     if (this.handDemoMagicStatus.textContent !== message) this.handDemoMagicStatus.textContent = message;
   }
 
+  setHandDemoHeart(state: 'idle' | 'charging' | 'active'): void {
+    const message = state === 'active' ? '¡Lluvia de corazones!' :
+      state === 'charging' ? 'Sostén el corazón…' : 'Forma un corazón con los dedos';
+    if (this.handDemoHeartStatus.textContent !== message) this.handDemoHeartStatus.textContent = message;
+  }
+
   selectGame(id: GameId, records: Records): void {
     const game: GameDefinition = GAMES[id];
     this.currentGame = game;
     this.root.dataset.game = id;
     this.root.classList.remove('home-screen');
     this.root.classList.remove('hand-demo-screen');
+    this.root.classList.remove('filter-screen');
     this.panel.dataset.game = id;
     this.mouseOption.hidden = !game.controls.mouse;
     this.mouseOption.disabled = !game.controls.mouse;
@@ -522,6 +647,7 @@ export class AppShell {
     this.renderRecords(records);
     this.home.hidden = true;
     this.handDemo.hidden = true;
+    this.filterRoom.hidden = true;
     this.panel.hidden = false;
   }
 
@@ -530,11 +656,13 @@ export class AppShell {
     delete this.root.dataset.game;
     this.root.classList.add('home-screen');
     this.root.classList.remove('hand-demo-screen');
+    this.root.classList.remove('filter-screen');
     this.stage.classList.remove('playing');
     this.nameEntry.hidden = true;
     this.modeSelect.disabled = false;
     this.panel.hidden = true;
     this.handDemo.hidden = true;
+    this.filterRoom.hidden = true;
     this.home.hidden = false;
   }
 

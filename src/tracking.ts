@@ -18,10 +18,11 @@ export class HandTracker {
   private runId = 0;
   private active = false;
   private lastVideoTime = -1;
+  private lastDetectionAt = 0;
   private frameCount = 0;
   private rateStart = 0;
 
-  constructor(private video: HTMLVideoElement, private callbacks: Callbacks) {}
+  constructor(private video: HTMLVideoElement, private callbacks: Callbacks, private maxFps = 0) {}
 
   get isActive(): boolean { return this.active; }
 
@@ -59,6 +60,7 @@ export class HandTracker {
       }
       this.landmarker = landmarker;
       this.lastVideoTime = -1;
+      this.lastDetectionAt = 0;
       this.frameCount = 0;
       this.rateStart = performance.now();
       this.callbacks.onState('Cámara activa · buscando manos', true);
@@ -99,9 +101,13 @@ export class HandTracker {
 
   private detect(runId: number): void {
     if (runId !== this.runId || !this.landmarker) return;
-    if (this.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && this.video.currentTime !== this.lastVideoTime) {
+    const now = performance.now();
+    if (this.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+      this.video.currentTime !== this.lastVideoTime &&
+      (!this.maxFps || now - this.lastDetectionAt >= 1000 / this.maxFps)) {
       try {
-        const started = performance.now();
+        const started = now;
+        this.lastDetectionAt = started;
         const result = this.landmarker.detectForVideo(this.video, started);
         const duration = performance.now() - started;
         this.callbacks.onLandmarks?.(result.landmarks);

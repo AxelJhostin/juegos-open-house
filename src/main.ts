@@ -11,11 +11,14 @@ import { cameraPointOnCanvas } from './camera-coordinates';
 import { addResult, loadRecords, nameResult, saveRecords, type Records } from './records';
 import { SoundEffects } from './sound';
 import { RestartGesture } from './restart-gesture';
+import { PoseTracker } from './pose-tracking';
+import { BodyLandmarkVisualizer } from './body-landmarks';
 import './style.css';
 import './game-themes.css';
 import './home.css';
 import './game-shell.css';
 import './hand-demo.css';
+import './filter-room.css';
 
 const WIDTH = 960;
 const HEIGHT = 540;
@@ -32,6 +35,7 @@ const sound = new SoundEffects();
 const shell = new AppShell(root, {
   chooseGame: selectGame,
   openHandDemo,
+  openFilterRoom,
   returnHome,
   play: () => { void play(); },
   stopCamera: () => tracker.stop(),
@@ -61,6 +65,8 @@ const shell = new AppShell(root, {
     }
   },
   poseModeChanged: (active) => handDemoVisualizer.setPoseMode(active),
+  startFilterRoom: () => { void startFilterRoom(); },
+  stopFilterRoom,
 });
 shell.setSoundEnabled(sound.isEnabled);
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
@@ -105,6 +111,7 @@ let pendingRank: number | null = null;
 let lastResult = 0;
 let launchId = 0;
 let handDemoLaunchId = 0;
+let filterLaunchId = 0;
 let detectedHands = 0;
 const restartGesture = new RestartGesture();
 let cameraReplayReady = false;
@@ -179,6 +186,7 @@ const tracker = new HandTracker(shell.video, {
 const handDemoVisualizer = new HandDemoVisualizer(shell.handDemoCanvas,
   (state, percent) => shell.setHandDemoEnergy(state, percent),
   (active, charging) => shell.setHandDemoMagic(active, charging),
+  (state) => shell.setHandDemoHeart(state),
   (cue) => sound.play(cue));
 
 const handDemoTracker = new HandTracker(shell.handDemoVideo, {
@@ -200,11 +208,69 @@ const handDemoTracker = new HandTracker(shell.handDemoVideo, {
     shell.setHandDemoHands(hands.length);
   },
   onStats(fps, duration): void { shell.setHandDemoStats(fps, duration); },
+}, 30);
+
+const bodyVisualizer = new BodyLandmarkVisualizer(shell.filterCanvas);
+const filterTracker = new PoseTracker(shell.filterVideo, {
+  onState(message, active): void {
+    shell.setFilterStatus(message);
+    if (!active) {
+      bodyVisualizer.stop();
+      shell.setFilterActive(false);
+      shell.setFilterLaunching(false);
+      shell.setFilterCount(0);
+      shell.setBodyHandCount(0);
+      shell.clearFilterStats();
+    }
+  },
+  onLandmarks(poses, hands): void {
+    bodyVisualizer.setLandmarks(poses, hands);
+    shell.setFilterCount(poses.length);
+    shell.setBodyHandCount(hands.length);
+  },
+  onStats(fps, duration): void { shell.setFilterStats(fps, duration); },
 });
+
+function openFilterRoom(): void {
+  setGameplayKeyboardEnabled(false);
+  active.scene.abortRound();
+  tracker.stop();
+  stopHandDemo();
+  shell.showFilterRoom();
+}
+
+async function startFilterRoom(): Promise<void> {
+  if (filterTracker.isActive) return;
+  const thisLaunch = ++filterLaunchId;
+  shell.setFilterLaunching(true);
+  void sound.unlock();
+  await filterTracker.start();
+  if (thisLaunch !== filterLaunchId || !shell.isFilterVisible) {
+    filterTracker.stop();
+    shell.setFilterLaunching(false);
+    return;
+  }
+  if (filterTracker.isActive) {
+    shell.setFilterVideoSize(shell.filterVideo.videoWidth, shell.filterVideo.videoHeight);
+    bodyVisualizer.start();
+    shell.setFilterActive(true);
+  }
+  shell.setFilterLaunching(false);
+}
+
+function stopFilterRoom(): void {
+  ++filterLaunchId;
+  filterTracker.stop();
+  bodyVisualizer.stop();
+  shell.setFilterActive(false);
+  shell.setFilterLaunching(false);
+  shell.exitFullscreen();
+}
 
 function openHandDemo(): void {
   setGameplayKeyboardEnabled(false);
   tracker.stop();
+  stopFilterRoom();
   shell.showHandDemo();
 }
 
@@ -244,6 +310,7 @@ function selectGame(id: GameId): void {
   cameraReplayReady = false;
   restartGesture.reset();
   stopHandDemo();
+  stopFilterRoom();
   launchId++;
   pendingRank = null;
   active = sessions[id];
@@ -260,6 +327,7 @@ function returnHome(): void {
   active.scene.abortRound();
   tracker.stop();
   stopHandDemo();
+  stopFilterRoom();
   shell.showHome();
 }
 
@@ -329,6 +397,7 @@ document.addEventListener('visibilitychange', () => {
     sound.stopPlatformMusic();
     tracker.stop();
     stopHandDemo();
+    stopFilterRoom();
   }
 });
 window.addEventListener('pagehide', () => {
@@ -336,4 +405,5 @@ window.addEventListener('pagehide', () => {
   sound.stopPlatformMusic();
   tracker.stop();
   stopHandDemo();
+  stopFilterRoom();
 });

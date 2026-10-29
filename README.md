@@ -31,6 +31,15 @@ En cualquier juego, **Ampliar juego** pone solo el tablero en pantalla completa,
 
 En la pantalla de gestos, **Ampliar cámara** muestra solo la superficie del video y las animaciones. Después de activar la cámara, **Modo pose** amplía esa superficie y oculta los puntos de seguimiento; Vórtice Pixel y Sello Arcano siguen reaccionando a las manos. Los asistentes pueden fotografiar la pantalla con sus teléfonos. La aplicación no captura, guarda ni envía fotos.
 
+Una tercera seña, el corazón formado con pulgar e índice y los otros dedos doblados, provoca una lluvia de corazones rosas mientras se mantiene. La animación se desvanece al soltar la mano y también funciona en Modo pose.
+Para reducir la carga, los corazones con brillo se preparan una sola vez y la detección de esta pantalla se limita a 30 imágenes por segundo; los controles de los juegos conservan su frecuencia anterior.
+
+## Mapa corporal — fase 4
+
+Desde el menú, entra en **Mapa corporal** y pulsa **Activar cámara**. El detector corporal local puede seguir hasta tres personas a la vez y dibuja los 33 puntos estimados de cada una, junto con sus conexiones. Encima aparecen los 21 puntos detallados de cada mano detectada, hasta seis manos, en amarillo. Todo usa la misma cámara y se procesa localmente. Para ver piernas y pies, aléjate hasta que todo el cuerpo entre en la imagen.
+
+**Ampliar cámara** muestra únicamente el video y los puntos a pantalla completa. **Detener cámara**, volver al menú o cambiar de pestaña libera la cámara. La aplicación no toma fotos; cada asistente puede fotografiar la pantalla con su propio teléfono. El modelo corporal se sirve desde `public/mediapipe/models/` y el video se procesa solo en memoria del navegador. Los filtros creativos quedaron para una decisión posterior.
+
 ## Prototipo de rebanar fruta
 
 - Elige **Mouse**, **Teclado** o **Cámara** y pulsa **Empezar partida**. Cada ronda dura 45 segundos; cada fruta cortada suma 10 puntos. Al terminar puedes repetir.
@@ -80,6 +89,7 @@ El video y las posiciones se procesan solo en memoria del navegador. No se guard
 - `src/platform-art.ts` dibuja el bloque, los picos y el suelo geométrico de Plataformas. El bloque gira durante el salto; la física y las colisiones permanecen en `src/platform-game.ts`.
 - `src/platform-level.ts` define el recorrido y los pulsos de Plataformas; `src/sound.ts` usa esos mismos pulsos para la música original.
 - `src/tracking.ts` se ocupa de la cámara; `src/records.ts` guarda y lee los tres mejores resultados de cada juego sin alterar las claves locales existentes.
+- `src/pose-tracking.ts` obtiene hasta tres poses y seis manos del mismo video; `src/body-landmarks.ts` dibuja los 33 puntos del cuerpo y los 21 de cada mano sobre un canvas reflejado junto al video.
 - `src/main.ts` conecta esas piezas y administra la partida activa. No construye el HTML ni define los textos de presentación.
 
 Para añadir otro minijuego al proyecto en el futuro: crear una escena que cumpla `PlayableScene`, añadir su entrada a `GAMES`, registrarla en `sessions` en `main.ts` y definir su tema en `game-themes.css`. Esto describe la estructura; no amplía el alcance de la demo actual.
