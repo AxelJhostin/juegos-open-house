@@ -1,6 +1,7 @@
 import { GAME_ORDER, GAMES, type GameDefinition, type GameId } from './game-catalog';
 import type { ControlMode } from './game-types';
 import { normalizePlayerName, type Records } from './records';
+import type { RainbowState } from './rainbow-gesture';
 
 type ShellEvents = {
   chooseGame(id: GameId): void;
@@ -65,6 +66,7 @@ export class AppShell {
   private readonly handDemoEnergyProgress: HTMLElement;
   private readonly handDemoMagicStatus: HTMLElement;
   private readonly handDemoHeartStatus: HTMLElement;
+  private readonly handDemoRainbowStatus: HTMLElement;
   private readonly modeSelect: HTMLSelectElement;
   private readonly mouseOption: HTMLOptionElement;
   private readonly playButton: HTMLButtonElement;
@@ -197,6 +199,13 @@ export class AppShell {
               <div class="heart-hand-guide" aria-hidden="true"><span>PULGAR + ÍNDICE <b>♡</b></span><span>OTROS DEDOS <b>↘</b></span></div>
               <p id="hand-demo-heart-status" class="heart-status" role="status" aria-live="polite">Forma un corazón con los dedos</p>
             </div>
+            <div class="side-panel hand-demo-rainbow">
+              <p class="side-kicker">06 / CUARTO GESTO</p>
+              <strong>ARCO PRISMA</strong>
+              <p>Levanta dos manos abiertas en la parte alta de la cámara. Júntalas un momento y ábrelas hacia los lados para desplegar el arcoíris.</p>
+              <div class="rainbow-hand-guide" aria-hidden="true"><span>MANOS JUNTAS</span><i>↖ ◡ ↗</i><span>ABRE A LOS LADOS</span></div>
+              <p id="hand-demo-rainbow-status" class="rainbow-status" role="status" aria-live="polite">Junta dos manos abiertas arriba</p>
+            </div>
             <p class="privacy">La IA estima posiciones, no identifica personas. El video se procesa aquí; no se guarda ni se transmite.</p>
           </aside>
         </div>
@@ -313,6 +322,7 @@ export class AppShell {
     this.handDemoEnergyProgress = required(root, '#hand-demo-energy-progress');
     this.handDemoMagicStatus = required(root, '#hand-demo-magic-status');
     this.handDemoHeartStatus = required(root, '#hand-demo-heart-status');
+    this.handDemoRainbowStatus = required(root, '#hand-demo-rainbow-status');
     this.modeSelect = required(root, '#control-mode');
     this.mouseOption = required(this.modeSelect, 'option[value="mouse"]');
     this.playButton = required(root, '#play-button');
@@ -522,6 +532,7 @@ export class AppShell {
     this.setHandDemoStatus('Cámara apagada');
     this.setHandDemoHands(0);
     this.setHandDemoMagic(0, 0);
+    this.setHandDemoRainbow('idle');
     this.handDemoStats.textContent = 'Detección: —';
   }
 
@@ -607,6 +618,13 @@ export class AppShell {
     const message = state === 'active' ? '¡Lluvia de corazones!' :
       state === 'charging' ? 'Sostén el corazón…' : 'Forma un corazón con los dedos';
     if (this.handDemoHeartStatus.textContent !== message) this.handDemoHeartStatus.textContent = message;
+  }
+
+  setHandDemoRainbow(state: RainbowState): void {
+    const message = state === 'active' ? '¡Arco Prisma activo!' :
+      state === 'opening' ? 'Abriendo el arco…' :
+        state === 'ready' ? '¡Ahora sepáralas!' : 'Junta dos manos abiertas arriba';
+    if (this.handDemoRainbowStatus.textContent !== message) this.handDemoRainbowStatus.textContent = message;
   }
 
   selectGame(id: GameId, records: Records): void {

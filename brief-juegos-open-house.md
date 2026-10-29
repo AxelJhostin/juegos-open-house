@@ -40,6 +40,7 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 - En esa pantalla, una postura de dos manos (una arriba y otra abajo, con los dedos extendidos en sentidos opuestos) activa una esfera de energía original situada entre ambas. Esto muestra cómo el código convierte los puntos estimados en un gesto y un efecto visual.
 - Un segundo gesto original, índice y meñique extendidos con medio y anular doblados, activa un sello mágico por mano; puede aparecer en una o en las dos manos a la vez.
 - Un tercer gesto de una mano, inspirado en el corazón formado con pulgar e índice, activa una lluvia animada de corazones rosas que se desvanece al soltar la seña.
+- Un cuarto gesto usa dos manos abiertas en la parte alta de la cámara: se acercan un momento y luego se separan para desplegar un arcoíris animado original entre ellas. El efecto se apaga suavemente al bajar o perder las manos.
 - Fruta dura alrededor de 45 segundos. Plataformas tiene intentos cortos que terminan al chocar, caer o llegar a la meta. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** usar hasta dos manos con el mismo detector local. Nave y Plataformas admiten una; Fruta acepta uno o dos índices.
 - **Nave:** la posición del índice en la cámara dirige la nave en dos ejes.

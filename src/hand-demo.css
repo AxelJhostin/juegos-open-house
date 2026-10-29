@@ -93,6 +93,13 @@
 .heart-hand-guide span { display: grid; gap: 2px; justify-items: center; padding: 7px 3px; border: 1px solid #cf6ea6; background: #3a1231; color: #ffe0ee; font-size: 9px; font-weight: 900; }
 .heart-hand-guide b { color: #ff9bcb; font-size: 23px; line-height: 1; }
 .heart-status { min-height: 18px; color: #ffc3e1; font-weight: 800; text-transform: uppercase; }
+.hand-demo-rainbow { background: #16394f; color: #f4fbff; border-color: #7fdcd6; }
+.hand-demo-rainbow .side-kicker { color: #9be8dd; }
+.hand-demo-rainbow strong { color: #ffe990; font-size: 17px; letter-spacing: .04em; }
+.hand-demo-rainbow p:not(.side-kicker) { margin: 0; font-size: 12px; line-height: 1.45; }
+.rainbow-hand-guide { display: grid; gap: 4px; justify-items: center; padding: 9px; border: 1px dashed #92d8dc; background: #0c2a42; color: #d5f6f7; font-size: 9px; font-weight: 900; letter-spacing: .06em; }
+.rainbow-hand-guide i { color: #ffe990; font-size: 24px; font-style: normal; line-height: 1; }
+.rainbow-status { min-height: 18px; color: #ffe990; font-weight: 800; text-transform: uppercase; }
 
 @media (max-width: 960px) {
   .hand-demo-layout { grid-template-columns: 1fr; }
@@ -100,6 +107,7 @@
   .hand-demo-energy { grid-column: 1 / -1; }
   .hand-demo-magic { grid-column: 1 / -1; }
   .hand-demo-heart { grid-column: 1 / -1; }
+  .hand-demo-rainbow { grid-column: 1 / -1; }
   .hand-demo-sidebar .privacy { grid-column: 1 / -1; }
 }
 
@@ -110,5 +118,6 @@
   .hand-demo-energy { grid-column: auto; }
   .hand-demo-magic { grid-column: auto; }
   .hand-demo-heart { grid-column: auto; }
+  .hand-demo-rainbow { grid-column: auto; }
   .hand-demo-sidebar .privacy { grid-column: auto; }
 }

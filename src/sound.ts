@@ -1,7 +1,7 @@
 import { PLATFORM_BEAT_SECONDS, PLATFORM_JUMP_CUES } from './platform-level';
 
 export type SoundCue = 'start' | 'slice' | 'level' | 'roundEnd' | 'warning' | 'crash' |
-  'meteorPass' | 'jump' | 'land' | 'goal' | 'energy' | 'energyClose' | 'magic' | 'heart';
+  'meteorPass' | 'jump' | 'land' | 'goal' | 'energy' | 'energyClose' | 'magic' | 'heart' | 'rainbow';
 
 type Voice = { wave: OscillatorType; from: number; to: number; duration: number; volume: number; delay?: number; filterHz?: number };
 
@@ -212,6 +212,12 @@ export class SoundEffects {
         for (const [index, pitch] of [659, 784, 988, 1318].entries()) {
           this.tone({ wave: 'sine', from: pitch, to: pitch * 1.015, duration: 0.26,
             volume: 0.12, delay: index * 0.085 });
+        }
+        break;
+      case 'rainbow':
+        for (const [index, pitch] of [523, 659, 784, 988, 1175].entries()) {
+          this.tone({ wave: 'triangle', from: pitch * 0.97, to: pitch,
+            duration: 0.27, volume: 0.11, delay: index * 0.075 });
         }
         break;
     }

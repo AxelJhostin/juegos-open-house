@@ -32,6 +32,8 @@ En cualquier juego, **Ampliar juego** pone solo el tablero en pantalla completa,
 En la pantalla de gestos, **Ampliar cámara** muestra solo la superficie del video y las animaciones. Después de activar la cámara, **Modo pose** amplía esa superficie y oculta los puntos de seguimiento; Vórtice Pixel y Sello Arcano siguen reaccionando a las manos. Los asistentes pueden fotografiar la pantalla con sus teléfonos. La aplicación no captura, guarda ni envía fotos.
 
 Una tercera seña, el corazón formado con pulgar e índice y los otros dedos doblados, provoca una lluvia de corazones rosas mientras se mantiene. La animación se desvanece al soltar la mano y también funciona en Modo pose.
+
+**Arco Prisma:** levanta dos manos abiertas en la parte alta de la cámara, júntalas un momento y sepáralas hacia los lados. Un arcoíris original se despliega entre ellas, las sigue mientras permanecen abiertas y se desvanece al bajarlas. Funciona también en Modo pose y tiene un sonido breve generado en el navegador.
 Para reducir la carga, los corazones con brillo se preparan una sola vez y la detección de esta pantalla se limita a 30 imágenes por segundo; los controles de los juegos conservan su frecuencia anterior.
 
 ## Mapa corporal — fase 4

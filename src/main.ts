@@ -187,6 +187,7 @@ const handDemoVisualizer = new HandDemoVisualizer(shell.handDemoCanvas,
   (state, percent) => shell.setHandDemoEnergy(state, percent),
   (active, charging) => shell.setHandDemoMagic(active, charging),
   (state) => shell.setHandDemoHeart(state),
+  (state) => shell.setHandDemoRainbow(state),
   (cue) => sound.play(cue));
 
 const handDemoTracker = new HandTracker(shell.handDemoVideo, {

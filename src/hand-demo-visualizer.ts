@@ -7,6 +7,8 @@ import { drawHandLandmarks } from './hand-landmark-art';
 import { assignHandSlots, type HandSlots } from './hand-slots';
 import { heartPoseFromHands, type HeartPose } from './heart-gesture';
 import { HeartRainEffect } from './heart-rain-art';
+import { RainbowGesture, type RainbowSample, type RainbowState } from './rainbow-gesture';
+import { RainbowArcEffect } from './rainbow-art';
 import type { SoundCue } from './sound';
 
 type EnergyState = 'idle' | 'charging' | 'active';
@@ -64,6 +66,11 @@ export class HandDemoVisualizer {
   private heartWasActive = false;
   private lastHeartState = '';
   private readonly heartRain = new HeartRainEffect();
+  private readonly rainbowGesture = new RainbowGesture();
+  private readonly rainbowArc = new RainbowArcEffect();
+  private rainbowSample: RainbowSample = { state: 'idle', pose: null, progress: 0 };
+  private rainbowWasActive = false;
+  private lastRainbowState: RainbowState = 'idle';
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
@@ -71,6 +78,7 @@ export class HandDemoVisualizer {
     private readonly onEnergy: (state: EnergyState, percent: number) => void,
     private readonly onMagic: (active: number, charging: number) => void,
     private readonly onHeart: (state: 'idle' | 'charging' | 'active') => void,
+    private readonly onRainbow: (state: RainbowState) => void,
     private readonly onSound: (cue: SoundCue) => void,
   ) {}
 
@@ -108,10 +116,16 @@ export class HandDemoVisualizer {
     this.heartWasActive = false;
     this.lastHeartState = '';
     this.heartRain.reset();
+    this.rainbowGesture.reset();
+    this.rainbowArc.reset();
+    this.rainbowSample = { state: 'idle', pose: null, progress: 0 };
+    this.rainbowWasActive = false;
+    this.lastRainbowState = 'idle';
     this.canvas.getContext('2d')?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.onEnergy('idle', 0);
     this.onMagic(0, 0);
     this.onHeart('idle');
+    this.onRainbow('idle');
   }
 
   setLandmarks(hands: HandLandmarks): void {
@@ -120,6 +134,7 @@ export class HandDemoVisualizer {
     this.hands = hands;
     this.lastLandmarksAt = now;
     const aspectRatio = this.canvas.width / Math.max(1, this.canvas.height);
+    this.rainbowSample = this.rainbowGesture.sample(hands, aspectRatio, now);
     const heart = heartPoseFromHands(hands, aspectRatio);
     if (heart) {
       if (now - this.lastHeartAt > LOST_GRACE_MS) this.heartSince = now;
@@ -214,6 +229,16 @@ export class HandDemoVisualizer {
     if (!holding) this.pose = null;
 
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const rainbowState = visible ? this.rainbowSample.state : 'idle';
+    const rainbowSample = visible ? this.rainbowSample : { state: 'idle' as const, pose: null, progress: 0 };
+    this.rainbowArc.draw(context, rainbowSample, dt, now, this.reduceMotion);
+    const rainbowActive = rainbowState === 'active';
+    if (rainbowActive && !this.rainbowWasActive) this.onSound('rainbow');
+    this.rainbowWasActive = rainbowActive;
+    if (rainbowState !== this.lastRainbowState) {
+      this.onRainbow(rainbowState);
+      this.lastRainbowState = rainbowState;
+    }
     drawEnergyOrb(context, { x: this.x, y: this.y, radius: this.radius, charge: this.visualCharge,
       burst: this.burst, closing: holding ? 0 : this.closing },
       this.reduceMotion ? 0 : now);
