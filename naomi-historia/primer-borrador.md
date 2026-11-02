@@ -96,6 +96,24 @@ Por ahora.
 
 Eso bastó para que el cansancio la venciera otra vez.
 
+El cuidado de las hermanas no terminó cuando volvió a dormirse.
+
+La despertaban solo para que bebiera agua o probara unas cucharadas de comida. Si el dolor de la espalda le impedía moverse, la ayudaban a incorporarse con una delicadeza que a Naomi le resultaba casi insoportable. No porque le hicieran daño, sino porque no estaba acostumbrada a necesitarlo.
+
+En su mundo siempre había sabido hacerse cargo de sí misma. Podía atravesar caminos largos, subir por calles empinadas, aprender el uso de una herramienta nueva o pasar horas ayudando donde hiciera falta. Ahora apenas lograba sostener un vaso sin que le temblaran los dedos.
+
+El primer día que intentó levantarse sola, una de las hermanas la encontró de pie junto a la cama, aferrada al marco de madera. Naomi había llegado a dar dos pasos antes de que sus piernas cedieran. La hermana la sostuvo sin regañarla. Solo negó con la cabeza, señaló la cama y, después, señaló el amanecer que entraba por la ventana, como si le prometiera que habría otro momento para intentarlo.
+
+Naomi quiso discutir. No tenía palabras que ellas entendieran y, de todos modos, la paciencia de aquella mujer le quitó las fuerzas para hacerlo.
+
+Con el paso de los días, empezaron a entenderse con pequeños rituales. Las hermanas señalaban los objetos y repetían sus nombres: agua, pan, ventana, descansar. Naomi los escuchaba con atención y los repetía hasta que la pronunciación les arrancaba una sonrisa. Ella respondía enseñándoles algunas palabras de su lengua, aunque las mujeres no podían reproducir todos los sonidos. A veces terminaban riendo sin comprenderse del todo.
+
+Esa risa fue lo primero que hizo que el cuarto dejara de sentirse como una prisión.
+
+También cuidaban sus alas sin convertirlas en un espectáculo. Cuando debían cambiar las vendas o lavar la tela que rozaba su espalda, cerraban la puerta y apartaban los ojos hasta que Naomi les indicaba que podían acercarse. Nunca le pedían que las extendiera. Nunca le preguntaban si podía volar. Su curiosidad existía —Naomi la veía en las pausas, en las miradas que se detenían un segundo más de la cuenta—, pero elegían la compasión antes que las respuestas.
+
+Una mañana, cuando por fin pudo caminar hasta el pasillo, encontró un pequeño jardín detrás del convento. Había macetas, plantas medicinales y montañas extendiéndose más allá de los muros. Una hermana caminó a su lado sin apurarla, preparada para sostenerla si caía. Naomi no sabía el nombre de aquel lugar ni entendía aún la vida que ocurría detrás de sus paredes, pero sintió algo parecido a un refugio.
+
 Durante los primeros días, el mundo regresó en fragmentos. La luz entrando por la ventana. Una voz que repetía las mismas palabras, tal vez su nombre o tal vez una pregunta. Agua. Comida. Sueño. El dolor de intentar sentarse demasiado pronto y la mano firme de una hermana indicándole que descansara.
 
 Naomi odiaba la debilidad de su propio cuerpo. Quería levantarse, encontrar una salida, buscar el castillo, buscar a su familia. Pero cada intento terminaba con el mismo vacío bajo la piel y el mismo temblor en las alas.
@@ -132,7 +150,7 @@ La energía que antes había vivido bajo su piel era apenas un eco. Quiso llamar
 
 Detrás de ella, sus alas dolían.
 
-Monse giró lo suficiente para verlas. No eran las alas negras que conocía. Aquellas se habían reducido a dos formas débiles, pequeñas y desordenadas, pegadas a su espalda. Las miró con una mezcla de rabia y miedo. Si aquello podía pasarle a ella, ¿qué habría pasado con sus hermanas? ¿Con Noé?
+Monse giró lo suficiente para verlas. No eran las alas negras que conocía. Aquellas se habían reducido a dos formas débiles, pequeñas y desordenadas, pegadas a su espalda. Las miró con una mezcla de rabia y miedo. Si aquello podía pasarle a ella, ¿qué habría pasado con sus hermanos?
 
 Intentó pronunciar sus nombres. La voz se le rompió antes de salir completa.
 
@@ -448,13 +466,11 @@ Naomi y Monse se acercaron.
 
 La transmisión mostraba una estructura de piedra semienterrada en una zona seca y apartada. Había investigadores humanos alrededor, cintas de seguridad y cámaras. Un reportero hablaba frente a un arco cubierto de símbolos. La imagen tembló cuando enfocó una pared interior llena de estantes caídos.
 
-Naomi dejó caer la taza que llevaba.
+Naomi se quedó inmóvil con la taza entre las manos. Sus dedos se cerraron un poco más alrededor del barro y el borde chocó apenas contra el plato al dejarla sobre la mesa.
 
-El sonido del barro rompiéndose hizo que todas la miraran.
+Monse fue la primera en notarlo. Vio cómo se tensaban los hombros de Naomi antes de mirar de nuevo la pantalla.
 
-—No —susurró.
-
-Monse se inclinó hacia la pantalla.
+—¿Qué pasa? —preguntó en voz baja.
 
 —¿Qué pasa?
 
