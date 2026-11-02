@@ -972,11 +972,13 @@ La sintió como una verdad.
 
 La transmisión interrumpió el entrenamiento.
 
-No fue una noticia local ni una alerta común. Todos los teléfonos del convento vibraron al mismo tiempo. La televisión de la sala se encendió sola con una señal que mostraba un cielo gris sobre una ciudad que Naomi no reconoció.
+No fue una noticia local ni una alerta común. Desde aquella mañana, canales de distintos países habían anunciado una presentación internacional convocada por una comisión recién formada, sin explicar quién la dirigía ni qué iba a revelar. A la hora señalada, todos los teléfonos del convento vibraron y la televisión de la sala se encendió con una señal compartida.
+
+Mostraba un cielo gris sobre una ciudad que Naomi no reconoció. La plaza estaba acordonada desde hacía horas. Había cámaras, equipos de transmisión, pantallas preparadas para mostrar traducciones y autoridades esperando frente a un espacio vacío. Alguien había planeado cada detalle.
 
 Personas de todo el mundo estaban viendo lo mismo.
 
-En medio de una plaza rodeada de cámaras, el aire se abrió.
+Entonces, en medio de la plaza, el aire se abrió.
 
 No hubo trueno. No hubo fuego. Solo una línea de luz que se ensanchó hasta formar un portal tan grande que el edificio más cercano quedó pequeño a su lado.
 
