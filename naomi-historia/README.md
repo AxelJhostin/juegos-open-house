@@ -33,12 +33,13 @@ No añadimos ideas nuevas durante una revisión sin anotarlas primero. Esto evit
 ## Archivos actuales
 
 - `biblia-narrativa.md`: fuente de verdad para el mundo, personajes, reglas, capítulos, arcos emocionales y decisiones pendientes.
-- `primer-borrador.md`: prosa inicial del primer libro. Es editable y todavía se revisará; no representa una versión final.
+- `primer-borrador.md`: respaldo cerrado de la primera versión completa del libro.
+- `segundo-borrador.md`: versión de trabajo para las ampliaciones y mejoras aprobadas durante la revisión. Por ahora incorpora la revisión de los capítulos 12 y 13.
 - `README.md`: esta guía de propósito y proceso.
 
 ## Estado actual
 
-La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro.
+La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro. El segundo borrador está en marcha en un archivo separado.
 
 El próximo paso, cuando decidamos retomarlo, será una revisión estructural y un segundo borrador: ampliar solo las escenas que lo necesiten, pulir diálogos, ritmo y coherencia, sin cambiar la base acordada.
 
