@@ -1280,6 +1280,10 @@ La fortaleza-jardín apareció al final de un sendero cubierto de vegetación. P
 
 —Parece un jardín que decidió defenderse —respondió Monse.
 
+Naomi recorrió con la mirada los muros cubiertos de hojas y los espacios abiertos entre las torres. Recordó haber visto construcciones parecidas en viejos libros de viaje: lugares donde delegaciones de distintos reinos podían descansar sin entrar en territorio ajeno. No estaban hechos para encerrar a nadie. Estaban hechos para que personas distintas pudieran encontrarse sin miedo.
+
+—Tal vez primero fue un jardín —dijo—. Y aprendió a proteger a quienes llegaban.
+
 El talismán de Monse vibró primero.
 
 Dentro encontraron un corredor abierto hacia el vacío. Varias plataformas de piedra flotaban a distancias irregulares, unidas por puentes incompletos. Al otro lado, dos pares de botas descansaban bajo una cúpula de raíces.
@@ -1314,6 +1318,20 @@ Naomi asintió.
 
 Avanzaron. Naomi levantaba el escudo cuando una plataforma temblaba; Monse señalaba las sombras que podían sostener un paso más. Cuando una grieta se abrió entre ellas, Naomi extendió una barrera corta y Monse saltó sin mirar abajo.
 
+En el siguiente tramo, la sombra que Monse había calculado se movió antes de que pudiera llegar. Su pie encontró aire. Naomi la vio caer y reaccionó por instinto, pero Monse ya había clavado la punta de la lanza entre dos piedras. La barrera de Naomi sostuvo el golpe contra el vacío el tiempo suficiente para que Monse volviera a subir.
+
+—¿Estás bien? —preguntó Naomi, demasiado rápido.
+
+Monse respiró una vez antes de responder.
+
+—Sí. Y la derecha ya no es más rápida.
+
+Naomi quiso disculparse por haber tenido razón. En lugar de eso, extendió la mano.
+
+—Entonces vamos juntas.
+
+Monse la tomó solo un instante, hasta recuperar el equilibrio.
+
 Al llegar a la cúpula, el alivio duró poco.
 
 Dos humanos corrompidos salieron entre las raíces. No tenían la rigidez de los atacantes del archivo. Se movían con más coordinación, como si alguien hubiera aprendido de las veces anteriores.
@@ -1323,6 +1341,12 @@ Dos humanos corrompidos salieron entre las raíces. No tenían la rigidez de los
 Naomi sintió el peso de esas palabras.
 
 La pelea fue breve y difícil. Naomi protegió el espacio entre las raíces para que nadie cayera al barranco. Monse usó la guadaña como lanza para obligar a los atacantes a mantener distancia. Ninguna quiso herir más de lo necesario. Cuando uno de ellos cayó, la energía corrupta volvió a parpadear y el hombre quedó inmóvil, respirando como si despertara de una pesadilla.
+
+El otro intentó levantarse otra vez. Naomi bloqueó su golpe con el escudo y, en vez de responder con la espada, usó el borde para apartarlo hacia una zona segura. Monse golpeó detrás de sus rodillas con el extremo de la lanza. El hombre cayó sin llegar al barranco y la corrupción abandonó sus ojos por un instante.
+
+—No quiero que se acostumbren a esto —dijo Naomi, mirando a los dos cuerpos inconscientes.
+
+—Yo tampoco —respondió Monse—. Por eso tenemos que terminarlo.
 
 Las botas respondieron al final.
 
@@ -1350,7 +1374,7 @@ No regresaron al convento de inmediato. La siguiente señal las condujo hacia Ga
 
 Naomi lo agradeció.
 
-El mar rodeaba la isla con un azul profundo. El viento llevaba sal y el suelo oscuro guardaba el calor del día. Monse caminaba más despacio que de costumbre, mirando el paisaje con una atención que no quería admitir.
+El mar rodeaba la isla con un azul profundo. El viento llevaba sal y el suelo oscuro guardaba el calor del día. Monse caminaba más despacio que de costumbre, mirando el paisaje con una atención que no quería admitir. Habían aceptado las reglas que les explicaron antes de entrar: seguir el sendero marcado, no mover piedras ni tocar nada que no perteneciera al observatorio. La ruina era importante, pero la isla no era suya para reclamarla.
 
 —Es hermoso —dijo al fin.
 
@@ -1370,6 +1394,8 @@ Naomi sonrió apenas.
 
 —Parece que sí.
 
+Naomi recordó las noches de su mundo en las que miraba la Vía Láctea desde una terraza, preguntándose qué habría detrás de las historias de otros reinos. Entonces no imaginaba que un cielo conocido podía conducirla a una Tierra tan distinta. Por primera vez, el recuerdo no la dejó solo triste. También le recordó que siempre había querido conocer más allá de su propio camino.
+
 Dentro, una abertura en el techo mostraba el cielo. Varios espejos de metal estaban orientados hacia el mar y hacia las nubes. En el centro, dos capas antiguas descansaban sobre una plataforma rodeada de mecanismos.
 
 Monse dio un paso hacia ellas.
@@ -1386,6 +1412,8 @@ Monse miró los símbolos.
 
 Trabajaron con paciencia. Naomi usó la luz del escudo para reflejar un rayo hacia una marca concreta. Monse se movía entre las sombras de los espejos, ajustando piezas sin bloquear la trayectoria. Cada corrección exigía volver a empezar. Cada error las obligaba a respirar antes de intentarlo otra vez.
 
+Cuando Naomi quería forzar una pieza para terminar más rápido, Monse le señalaba la línea que el rayo debía seguir. Cuando Monse se frustraba al ver que una sombra no alcanzaba el mecanismo, Naomi sostenía el escudo un segundo más para darle cobertura. No era una prueba de fuerza. Era una prueba de atención.
+
 Cuando por fin el último espejo encajó, la alarma se apagó.
 
 Una sombra se movió junto a la entrada.
@@ -1394,7 +1422,9 @@ Una proyección mágica cruzó el umbral, seguida por una figura humana corrompi
 
 Naomi levantó una barrera frente al metal. Monse desapareció en la sombra de un espejo y reapareció detrás del atacante humano, obligándolo a girar. No necesitaban destruir el lugar para defenderlo. Solo necesitaban usarlo mejor que quienes habían venido a dañarlo.
 
-La proyección cayó cuando Naomi desvió su energía hacia uno de los conductos vacíos. El humano quedó inconsciente después de que Monse le quitara el apoyo de las piernas con la guadaña.
+La proyección lanzó un segundo golpe. Naomi lo recibió con el escudo y la luz de la barrera comprimió su forma contra una pared de roca. Antes de que pudiera reconstruirse, Monse cruzó por la sombra de un espejo y atravesó con la lanza el centro donde el humo volvía a condensarse. La proyección se deshizo en un destello apagado.
+
+El humano quedó inconsciente después de que Monse le quitara el apoyo de las piernas con la guadaña.
 
 Las capas despertaron.
 
@@ -1407,6 +1437,12 @@ La capa de Monse era oscura, con un borde rojo como el de su talismán. Al coloc
 Naomi miró el reflejo apagarse.
 
 —Muy tú.
+
+—No sé si eso fue un cumplido.
+
+—Lo fue.
+
+Naomi extendió la capa una vez más antes de seguir. El viento levantó el borde claro y, durante unos segundos, sintió sus alas responder bajo la tela con un poco menos de dolor. No era volar. Pero era volver a confiar en el aire.
 
 Al salir, ambas contemplaron el mar por un momento.
 
