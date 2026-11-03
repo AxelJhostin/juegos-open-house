@@ -35,11 +35,14 @@ No añadimos ideas nuevas durante una revisión sin anotarlas primero. Esto evit
 - `biblia-narrativa.md`: fuente de verdad para el mundo, personajes, reglas, capítulos, arcos emocionales y decisiones pendientes.
 - `primer-borrador.md`: respaldo cerrado de la primera versión completa del libro.
 - `segundo-borrador.md`: versión completa de trabajo. Incorpora las ampliaciones aprobadas y una primera revisión de estilo, sin cambiar la trama ni las decisiones de la biblia narrativa.
+- `Alas-de-mundos-rotos.docx`: edición en Word de *Alas de mundos rotos*, de Hernández Axel, con portada, contenido navegable y capítulos separados.
+- `plan-edicion-ilustrada.md`: plan de portada e ilustraciones interiores para una futura edición ilustrada, sin alterar el texto de la novela.
+- `herramientas/crear_edicion_lectura.py`: herramienta para regenerar la edición de lectura a partir del segundo borrador, sin reescribir el texto.
 - `README.md`: esta guía de propósito y proceso.
 
 ## Estado actual
 
-La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro.
+La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro. El libro se titula *Alas de mundos rotos* y está firmado por Hernández Axel. También existe una edición de lectura en Word para guardar, leer y compartir el segundo borrador sin sustituir su fuente editable.
 
 El segundo borrador también está completo: amplía los capítulos que más lo necesitaban y ya pasó una primera revisión de estilo. Tiene aproximadamente 20 800 palabras, por lo que sigue siendo una novela corta y ágil.
 
