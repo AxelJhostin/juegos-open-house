@@ -38,7 +38,9 @@ No añadimos ideas nuevas durante una revisión sin anotarlas primero. Esto evit
 
 ## Estado actual
 
-La biblia narrativa y la escaleta de 26 capítulos del primer libro están completas. El primer borrador también está completo y ya empezó la primera ampliación: el capítulo 1 incorpora con más detalle la pérdida de las alas de Naomi y el cuidado de las hermanas.
+La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro.
+
+El próximo paso, cuando decidamos retomarlo, será una revisión estructural y un segundo borrador: ampliar solo las escenas que lo necesiten, pulir diálogos, ritmo y coherencia, sin cambiar la base acordada.
 
 ## Regla principal
 
