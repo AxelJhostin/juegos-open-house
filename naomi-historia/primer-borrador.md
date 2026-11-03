@@ -1192,21 +1192,15 @@ Naomi levantó el escudo. El golpe de energía la obligó a retroceder dos pasos
 
 —No tiene cuerpo —dijo Naomi.
 
-—Entonces hay que romper lo que la sostiene.
+—Pero vuelve a tomar forma —respondió Monse—. No dejemos que lo haga.
 
-Monse señaló las líneas de energía que corrían desde los pedestales hasta la figura. Naomi entendió.
+Naomi corrió hacia el lado opuesto de la sala, obligando a la proyección a seguirla. El escudo recibió otro golpe. Esta vez, Naomi no intentó resistirlo por completo; se movió, dejó que el impacto la empujara y abrió espacio para Monse.
 
-Corrió hacia el lado opuesto de la sala, obligando a la proyección a seguirla. El escudo recibió otro golpe. Esta vez, Naomi no intentó resistirlo por completo; se movió, dejó que el impacto la empujara y abrió espacio para Monse.
+Monse cambió la guadaña a lanza y atravesó con una estocada el punto donde el humo se condensaba con más fuerza. La figura se abrió, pero trató de cerrarse otra vez.
 
-Monse cambió la guadaña a lanza. Lanzó una estocada contra una de las líneas que alimentaban a la criatura.
+Naomi llegó antes. El escudo apartó uno de sus brazos y la espada trazó un corte de luz directo a aquel centro inestable.
 
-La sala tembló.
-
-La figura giró hacia ella.
-
-Naomi levantó el escudo entre las dos. La luz del sello solar creció, apenas, pero lo suficiente para que Monse alcanzara la segunda línea.
-
-Cuando la rompió, la proyección se deshizo en un remolino de humo y brillo apagado.
+La proyección se quebró en un remolino de humo y brillo apagado.
 
 El silencio volvió.
 
@@ -1424,7 +1418,7 @@ Monse miró a los enemigos inconscientes.
 
 —Nunca lo fue.
 
-Las hombreras y los guanteletes respondieron con una luz baja. Sobre Naomi, las piezas se acomodaron como parte de una armadura que no pesaba. Al levantar la espada, una línea de sol recorrió la hoja. No era un poder inmenso, pero podía cortar la energía corrupta que protegía ciertos obstáculos.
+Las hombreras y los guanteletes respondieron con una luz baja. Sobre Naomi, las piezas se acomodaron como parte de una armadura que no pesaba. Al levantar la espada, una línea de sol recorrió la hoja. No era un poder inmenso, pero volvía sus cortes capaces de quebrar barreras corrompidas y deshacer proyecciones débiles.
 
 En Monse, los guanteletes se ajustaron a sus manos. La guadaña cambió de forma con más facilidad y precisión. Ya no tenía que luchar contra ella para usar una lanza o una hoja larga; el arma empezaba a seguir su intención.
 
@@ -1542,13 +1536,13 @@ Naomi sostuvo el escudo hasta que los brazos le ardieron. Cada vez que el ángel
 
 No podían vencer por separado.
 
-Monse lo entendió antes. Dejó un señuelo de sombra al borde de la plataforma. La demonio lo siguió, convencida de que era ella. Naomi elevó una barrera justo cuando el ángel atacó, desviando su golpe hacia un pilar vacío. La torre entera tembló.
+Monse lo entendió antes. Dejó un señuelo de sombra al borde de la plataforma. La demonio lo siguió, convencida de que era ella. Naomi elevó una barrera justo cuando el ángel atacó, desviando su golpe hacia un pilar vacío. Aprovechó el hueco y trazó con la espada un corte solar contra el suelo frente a él. La luz quebró la piedra y lo obligó a retroceder hacia la ruta que Monse había preparado. La torre entera tembló.
 
 —¡Ahora! —gritó Naomi.
 
-Monse cambió la guadaña a una hoja larga y cortó las líneas de energía corrupta que rodeaban a los dos seguidores. No los destruyó. Pero rompió la ventaja que les daba aquella magia robada.
+Monse cambió la guadaña a una hoja larga y lanzó un barrido de sombras contra las piernas de los dos seguidores. No los destruyó, pero quebró su postura y apagó por un instante el brillo corrupto de sus armas. El ángel recibió el golpe de lleno y cayó de rodillas; la demonio retrocedió, furiosa.
 
-El ángel cayó de rodillas. La demonio retrocedió, furiosa, y lanzó una última sombra hacia los collares.
+La demonio lanzó una última sombra hacia los collares.
 
 Naomi llegó antes.
 
@@ -1564,7 +1558,11 @@ Monse recibió una respuesta distinta, pero igual de intensa. Sus alas negras se
 
 Las dos levantaron los pies del suelo.
 
-No volaron lejos. Apenas unos metros. Pero el aire las sostuvo.
+Al principio, Naomi se aferró al aire con la misma incertidumbre con la que había tocado sus alas reducidas en el convento. Después abrió las alas por completo. El viento de la Patagonia pasó bajo las plumas y la sostuvo sin esfuerzo. No era un salto ni un planeo: podía subir, girar y elegir hacia dónde ir.
+
+Monse ascendió a su lado con un movimiento más brusco, probando la fuerza nueva de sus alas negras. Dio una vuelta completa alrededor del vacío de la atalaya y volvió con una sonrisa breve, sorprendida de haberla dejado escapar.
+
+Volaban de verdad.
 
 En el centro de la atalaya, una última inscripción se iluminó. Mostraba un plano del complejo de Buenos Aires y una ruta oculta hacia una zona inferior: el núcleo.
 
@@ -1602,7 +1600,7 @@ La mujer volvió a mirar el edificio, aterrada.
 
 El control regresó antes de que pudieran hacer más. Pero ahora sabían que podía romperse, aunque solo fuera por instantes.
 
-Usaron esas brechas para avanzar. Naomi levantaba barreras cortas que ocultaban su paso. Monse dejaba señuelos de sombra para atraer a los guardias controlados hacia direcciones vacías. Cuando las rutas se cerraban, planeaban desde un techo a otro, usando las alas sin llamar demasiado la atención.
+Usaron esas brechas para avanzar. Naomi levantaba barreras cortas que ocultaban su paso. Monse dejaba señuelos de sombra para atraer a los guardias controlados hacia direcciones vacías. Cuando las rutas se cerraban, volaban de un techo a otro, usando las alas sin llamar demasiado la atención.
 
 Las proyecciones eran más difíciles.
 
@@ -1770,7 +1768,7 @@ Naomi miró las columnas. Los conductos. Las plataformas superiores.
 
 Monse entendió.
 
-Naomi corrió hacia la izquierda. Bruno la siguió de inmediato, convencido de que el escudo era la amenaza principal. Ella bloqueó dos golpes, se impulsó con las botas y planeó hasta una plataforma baja. El ángel golpeó una columna al intentar alcanzarla.
+Naomi corrió hacia la izquierda. Bruno la siguió de inmediato, convencido de que el escudo era la amenaza principal. Ella bloqueó dos golpes, se impulsó con las botas y alzó vuelo hasta una plataforma baja. Antes de aterrizar, lanzó un corte de luz contra una unión metálica sobre él. Bruno golpeó una columna al intentar alcanzarla.
 
 El conducto cercano tembló.
 
@@ -1784,9 +1782,7 @@ Cada golpe suyo abría otra ruta. Naomi desviaba su atención; Monse transformab
 
 Bruno cayó varios metros, atrapado entre vigas y metal doblado.
 
-No murió. Naomi lo sabía. Era demasiado fuerte para eso.
-
-Pero por primera vez, no podía levantarse a tiempo.
+No murió. Naomi lo sabía. Era demasiado fuerte para eso. Pero el golpe contra la estructura lo dejó inmóvil. Desde el borde del hueco, alcanzó a ver que su pecho seguía subiendo y bajando: estaba vivo, pero inconsciente.
 
 Monse llegó junto a ella, respirando con dificultad.
 
@@ -1798,7 +1794,7 @@ Naomi miró hacia el hueco.
 
 Monse soltó una risa breve, casi incrédula.
 
-Juntas, cruzaron la puerta circular antes de que Bruno pudiera volver a ponerse de pie.
+Juntas, cruzaron la puerta circular antes de que pudiera despertar.
 
 ## Capítulo 23 — La cacería
 
@@ -1856,7 +1852,7 @@ Por primera vez, la sonrisa de Mara desapareció.
 
 —Nunca dijimos que no pensábamos —respondió Monse.
 
-Mara retrocedió, buscando otra sombra. Naomi y Monse se movieron al mismo tiempo. Una la encerró con luz; la otra le quitó el suelo con una onda oscura. Mara cayó contra una pared y quedó aturdida.
+Mara retrocedió, buscando otra sombra. Naomi y Monse se movieron al mismo tiempo. Naomi alzó vuelo sobre la pasarela y descendió con la espada envuelta en luz, cerrando la única ruta de escape de Mara sin alcanzarla. Monse le quitó el suelo con una onda oscura. Mara cayó contra una pared y quedó aturdida.
 
 No tuvieron tiempo de celebrar.
 
@@ -1968,7 +1964,7 @@ Vera salió de las sombras con el rostro tenso.
 
 Las dos atacaron juntas.
 
-Naomi levantó una barrera para romper los reflejos donde Vera se escondía. Monse usó la guadaña para cortar las líneas de energía que alimentaban las ilusiones. Cuando Vera intentó crear una nueva visión, los talismanes brillaron a la vez.
+Naomi levantó una barrera que atravesó los reflejos donde Vera se escondía y los hizo estallar como vidrio. Monse se desplazó por la única sombra que quedó en pie y golpeó a Vera con el mango de la guadaña antes de que pudiera crear otra visión. Cuando Vera intentó levantarse, los talismanes brillaron a la vez.
 
 Esta vez, ninguna miró.
 
@@ -2054,7 +2050,7 @@ Caelum se detuvo. Por primera vez, la seguridad dejó su rostro.
 
 —¿Qué hicieron?
 
-Monse no respondió. Se lanzó hacia una de las columnas de energía y clavó la guadaña en la línea corrupta. Naomi puso el escudo entre ellas y Caelum. La luz del sello solar se extendió, no para atacar, sino para sostener el espacio que Monse necesitaba.
+Monse no respondió. Se lanzó hacia una de las columnas de energía y clavó la guadaña en uno de los conductos principales que la alimentaban. Naomi puso el escudo entre ellas y Caelum. La luz del sello solar se extendió, no para atacar, sino para sostener el espacio que Monse necesitaba.
 
 El núcleo perdió un latido.
 
@@ -2066,7 +2062,7 @@ No necesitaba estar libre de miedo.
 
 Necesitaba actuar.
 
-Naomi se impulsó con las botas, planeó sobre el golpe de Caelum y cayó frente a Monse. El escudo bloqueó una ráfaga; la espada trazó un arco de luz sobre la última línea que protegía el núcleo.
+Naomi se impulsó con las botas y alzó vuelo sobre el golpe de Caelum. Cruzó la sala bajo las sombras de sus alas, cayó frente a Monse y bloqueó una ráfaga con el escudo. Luego la espada trazó un arco de luz sobre la última línea que protegía el núcleo.
 
 Monse terminó el movimiento.
 
@@ -2175,3 +2171,55 @@ Salvarían a todas las personas que pudieran.
 Recuperarían sus mundos.
 
 Y quienes los habían destruido tendrían que responder por ello.
+
+## Epílogo — El camino sigue
+
+Tres semanas después, Naomi volvió a caminar por el jardín del convento.
+
+La primera vez que lo había visto apenas podía sostenerse en pie. Las montañas que rodeaban el edificio le habían parecido enormes y desconocidas; las plantas, los senderos y las voces de las hermanas habían sido las únicas cosas firmes en un mundo que se había roto.
+
+Ahora el mismo jardín seguía allí.
+
+Una hermana acomodaba unas macetas cerca de la pared. Otra llevaba una bandeja de tazas hacia la cocina. Cuando Naomi y Monse habían regresado, las mujeres no hicieron preguntas antes de abrazarlas. Habían visto las noticias, habían escuchado versiones confusas sobre Buenos Aires y sabían que algo terrible había terminado. Pero esperaron hasta que ellas pudieron contar lo necesario.
+
+Noé también tuvo un lugar en esas conversaciones.
+
+No como una noticia ni como un sacrificio útil para una historia que otros contarían. Para Monse fue su hermano menor: el que creyó una mentira porque quería volver a casa, el que resistió porque no dejó de pensar en sus hermanas y el que, al final, eligió ayudar cuando ya casi no le quedaba fuerza.
+
+Naomi se sentó junto a ella bajo la sombra de un árbol.
+
+—¿Cómo estás? —preguntó en español. Ya no necesitaba pensar cada palabra antes de decirla.
+
+Monse tardó en responder.
+
+—No bien —dijo al fin—. Pero sigo aquí.
+
+Naomi asintió. No intentó corregirla.
+
+Desde Buenos Aires llegaban noticias cada día. Las personas liberadas empezaban a dar testimonio. Los supervivientes rescatados necesitaban atención, refugio y tiempo para recuperar sus fuerzas. La mentira de Caelum ya no podía ocultarse, aunque el mundo todavía discutiera cómo nombrar lo que había ocurrido y qué hacer con los portales que quedaban cerrados.
+
+Las comunidades que habían ayudado a personas aladas también comenzaron a encontrarse entre sí. No tenían todas las respuestas, pero ya no estaban solas ni dispersas del mismo modo.
+
+Monse apretó el talismán rojo entre los dedos.
+
+—Noé dijo que ellas siguen vivas.
+
+—Las vamos a encontrar.
+
+—Y a tu familia.
+
+Naomi miró el cielo claro sobre la Sierra. Pensó en Elian, en Liora y en Ayla. Aún no sabía dónde estaban. Aún podía temer lo peor. Pero ahora el miedo no la dejaba inmóvil.
+
+—Sí —dijo—. A todos los que podamos.
+
+Se levantaron al mismo tiempo.
+
+Las alas de Naomi se abrieron, claras y enormes, recogiendo la luz de la mañana. Las de Monse desplegaron negro y rojo contra el cielo. No lo hicieron para impresionar a nadie ni para escapar del dolor. Las abrieron porque ya podían sostenerse.
+
+Las hermanas las miraron desde el jardín. Una de ellas levantó una mano en despedida; otra sonrió con los ojos húmedos. Naomi y Monse respondieron al gesto.
+
+Luego alzaron vuelo sobre las montañas.
+
+No sabían cuánto tardaría la reconstrucción ni cuántas respuestas hallarían al volver a sus mundos. Pero tenían un rumbo, tenían memoria y se tenían la una a la otra.
+
+Por primera vez desde el destello, el futuro no pareció una caída.

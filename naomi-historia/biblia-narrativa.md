@@ -374,7 +374,7 @@ La primera expedición las lleva a un paso montañoso aislado de Perú, donde un
 1. **La altura.** Naomi y Monse siguen el mapa hasta un paso montañoso aislado de Perú. El frío, la altura y el camino difícil revelan que todavía no tienen la resistencia que necesitarán.
 2. **El santuario de viajeros.** Encuentran un fragmento de sus mundos: un refugio construido para guiar a quienes cruzaban rutas peligrosas. Naomi reconoce detalles de su cultura; Monse identifica otros que pertenecen al suyo.
 3. **La prueba del camino.** Para acceder al centro deben resolver un mecanismo que exige cooperación: una abre una ruta mientras la otra sostiene una protección o mantiene activa una señal.
-4. **Un peón sin cuerpo.** Una proyección mágica, creada por la corrupción, aparece para impedirles avanzar. Es más difícil que un humano corrompido, pero se destruye al deshacer la energía que lo sostiene.
+4. **Un peón sin cuerpo.** Una proyección mágica, creada por la corrupción, aparece para impedirles avanzar. Es más difícil que un humano corrompido, pero Naomi y Monse la destruyen al golpear juntas el punto donde su forma intenta reconstruirse.
 5. **Las primeras pecheras.** Dos camisas antiguas responden a los talismanes y revelan armaduras ligeras. Naomi obtiene una barrera breve con su escudo; Monse libera una onda de sombras de corto alcance. El triunfo les da confianza, pero confirma que alguien también está vigilando las reliquias.
 
 ### Capítulo 15 — Los puentes
@@ -427,15 +427,15 @@ La gran mayoría de supervivientes que aceptó volver deja de responder a sus co
 
 ### Capítulo 19 — La atalaya
 
-Naomi y Monse llegan al último santuario, una gran atalaya de ambos mundos situada en la Patagonia chileno-argentina. Dos seguidores de élite intentan impedirles obtener las reliquias finales. La batalla exige todo lo aprendido: Naomi sostiene la defensa y abre rutas; Monse domina el terreno y sus armas largas. Al vencer o sobrevivir al enfrentamiento, obtienen los collares gemelos. Sus alas crecen hasta ser majestuosas, mayores que ellas mismas, y recuperan vuelo limitado y técnicas aéreas. La atalaya les da una pista decisiva para entrar al complejo de la máquina.
+Naomi y Monse llegan al último santuario, una gran atalaya de ambos mundos situada en la Patagonia chileno-argentina. Dos seguidores de élite intentan impedirles obtener las reliquias finales. La batalla exige todo lo aprendido: Naomi sostiene la defensa, contraataca con espada y abre rutas; Monse domina el terreno y sus armas largas. Al vencer o sobrevivir al enfrentamiento, obtienen los collares gemelos. Sus alas crecen hasta ser majestuosas, mayores que ellas mismas, y recuperan el vuelo pleno, además de técnicas aéreas. La atalaya les da una pista decisiva para entrar al complejo de la máquina.
 
 **Escenas:**
 
 1. **La última altura.** La señal conduce a una atalaya de ambos mundos en la Patagonia chileno-argentina. El viento y la inmensidad del paisaje hacen sentir que han llegado al borde de una decisión imposible.
 2. **Un santuario compartido.** La atalaya contiene marcas de luz y oscuridad creadas en cooperación. Naomi y Monse resuelven su acceso combinando las habilidades que adquirieron, no tratando sus magias como opuestas.
 3. **Seguidores de élite.** Un ángel y un demonio que eligieron la corrupción aparecen para impedirles avanzar. Son más fuertes y disciplinados que las amenazas anteriores, y muestran que Caelum teme lo que las protagonistas pueden llegar a ser.
-4. **Todo lo aprendido.** Naomi sostiene el combate y protege los espacios; Monse controla distancia, rutas y cambios de arma. Juntas sobreviven al enfrentamiento y logran alcanzar el centro de la atalaya.
-5. **Los collares gemelos.** Las reliquias restauran sus alas hasta volverlas majestuosas y mayores que ellas. Obtienen vuelo limitado y técnicas aéreas, además de una pista que revela cómo entrar al complejo de la máquina.
+4. **Todo lo aprendido.** Naomi sostiene el combate, contraataca con espada y protege los espacios; Monse controla distancia, rutas y cambios de arma. Juntas sobreviven al enfrentamiento y logran alcanzar el centro de la atalaya.
+5. **Los collares gemelos.** Las reliquias restauran sus alas hasta volverlas majestuosas y mayores que ellas. Obtienen vuelo pleno y técnicas aéreas, además de una pista que revela cómo entrar al complejo de la máquina.
 
 ### Capítulo 20 — La ciudad tomada
 
@@ -522,6 +522,10 @@ Naomi y Monse comparten una sola mirada fría, sin necesidad de palabras. Las do
 3. **El duelo.** Noé muere. Monse no tiene una respuesta fácil ni una victoria que haga desaparecer la pérdida; Naomi la acompaña y reconoce que proteger a alguien también significa permanecer cuando ya no se puede arreglar todo.
 4. **La mentira expuesta.** Las personas liberadas, los supervivientes rescatados y la evidencia dentro del complejo hacen imposible mantener la versión pública de Caelum. El mundo debe enfrentar el daño causado y la ausencia de quienes no regresarán.
 5. **Lo que queda.** Los miembros restantes del grupo se retiran para prepararse. Naomi y Monse comparten una mirada fría y silenciosa: salvarán a quienes puedan, buscarán a sus familias, recuperarán sus mundos y exigirán cuentas por quienes fueron destruidos. El libro termina con esa promesa sin decirla en voz alta.
+
+### Epílogo — El camino sigue
+
+Semanas después, Naomi y Monse regresan al convento de la Sierra, el primer refugio de Naomi. Comparten el duelo por Noé, ven que la verdad sobre Caelum comienza a conocerse y comprenden que las comunidades humanas que las acogieron se están convirtiendo en una red de apoyo para las personas liberadas. Al recordar que las hermanas de Monse, Elian, Liora y Ayla aún pueden estar vivos, eligen iniciar la búsqueda. Cierran el libro alzando vuelo juntas desde Ecuador: no han reparado todo, pero ahora tienen rumbo, memoria y compañía.
 
 ## 13. Arcos emocionales del primer libro
 
