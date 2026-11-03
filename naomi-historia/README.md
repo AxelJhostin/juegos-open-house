@@ -34,14 +34,16 @@ No añadimos ideas nuevas durante una revisión sin anotarlas primero. Esto evit
 
 - `biblia-narrativa.md`: fuente de verdad para el mundo, personajes, reglas, capítulos, arcos emocionales y decisiones pendientes.
 - `primer-borrador.md`: respaldo cerrado de la primera versión completa del libro.
-- `segundo-borrador.md`: versión de trabajo para las ampliaciones y mejoras aprobadas durante la revisión. Por ahora incorpora la revisión de los capítulos 12 y 13.
+- `segundo-borrador.md`: versión completa de trabajo. Incorpora las ampliaciones aprobadas y una primera revisión de estilo, sin cambiar la trama ni las decisiones de la biblia narrativa.
 - `README.md`: esta guía de propósito y proceso.
 
 ## Estado actual
 
-La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro. El segundo borrador está en marcha en un archivo separado.
+La biblia narrativa, la escaleta de 26 capítulos y el epílogo del primer libro están completos. El primer borrador queda oficialmente cerrado: incorpora el refugio de las hermanas, la alianza entre Naomi y Monse, las reliquias, el enfrentamiento con Caelum, el costo de la victoria y el puente hacia el segundo libro.
 
-El próximo paso, cuando decidamos retomarlo, será una revisión estructural y un segundo borrador: ampliar solo las escenas que lo necesiten, pulir diálogos, ritmo y coherencia, sin cambiar la base acordada.
+El segundo borrador también está completo: amplía los capítulos que más lo necesitaban y ya pasó una primera revisión de estilo. Tiene aproximadamente 20 800 palabras, por lo que sigue siendo una novela corta y ágil.
+
+El siguiente paso, cuando decidamos retomarlo, será una lectura de validación: revisar solo los fragmentos que el autor quiera comentar y hacer correcciones puntuales. No hace falta reescribir el libro ni aumentar su tamaño sin una razón narrativa clara.
 
 ## Regla principal
 

@@ -1,4 +1,4 @@
-# Primer borrador — Proyecto Naomi
+# Segundo borrador — Proyecto Naomi
 
 > Este archivo contiene prosa editable. La estructura, decisiones y pendientes se conservan en `biblia-narrativa.md`.
 
@@ -114,7 +114,7 @@ También cuidaban sus alas sin convertirlas en un espectáculo. Cuando debían c
 
 Una mañana, cuando por fin pudo caminar hasta el pasillo, encontró un pequeño jardín detrás del convento. Había macetas, plantas medicinales y montañas extendiéndose más allá de los muros. Una hermana caminó a su lado sin apurarla, preparada para sostenerla si caía. Naomi no sabía el nombre de aquel lugar ni entendía aún la vida que ocurría detrás de sus paredes, pero sintió algo parecido a un refugio.
 
-Durante los primeros días, el mundo regresó en fragmentos. La luz entrando por la ventana. Una voz que repetía las mismas palabras, tal vez su nombre o tal vez una pregunta. Agua. Comida. Sueño. El dolor de intentar sentarse demasiado pronto y la mano firme de una hermana indicándole que descansara.
+Durante las semanas siguientes, el mundo regresó en fragmentos. La luz entrando por la ventana. Una voz que repetía las mismas palabras, tal vez su nombre o tal vez una pregunta. Agua. Comida. Sueño. El dolor de intentar sentarse demasiado pronto y la mano firme de una hermana indicándole que descansara.
 
 Naomi odiaba la debilidad de su propio cuerpo. Quería levantarse, encontrar una salida, buscar el castillo, buscar a su familia. Pero cada intento terminaba con el mismo vacío bajo la piel y el mismo temblor en las alas.
 
@@ -422,7 +422,7 @@ Naomi tampoco necesitó que la terminara.
 
 Hablaron durante mucho tiempo. No siempre de la catástrofe. Naomi contó que soñaba con recorrer reinos, aprender de otras personas y vivir sin prisas. Monse explicó que ya aprendía junto a administradores de su comunidad, que quería convertirse en una líder justa y útil, no en alguien que mandara por orgullo.
 
-Eran distintas. Naomi hablaba de lo que sentía antes de darse cuenta. Monse ordenaba sus ideas como si fueran piezas que debían encajar. Pero, debajo de todo, ambas habían perdido un lugar al que querían volver.
+Eran distintas. Naomi expresaba lo que sentía antes de darse cuenta de que lo estaba haciendo. Monse ordenaba sus ideas como si fueran piezas que debían encajar. Pero, debajo de todo, ambas habían perdido un lugar al que querían volver.
 
 Cuando el cielo comenzó a oscurecer, Monse miró la puerta.
 
@@ -471,8 +471,6 @@ Naomi se quedó inmóvil con la taza entre las manos. Sus dedos se cerraron un p
 Monse fue la primera en notarlo. Vio cómo se tensaban los hombros de Naomi antes de mirar de nuevo la pantalla.
 
 —¿Qué pasa? —preguntó en voz baja.
-
-—¿Qué pasa?
 
 Naomi señaló uno de los signos grabados sobre el arco: una figura abierta, formada por líneas que parecían rayos de sol y páginas al mismo tiempo.
 
@@ -830,7 +828,7 @@ El aire delante de ella tembló.
 
 Una espada apareció primero. No era grande ni extravagante; tenía una hoja sencilla, con el sello del sol cerca de la empuñadura. En la otra mano se formó un escudo redondo, firme, marcado por la misma luz suave.
 
-Naomi casi dejó caer ambos.
+Naomi casi dejó caer las dos armas.
 
 Monse soltó una risa corta.
 
@@ -1990,8 +1988,6 @@ Monse la miró desde el otro lado.
 
 No gritó. Solo levantó dos dedos y señaló una columna, luego una sombra detrás de Mara. Era uno de los gestos que habían creado durante el entrenamiento: punto fijo, distracción, espera. Naomi entendió sin necesidad de mirarla una segunda vez.
 
-Naomi entendió.
-
 Mara volvió a atacar. Naomi dejó que la demonio la persiguiera por la pasarela, fingiendo que había perdido el equilibrio. Cuando Mara extendió la mano para alcanzarla, un señuelo de sombra apareció junto a la columna.
 
 Mara giró hacia él por instinto.
@@ -2400,7 +2396,7 @@ Desde Buenos Aires llegaban noticias cada día. Las personas liberadas empezaban
 
 Las comunidades que habían ayudado a personas aladas también comenzaron a encontrarse entre sí. No tenían todas las respuestas, pero ya no estaban solas ni dispersas del mismo modo.
 
-Durante esos días, Naomi y Monse ayudaron donde pudieron. Cargaron alimentos, acompañaron a sobrevivientes que todavía temían dormir bajo un techo cerrado y tradujeron las pocas palabras de la lengua común que podían aliviar una conversación. No solucionaba lo perdido, pero les recordaba quiénes querían ser cuando la batalla terminaba.
+Durante esos días, Naomi y Monse ayudaron donde pudieron. Cargaron alimentos, acompañaron a sobrevivientes que todavía temían dormir bajo un techo cerrado y tradujeron las pocas palabras de la lengua común que podían aliviar una conversación. Nada de eso solucionaba lo perdido, pero les recordaba quiénes querían ser cuando la batalla terminaba.
 
 Monse apretó el talismán rojo entre los dedos.
 
