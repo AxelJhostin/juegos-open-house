@@ -1692,9 +1692,13 @@ Las luces seguían encendidas. Los autos recorrían las avenidas. Las personas e
 
 La gente caminaba en grupos demasiado ordenados. Repetía rutas. Ignoraba preguntas. Miraba hacia el complejo internacional como si una parte de su voluntad estuviera atada a ese lugar.
 
+No parecían monstruos ni soldados. Ese era el detalle que más inquietaba a Naomi. Una persona esperaba el cambio de luz antes de cruzar la calle; otra sostenía el teléfono junto al oído sin hablar; alguien llevaba flores envueltas en papel y no miraba hacia donde iba. Conservaban los gestos de una vida normal, pero algo detrás de sus ojos había aprendido a obedecer.
+
 El edificio de la máquina se elevaba detrás de muros y torres de vigilancia. No tenía aspecto futurista: era un centro nuevo, elegante, presentado al mundo como símbolo de cooperación. Desde lejos, nadie habría imaginado los conductos de esencia escondidos bajo sus pisos.
 
 Naomi y Monse aterrizaron en una terraza vacía.
+
+Desde allí podían ver el río como una franja gris al fondo y el complejo creciendo entre edificios reales, avenidas reales y personas que no sabían que estaban siendo utilizadas. El plano de la atalaya les había dado una ruta de servicio, pero no les prometía que siguiera libre.
 
 —No podemos abrirnos paso peleando —dijo Naomi.
 
@@ -1708,13 +1712,23 @@ Naomi no entendió todas las palabras. Monse sí entendió lo suficiente.
 
 La mujer volvió a mirar el edificio, aterrada.
 
+—No vayan abajo —alcanzó a decir antes de que la mirada se le apagara otra vez.
+
 El control regresó antes de que pudieran hacer más. Pero ahora sabían que podía romperse, aunque solo fuera por instantes.
 
-Usaron esas brechas para avanzar. Naomi levantaba barreras cortas que ocultaban su paso. Monse dejaba señuelos de sombra para atraer a los guardias controlados hacia direcciones vacías. Cuando las rutas se cerraban, volaban de un techo a otro, usando las alas sin llamar demasiado la atención.
+Naomi quiso sujetarla y alejarla de la puerta. Monse negó con la cabeza.
+
+—Si la sacamos ahora, alguien la verá. Tenemos que abrir una salida cuando podamos sostenerla.
+
+Naomi odiaba que tuviera razón. Dejar a una persona allí se parecía demasiado a abandonarla. Pero también entendía que pelear contra quienes no elegían pelear solo convertiría el rescate en otra forma de daño.
+
+Usaron esas brechas para avanzar. Naomi levantaba barreras cortas que ocultaban su paso. Monse dejaba señuelos de sombra para atraer a los guardias controlados hacia direcciones vacías. Cuando las rutas se cerraban, volaban de un techo a otro, usando las alas sin llamar demasiado la atención. No era la libertad abierta que habían descubierto en la Patagonia; eran vuelos cortos, pegadas a las sombras de los edificios, con el ruido de la ciudad cubriendo el batir de las alas.
 
 Las proyecciones eran más difíciles.
 
-No dudaban. No podían despertar. Custodiaban los accesos con una energía que reconocía la presencia de los talismanes. Naomi aprendió a desviar sus ataques hacia conductos vacíos; Monse a romper sus líneas de sostén antes de que tomaran forma completa.
+No dudaban. No podían despertar. Custodiaban los accesos con una energía que reconocía la presencia de los talismanes. La primera surgió de una pared de metal y golpeó a Naomi con un brazo que parecía humo comprimido. Ella lo desvió con el escudo, alzó vuelo apenas lo necesario para rodearla y descargó un corte solar sobre el centro de su forma. Monse apareció desde una sombra cercana y atravesó el mismo punto con la lanza. La proyección se deshizo antes de poder reconstruirse.
+
+No celebraron. Cada enfrentamiento podía llamar la atención de quienes vigilaban el complejo.
 
 En los niveles inferiores, el aire cambió.
 
@@ -1744,7 +1758,9 @@ No eran máquinas vacías.
 
 Había personas dentro.
 
-Naomi sintió que el estómago se le cerraba. Algunos tenían alas reducidas, otros no. Todos respiraban con lentitud, como si una parte de ellos estuviera siendo llamada a algún lugar lejano.
+Naomi sintió que el estómago se le cerraba. Algunos tenían alas reducidas, otros no. Todos respiraban con lentitud, como si una parte de ellos estuviera siendo llamada a algún lugar lejano. Las cápsulas no tenían nombres, solo códigos. Para la máquina, no eran familias ni sobrevivientes: eran fuentes que podía medir y consumir.
+
+Naomi pasó junto a una de ellas sin tocar el vidrio. Dentro había una joven de alas claras que parecía tener una edad parecida a la suya. Por un instante imaginó a Elian atrapado de la misma forma, o a Liora intentando proteger a Ayla sin poder moverse. Tuvo que cerrar los dedos sobre el borde del escudo para seguir caminando.
 
 Monse caminó entre las cápsulas sin mirar a los lados.
 
@@ -1766,6 +1782,8 @@ Durante un segundo no reaccionó. Luego la miró de nuevo, como si temiera que s
 
 Su voz fue apenas un hilo.
 
+Monse soltó el aire de golpe, como si llevara meses conteniéndolo.
+
 Monse dejó de ser la estratega, la portadora de una guadaña, la joven que siempre parecía saber qué hacer. Se arrodilló junto a la cápsula y apoyó la frente contra el vidrio.
 
 —Estoy aquí.
@@ -1782,6 +1800,14 @@ Monse cerró los ojos.
 
 —Lo sé.
 
+—Tú no fuiste con ellos.
+
+—No.
+
+Noé la miró mejor entonces: las alas grandes, la armadura ligera, la guadaña apoyada a un lado. Una chispa de orgullo cruzó su expresión agotada.
+
+—Siempre terminabas encontrando una forma de llegar.
+
 —No encontraba a nadie. Pero pensé que, si esperaba...
 
 —No hiciste nada malo.
@@ -1793,6 +1819,14 @@ Noé soltó una risa débil que terminó en tos.
 —Porque lo soy.
 
 Por un instante, los dos sonrieron.
+
+—Las otras te habrían dicho que no hagas una tontería —murmuró Noé.
+
+—Probablemente.
+
+—Y tú les habrías dicho que no opinaran.
+
+Monse dejó escapar una risa que terminó antes de convertirse en alegría.
 
 Noé miró a Naomi.
 
@@ -1836,7 +1870,7 @@ Monse apretó su mano.
 
 Noé no discutió. Solo cerró los dedos sobre los de ella.
 
-Naomi y Monse lo ayudaron a ocultarse lo mejor que pudieron detrás de un panel abierto, lejos de las cámaras y del paso principal. Era un refugio frágil, no una salvación. Pero les daba tiempo.
+Naomi y Monse lo ayudaron a ocultarse lo mejor que pudieron detrás de un panel abierto, lejos de las cámaras y del paso principal. Naomi extendió una barrera pequeña para ocultar el movimiento mientras Monse cubría los cables expuestos con una lámina de metal. Era un refugio frágil, no una salvación. Pero les daba tiempo.
 
 Al salir de la sala, Monse no soltó la guadaña.
 
