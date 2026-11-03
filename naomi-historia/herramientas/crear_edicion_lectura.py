@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import argparse
 import re
 from pathlib import Path
 
+from PIL import Image, ImageDraw, ImageFont
 from docx import Document
 from docx.enum.section import WD_SECTION
 from docx.enum.style import WD_STYLE_TYPE
@@ -15,6 +17,10 @@ from docx.shared import Inches, Pt, RGBColor
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "segundo-borrador.md"
 OUTPUT = ROOT / "Alas-de-mundos-rotos.docx"
+ILLUSTRATED_OUTPUT = ROOT / "Alas-de-mundos-rotos-con-portada-ilustrada.docx"
+SYMBOLIC_COVER_ART = ROOT / "arte" / "portada-simbolica-sin-texto-v1.png"
+COMPOSED_SYMBOLIC_COVER = ROOT / "arte" / "portada-alas-de-mundos-rotos-v1.png"
+TITLE_FONT = Path("/System/Library/Fonts/Supplemental/Times New Roman.ttf")
 
 
 def set_font(run, name: str, size: float, *, bold: bool = False, italic: bool = False) -> None:
@@ -154,21 +160,70 @@ def source_paragraphs(lines: list[str]) -> list[str]:
 
 def add_body_paragraph(document: Document, text: str, *, first_in_chapter: bool) -> None:
     paragraph = document.add_paragraph(style="Cuerpo de novela")
-    paragraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    # Las frases breves de ritmo narrativo no deben estirarse en algunos lectores.
+    paragraph.alignment = (
+        WD_ALIGN_PARAGRAPH.LEFT if len(text) <= 80 else WD_ALIGN_PARAGRAPH.JUSTIFY
+    )
     paragraph.paragraph_format.first_line_indent = Inches(0 if first_in_chapter else 0.25)
     run = paragraph.add_run(text)
     set_font(run, "Liberation Serif", 11.5)
 
 
-def create_document(chapters: list[tuple[str, list[str]]]) -> None:
-    document = Document()
-    section = document.sections[0]
+def compose_symbolic_cover() -> Path:
+    if not SYMBOLIC_COVER_ART.exists():
+        raise FileNotFoundError(f"No se encontró la portada base: {SYMBOLIC_COVER_ART}")
+
+    image = Image.open(SYMBOLIC_COVER_ART).convert("RGB")
+    draw = ImageDraw.Draw(image)
+    width, height = image.size
+    title_font = ImageFont.truetype(str(TITLE_FONT), size=72)
+    author_font = ImageFont.truetype(str(TITLE_FONT), size=31)
+
+    title = "ALAS DE\nMUNDOS ROTOS"
+    title_box = draw.multiline_textbbox(
+        (0, 0), title, font=title_font, spacing=5, align="center"
+    )
+    title_width = title_box[2] - title_box[0]
+    draw.multiline_text(
+        ((width - title_width) / 2, 125),
+        title,
+        font=title_font,
+        fill="#EAE2D2",
+        spacing=5,
+        align="center",
+    )
+
+    author = "Hernández Axel"
+    author_box = draw.textbbox((0, 0), author, font=author_font)
+    author_width = author_box[2] - author_box[0]
+    draw.text(
+        ((width - author_width) / 2, height - 92),
+        author,
+        font=author_font,
+        fill="#D8D0C1",
+    )
+    image.save(COMPOSED_SYMBOLIC_COVER, quality=96)
+    return COMPOSED_SYMBOLIC_COVER
+
+
+def configure_standard_margins(section) -> None:
     section.page_width = Inches(8.5)
     section.page_height = Inches(11)
     section.top_margin = Inches(0.9)
     section.bottom_margin = Inches(0.65)
     section.left_margin = Inches(0.95)
     section.right_margin = Inches(0.85)
+
+
+def create_document(
+    chapters: list[tuple[str, list[str]]],
+    *,
+    output: Path = OUTPUT,
+    cover_art: Path | None = None,
+) -> None:
+    document = Document()
+    section = document.sections[0]
+    configure_standard_margins(section)
 
     normal = document.styles["Normal"]
     set_style_font(normal, "Liberation Serif", 11.5)
@@ -197,21 +252,36 @@ def create_document(chapters: list[tuple[str, list[str]]]) -> None:
     body_style.paragraph_format.space_after = Pt(3)
     body_style.paragraph_format.widow_control = True
 
-    # Portada
-    cover = document.add_paragraph()
-    cover.paragraph_format.space_before = Inches(3.0)
-    cover.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = cover.add_run("Alas de mundos rotos")
-    set_font(run, "Liberation Serif", 30)
+    # Portada. La edición ilustrada usa un archivo compuesto para garantizar que
+    # el título y el nombre de autor se mantengan exactos, sin depender de texto IA.
+    if cover_art is not None:
+        section.top_margin = Inches(0.25)
+        section.bottom_margin = Inches(0.25)
+        section.left_margin = Inches(0.75)
+        section.right_margin = Inches(0.75)
+        cover = document.add_paragraph()
+        cover.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        cover.paragraph_format.space_before = Pt(0)
+        cover.paragraph_format.space_after = Pt(0)
+        cover.add_run().add_picture(str(cover_art), width=Inches(6.95))
 
-    author = document.add_paragraph()
-    author.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    author.paragraph_format.space_before = Pt(24)
-    author.paragraph_format.space_after = Pt(0)
-    run = author.add_run("Hernández Axel")
-    set_font(run, "Liberation Serif", 14)
+        front_matter = document.add_section(WD_SECTION.NEW_PAGE)
+        configure_standard_margins(front_matter)
+    else:
+        cover = document.add_paragraph()
+        cover.paragraph_format.space_before = Inches(3.0)
+        cover.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = cover.add_run("Alas de mundos rotos")
+        set_font(run, "Liberation Serif", 30)
 
-    document.add_page_break()
+        author = document.add_paragraph()
+        author.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        author.paragraph_format.space_before = Pt(24)
+        author.paragraph_format.space_after = Pt(0)
+        run = author.add_run("Hernández Axel")
+        set_font(run, "Liberation Serif", 14)
+
+        document.add_page_break()
 
     # Contenido
     contents_title = document.add_paragraph()
@@ -230,12 +300,7 @@ def create_document(chapters: list[tuple[str, list[str]]]) -> None:
 
     # El texto narrativo empieza en una nueva sección y con la página 1.
     narrative = document.add_section(WD_SECTION.NEW_PAGE)
-    narrative.page_width = Inches(8.5)
-    narrative.page_height = Inches(11)
-    narrative.top_margin = Inches(0.9)
-    narrative.bottom_margin = Inches(0.65)
-    narrative.left_margin = Inches(0.95)
-    narrative.right_margin = Inches(0.85)
+    configure_standard_margins(narrative)
     restart_page_numbering(narrative, 1)
     add_section_footer(narrative)
 
@@ -256,9 +321,25 @@ def create_document(chapters: list[tuple[str, list[str]]]) -> None:
     properties.subject = "Novela corta de fantasía"
     properties.author = "Hernández Axel"
     properties.comments = ""
-    document.save(OUTPUT)
+    document.save(output)
 
 
 if __name__ == "__main__":
-    create_document(parse_source(SOURCE))
-    print(OUTPUT)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--with-symbolic-cover",
+        action="store_true",
+        help="Crea una copia con la portada simbólica ilustrada.",
+    )
+    args = parser.parse_args()
+
+    if args.with_symbolic_cover:
+        create_document(
+            parse_source(SOURCE),
+            output=ILLUSTRATED_OUTPUT,
+            cover_art=compose_symbolic_cover(),
+        )
+        print(ILLUSTRATED_OUTPUT)
+    else:
+        create_document(parse_source(SOURCE))
+        print(OUTPUT)

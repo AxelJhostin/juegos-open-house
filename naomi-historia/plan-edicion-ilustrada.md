@@ -6,7 +6,8 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 
 ## Dirección visual propuesta
 
-- Fantasía juvenil de pintura digital semirrealista: luminosa, expresiva y con un toque cinematográfico, sin apariencia de fotografía.
+- La portada será minimalista, misteriosa y elegante: alas y símbolos como elementos centrales, sin personajes ni escenario.
+- La edición interior conservará fantasía juvenil de pintura digital semirrealista: luminosa, expresiva y con un toque cinematográfico, sin apariencia de fotografía.
 - El mundo humano se ve actual y reconocible. Las ruinas, alas y reliquias introducen lo extraordinario sin convertir las ciudades en escenarios futuristas.
 - Naomi y Monse se ven como jóvenes adultas. Su ropa cambia poco a poco de prendas de viaje sencillas a armaduras ligeras hechas por las reliquias.
 - Naomi usa alas blancas, marca solar en el hombro izquierdo, espada y escudo. Su luz es cálida y dorada.
@@ -26,7 +27,7 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 
 | Nº | Ubicación | Escena | Propósito |
 | --- | --- | --- | --- |
-| Portada | Cubierta | Naomi y Monse de espaldas, unidas ante un cielo nocturno donde se cruzan luz y oscuridad. Sus alas blanca y negra enmarcan el título. | Presentar que la historia pertenece a dos jóvenes de mundos distintos que deciden luchar juntas. |
+| Portada | Cubierta | Un ala blanca y otra negra con leves tonos rojos enmarcan un sol dorado incompleto y un diamante rojo, sobre fondo azul medianoche. El título es *Alas de mundos rotos* y la firma es Hernández Axel. | Sugerir misterio, dos mundos y una alianza sin explicar ni mostrar a las protagonistas. |
 | 1 | Después del capítulo 4, *Las alas negras* | Primer encuentro en el convento de la Sierra: Naomi y Monse se observan con cautela, ambas aún débiles, mientras las hermanas mantienen una presencia tranquila al fondo. | Mostrar el origen humano y frágil de su alianza. |
 | 2 | Después del capítulo 8, *La biblioteca caída* | El arco roto de la biblioteca en Argentina, estanterías derrumbadas y el mensaje mágico encendiéndose frente a ellas. | Abrir el misterio de los mundos atacados. |
 | 3 | Después del capítulo 10, *Los talismanes* | En una mesa del convento, los talismanes despiertan: el sello solar de Naomi y el diamante rojo de Monse; sus armas se forman por primera vez. | Marcar el inicio de su preparación y sus identidades de combate. |
@@ -44,14 +45,12 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 
 ## Orden de producción
 
-1. Definir un retrato de referencia de Naomi y uno de Monse para mantener sus rasgos, alas, marcas y armas consistentes.
-2. Crear una prueba de portada y corregirla hasta fijar el estilo.
+1. Usar los diseños de referencia existentes de Naomi y Monse para mantener sus rasgos, alas, marcas y armas consistentes.
+2. Crear una portada simbólica con el título y el nombre de autor compuestos fuera de la ilustración, para que el texto sea exacto y legible.
 3. Generar las siete ilustraciones interiores en orden narrativo, revisando cada una antes de incorporarla al libro.
 4. Preparar una copia separada de la novela con las imágenes ya aprobadas. El archivo actual sin ilustraciones se conserva como versión de texto limpia.
 
 ## Decisiones que validaremos antes de generar arte
 
-- El nivel exacto de realismo: más parecido a una ilustración de novela juvenil o más cercano a animación estilizada.
-- Rasgos físicos, peinados y colores definitivos de Naomi y Monse.
-- Si la portada muestra sus rostros o una composición más simbólica con ellas vistas desde atrás.
+- El nivel exacto de realismo de las ilustraciones interiores: más parecido a una ilustración de novela juvenil o más cercano a animación estilizada.
 - Si las ilustraciones interiores serán a color completo o con una paleta más limitada.
