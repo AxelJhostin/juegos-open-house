@@ -140,7 +140,7 @@ Naomi y Monse no derrotan a los diez integrantes en el primer libro. En la fase 
 3. Un manipulador mental que usa ilusiones para confrontarlas con pérdidas, temores y pesadillas. Su magia no crea hechos ni secretos reales: distorsiona dudas y recuerdos existentes. Los talismanes ofrecen resistencia, y la confianza entre Naomi y Monse les permite volver a la realidad.
 4. El líder ángel.
 
-El líder muere al final del enfrentamiento. Naomi y Monse entienden que es una amenaza demasiado peligrosa para ellas y para cualquier mundo. Su muerte demuestra al resto del grupo que las protagonistas son rivales reales; los científicos y seguidores que sobreviven se retiran de la Tierra para prepararse. Esto deja abierto el segundo libro: las protagonistas buscarán a los supervivientes, reconstruirán sus mundos y perseguirán a quienes quedan.
+El líder es el único miembro del grupo cuya muerte se confirma al final del enfrentamiento. Naomi y Monse entienden que es una amenaza demasiado peligrosa para ellas y para cualquier mundo. Su muerte demuestra al resto del grupo que las protagonistas son rivales reales; los científicos, cómplices y seguidores restantes escapan de la Tierra para prepararse. Esto deja abierto el segundo libro: las protagonistas buscarán a los supervivientes, reconstruirán sus mundos y perseguirán a quienes quedan.
 
 #### Los tres combatientes principales
 
@@ -156,11 +156,11 @@ Cuando llegan al final, la máquina está activa de forma parcial. La ciudad que
 
 Antes de la batalla final encuentran a Noé, atrapado entre los supervivientes usados como fuente de energía. Noé llegó voluntariamente a la promesa de volver a casa, conserva sus recuerdos y personalidad, y resiste por amor a su familia. Monse logra reunirse con él y ocultarlo temporalmente en un lugar seguro dentro o cerca del complejo.
 
-Demasiado débil para combatir, Noé ayuda a desactivar un conducto esencial desde dentro de la máquina. Esa decisión permite a Naomi y Monse detener el núcleo, pero le cuesta la última energía que le quedaba. Antes de morir, confirma que las dos hermanas de Monse siguen vivas. La victoria no deshace su pérdida, pero da a Monse y Naomi una razón concreta para continuar.
+Demasiado débil para combatir, Noé ayuda a desactivar un conducto esencial desde dentro de la máquina. Esa decisión permite a Naomi y Monse detener el núcleo, pero le cuesta la última energía que le quedaba. Antes de morir, cuenta que vio señales de esencia todavía activas en los mapas de ambos mundos: no sabe a quién pertenecen, pero prueba que hay supervivientes. La victoria no deshace su pérdida, pero da a Monse y Naomi una razón concreta para continuar.
 
 ## 9. Puente al segundo libro
 
-El primer libro termina con la amenaza de la máquina detenida en la Tierra y la certeza de que los mundos de origen no se curaron: quedaron devastados por el vaciamiento de esencia. Las hermanas de Monse siguen vivas; el destino de Elian, Liora y Ayla continúa desconocido. El segundo libro comenzará con el regreso a los mundos de origen, la búsqueda de familias y las consecuencias del desastre.
+El primer libro termina con la amenaza de la máquina detenida en la Tierra y la certeza de que los mundos de origen no se curaron: quedaron devastados por el vaciamiento de esencia. Noé vio señales que prueban que aún hay supervivientes, aunque no pudo saber quiénes eran; el destino de las hermanas de Monse, de Elian, Liora y Ayla sigue desconocido. Naomi y Monse emprenden la búsqueda de reliquias de paso que les permitan regresar. El segundo libro comenzará cuando por fin puedan volver a sus mundos, buscar familias y enfrentar las consecuencias del desastre.
 
 ## 10. Pendientes deliberados
 
@@ -200,8 +200,8 @@ El primer libro termina con la amenaza de la máquina detenida en la Tierra y la
 1. **Infiltración.** La máquina se encuentra activa parcialmente en una ciudad enorme. Sus habitantes están sometidos; Naomi y Monse avanzan sin tratarlos como enemigos, liberando rutas limitadas y evitando daño innecesario.
 2. **El reencuentro con Noé.** En la zona de extracción Monse encuentra a su hermano menor, usado como fuente de energía. Él conserva sus recuerdos y resiste gracias al amor por su familia.
 3. **La batalla por el núcleo.** Las protagonistas enfrentan, en orden, al ángel de fuerza devastadora, a la demonio veloz, al manipulador mental y al líder. Noé ayuda desde dentro a desactivar un conducto clave. Naomi protege la ruta y Monse abre el camino; el triunfo requiere su combinación de luz, sombra, defensa y estrategia.
-4. **El costo.** La máquina se detiene, pero Noé entrega la última energía que le queda para que la desactivación sea posible. Antes de morir confirma que las dos hermanas de Monse siguen vivas.
-5. **Cierre.** El mundo enfrenta las consecuencias de la mentira y la liberación de los sometidos. Naomi y Monse han detenido la amenaza en la Tierra, pero sus mundos continúan devastados. Los miembros restantes del grupo se retiran para prepararse. El destino de Elian, Liora y Ayla sigue desconocido: la siguiente travesía será volver a casa.
+4. **El costo.** La máquina se detiene, pero Noé entrega la última energía que le queda para que la desactivación sea posible. Antes de morir comunica que vio señales de supervivientes en los mundos devastados, sin poder saber quiénes eran.
+5. **Cierre.** La mayoría de seres alados conectados a la máquina muere porque la ayuda llegó tarde; los pocos rescatados intentan integrarse a la Tierra con apoyo de las comunidades que los recibieron. Naomi y Monse han detenido la amenaza en la Tierra, pero sus mundos continúan devastados. Caelum es el único villano del grupo cuya muerte se confirma; los demás se retiran para prepararse. La siguiente travesía será hallar reliquias de paso y volver a casa.
 
 **Resolución:** Naomi ya no necesita sentirse completamente libre de miedo para actuar; Monse comienza a liderar no solo mediante planes, sino acompañando y protegiendo a otras personas. Ambas eligen continuar juntas.
 
@@ -511,21 +511,21 @@ Naomi y Monse alcanzan el núcleo y enfrentan a Caelum Veyr. Su poder proviene d
 
 ### Capítulo 26 — Lo que queda
 
-La máquina se detiene y el control mental comienza a romperse en la ciudad. Noé muere después de confirmar que las dos hermanas de Monse siguen vivas. La victoria libera a muchas personas, pero no devuelve lo perdido ni repara los mundos vaciados. Los integrantes restantes del grupo de Caelum se retiran para prepararse.
+La máquina se detiene y el control mental comienza a romperse en la ciudad. Noé muere después de revelar que los mapas del enemigo mostraban señales de supervivientes en ambos mundos, sin poder saber quiénes eran. La victoria libera a algunas personas, pero la mayoría de los seres alados conectados a la máquina murió antes del apagado. Los pocos rescatados empiezan a integrarse a la Tierra con apoyo de las comunidades que los acogieron. Caelum es el único villano del grupo cuya muerte se confirma; los integrantes restantes se retiran para prepararse.
 
 Naomi y Monse comparten una sola mirada fría, sin necesidad de palabras. Las dos entienden lo mismo: irán por quienes quedan, recuperarán sus mundos y salvarán a todas las personas que puedan. También cargarán la memoria de quienes no sobrevivieron y exigirán cuentas a quienes los destruyeron.
 
 **Escenas:**
 
-1. **El apagado.** La máquina se detiene. El control mental se rompe de forma gradual y la ciudad empieza a despertar del sometimiento; no todo se resuelve de inmediato, pero las personas recuperan la posibilidad de elegir.
-2. **Las últimas palabras.** Monse llega hasta Noé. Él confirma que sus dos hermanas siguen vivas y le deja una última razón para continuar. Naomi permanece cerca, sin invadir un momento que pertenece a los hermanos.
+1. **El apagado.** La máquina se detiene. El control mental se rompe de forma gradual y la ciudad empieza a despertar del sometimiento; no todo se resuelve de inmediato, pero las personas recuperan la posibilidad de elegir. En la zona de extracción, solo unas pocas personas sobreviven: la mayoría de seres alados conectados fue drenada durante demasiado tiempo.
+2. **Las últimas palabras.** Monse llega hasta Noé. Él revela que vio señales de esencia aún vivas en los mapas de ambos mundos, sin saber a quién pertenecían, y le deja una razón honesta para continuar. Naomi permanece cerca, sin invadir un momento que pertenece a los hermanos.
 3. **El duelo.** Noé muere. Monse no tiene una respuesta fácil ni una victoria que haga desaparecer la pérdida; Naomi la acompaña y reconoce que proteger a alguien también significa permanecer cuando ya no se puede arreglar todo.
 4. **La mentira expuesta.** Las personas liberadas, los supervivientes rescatados y la evidencia dentro del complejo hacen imposible mantener la versión pública de Caelum. El mundo debe enfrentar el daño causado y la ausencia de quienes no regresarán.
 5. **Lo que queda.** Los miembros restantes del grupo se retiran para prepararse. Naomi y Monse comparten una mirada fría y silenciosa: salvarán a quienes puedan, buscarán a sus familias, recuperarán sus mundos y exigirán cuentas por quienes fueron destruidos. El libro termina con esa promesa sin decirla en voz alta.
 
 ### Epílogo — El camino sigue
 
-Semanas después, Naomi y Monse regresan al convento de la Sierra, el primer refugio de Naomi. Comparten el duelo por Noé, ven que la verdad sobre Caelum comienza a conocerse y comprenden que las comunidades humanas que las acogieron se están convirtiendo en una red de apoyo para las personas liberadas. Al recordar que las hermanas de Monse, Elian, Liora y Ayla aún pueden estar vivos, eligen iniciar la búsqueda. Cierran el libro alzando vuelo juntas desde Ecuador: no han reparado todo, pero ahora tienen rumbo, memoria y compañía.
+Semanas después, Naomi y Monse regresan al convento de la Sierra, el primer refugio de Naomi. Comparten el duelo por Noé, ven que la verdad sobre Caelum comienza a conocerse y comprenden que las comunidades humanas que las acogieron se están convirtiendo en una red de apoyo para los pocos seres alados liberados. Las señales que Noé vio prueban que aún hay supervivientes en los mundos devastados, aunque no revelan sus identidades. Por eso inician una nueva búsqueda: reliquias de paso capaces de abrir rutas estables entre mundos. Cierran el libro alzando vuelo juntas desde Ecuador: no han reparado todo, pero ahora tienen rumbo, memoria y compañía.
 
 ## 13. Arcos emocionales del primer libro
 

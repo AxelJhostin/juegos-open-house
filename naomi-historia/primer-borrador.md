@@ -2098,7 +2098,7 @@ Primero llegaron alarmas. Después, luces que parpadeaban en los pasillos. Luego
 
 Las personas controladas comenzaron a detenerse.
 
-En las calles, algunas cayeron de rodillas. Otras miraron a su alrededor con miedo, como si despertaran de un sueño que no recordaban haber tenido. Dentro del complejo, los supervivientes conectados respiraron con más fuerza cuando los conductos perdieron luz.
+En las calles, algunas cayeron de rodillas. Otras miraron a su alrededor con miedo, como si despertaran de un sueño que no recordaban haber tenido. Dentro del complejo, unas pocas personas conectadas volvieron a respirar con fuerza cuando los conductos perdieron luz. Muchas otras no se movieron.
 
 Naomi y Monse corrieron hacia la zona de extracción.
 
@@ -2116,15 +2116,15 @@ Noé abrió los ojos con dificultad.
 
 Naomi se arrodilló cerca, sin saber dónde colocar las manos ni qué palabras podían servir. Las alas de Noé apenas se movían. Ya no quedaba energía en ellas.
 
-—Escuché sus nombres —dijo él después de un momento—. En los registros. Nuestras hermanas... siguen vivas.
+—Antes de que me conectaran —dijo él después de un momento— vi los mapas que usaban. Había señales de esencia en nuestros mundos. Pequeñas, pero seguían ahí.
 
 Monse contuvo el aire.
 
-—¿Estás seguro?
+—¿De ellas?
 
-Noé asintió apenas.
+Noé negó apenas con la cabeza.
 
-—Búscalas. No dejes que piensen que no volviste por ellas.
+—No sé quiénes son. Pero no se apagó todo. Hay personas vivas allá. Encuentren cómo volver. Búsquenlas... y busquen a todos los que puedan.
 
 Monse apretó su mano contra la frente.
 
@@ -2144,9 +2144,11 @@ Era no dejarla sola después.
 
 En los días que siguieron, la verdad se volvió imposible de ocultar.
 
-Había supervivientes liberados dentro del complejo. Había registros de la máquina. Había personas que recordaban fragmentos de haber sido controladas. La historia de Caelum se deshizo frente al mundo, aunque muchas preguntas siguieron sin respuesta.
+Había unos pocos supervivientes liberados dentro del complejo. Había registros de la máquina. Había personas que recordaban fragmentos de haber sido controladas. Pero la mayoría de los seres alados conectados había sido drenada durante demasiado tiempo. La máquina se detuvo, sí, pero para muchos la ayuda llegó tarde.
 
-Los miembros restantes de su grupo desaparecieron antes de que pudieran ser encontrados. Sin Caelum y sin la máquina, se retiraron de la Tierra para preparar algo nuevo, lejos de los ojos de quienes habían sobrevivido.
+La historia de Caelum se deshizo frente al mundo, aunque muchas preguntas siguieron sin respuesta.
+
+No encontraron a Bruno, Mara ni Vera cuando el complejo quedó bajo custodia. Tampoco a los científicos y cómplices que habían iniciado el plan junto a Caelum. El único miembro de aquel grupo cuya muerte pudo confirmarse fue el propio Caelum. Los demás desaparecieron antes de que pudieran ser encontrados, retirándose de la Tierra para preparar algo nuevo, lejos de los ojos de quienes habían sobrevivido.
 
 Naomi y Monse regresaron una última vez al lugar donde habían dejado a Noé.
 
@@ -2158,7 +2160,7 @@ No hablaron.
 
 No hacía falta.
 
-Naomi pensó en Ayla, en Elian y en Liora. Pensó en el mundo verde que había perdido y en la vida tranquila que todavía deseaba proteger. Monse pensó en Noé, en sus hermanas y en la promesa que no había podido decir en voz alta.
+Naomi pensó en Ayla, en Elian y en Liora. Pensó en el mundo verde que había perdido y en la vida tranquila que todavía deseaba proteger. Monse pensó en Noé, en sus hermanas y en la posibilidad, pequeña pero real, de que todavía estuvieran esperando en algún lugar.
 
 Se miraron.
 
@@ -2196,15 +2198,15 @@ Monse tardó en responder.
 
 Naomi asintió. No intentó corregirla.
 
-Desde Buenos Aires llegaban noticias cada día. Las personas liberadas empezaban a dar testimonio. Los supervivientes rescatados necesitaban atención, refugio y tiempo para recuperar sus fuerzas. La mentira de Caelum ya no podía ocultarse, aunque el mundo todavía discutiera cómo nombrar lo que había ocurrido y qué hacer con los portales que quedaban cerrados.
+Desde Buenos Aires llegaban noticias cada día. Las personas liberadas empezaban a dar testimonio. Los pocos supervivientes rescatados necesitaban atención, refugio y tiempo para recuperar sus fuerzas. Muchas comunidades de la Tierra decidieron ayudarles a integrarse en ese nuevo mundo, porque ya no tenían una casa segura a la cual regresar. La mentira de Caelum ya no podía ocultarse, aunque el mundo todavía discutiera cómo nombrar lo que había ocurrido y qué hacer con los portales que quedaban cerrados.
 
 Las comunidades que habían ayudado a personas aladas también comenzaron a encontrarse entre sí. No tenían todas las respuestas, pero ya no estaban solas ni dispersas del mismo modo.
 
 Monse apretó el talismán rojo entre los dedos.
 
-—Noé dijo que ellas siguen vivas.
+—Noé vio señales de vida en nuestros mundos.
 
-—Las vamos a encontrar.
+—Entonces encontraremos cómo volver.
 
 —Y a tu familia.
 
@@ -2212,14 +2214,18 @@ Naomi miró el cielo claro sobre la Sierra. Pensó en Elian, en Liora y en Ayla.
 
 —Sí —dijo—. A todos los que podamos.
 
+Los libros del archivo y los datos recuperados del complejo hablaban de reliquias de paso: objetos antiguos capaces de abrir un camino estable entre mundos, no como los portales violentos del desastre, sino como rutas creadas para viajar. Estaban dispersas en fragmentos que también habían caído en la Tierra.
+
+Esa sería su siguiente búsqueda.
+
 Se levantaron al mismo tiempo.
 
 Las alas de Naomi se abrieron, claras y enormes, recogiendo la luz de la mañana. Las de Monse desplegaron negro y rojo contra el cielo. No lo hicieron para impresionar a nadie ni para escapar del dolor. Las abrieron porque ya podían sostenerse.
 
 Las hermanas las miraron desde el jardín. Una de ellas levantó una mano en despedida; otra sonrió con los ojos húmedos. Naomi y Monse respondieron al gesto.
 
-Luego alzaron vuelo sobre las montañas.
+Luego alzaron vuelo sobre las montañas, rumbo a la primera pista.
 
-No sabían cuánto tardaría la reconstrucción ni cuántas respuestas hallarían al volver a sus mundos. Pero tenían un rumbo, tenían memoria y se tenían la una a la otra.
+No sabían qué reliquia les abriría el camino, cuánto tardaría la reconstrucción ni cuántas respuestas hallarían al volver a sus mundos. Pero tenían un rumbo, tenían memoria y se tenían la una a la otra.
 
 Por primera vez desde el destello, el futuro no pareció una caída.
