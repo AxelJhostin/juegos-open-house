@@ -1468,6 +1468,14 @@ Monse observó los símbolos grabados sobre los yunques.
 
 Había marcas de ambos mundos en todas partes. Herreros de la luz y artesanos de la oscuridad habían trabajado allí para crear defensas, puentes y herramientas que nadie pudiera reclamar solo para sí mismo. Naomi sintió tristeza al pensar que Caelum había intentado convertir esa cooperación en una fuente de poder.
 
+En una pared baja descubrieron dibujos de escudos abiertos sobre caminos y de armas largas sosteniendo vigas caídas. No había coronas ni banderas de conquista. La forja había fabricado cosas para proteger a quien viajaba, para sostener una puerta o para abrir una ruta cuando el mundo se volvía peligroso.
+
+—Eso es lo que una herramienta debería hacer —dijo Naomi.
+
+Monse pasó los dedos cerca de la marca de una lanza, sin tocarla.
+
+—Depende de quién la sostenga.
+
 El centro de la torre guardaba dos pares de hombreras y guanteletes sobre un pedestal.
 
 No llegaron a tocarlos.
@@ -1482,9 +1490,15 @@ Naomi levantó el escudo.
 
 La pelea ocupó toda la torre. Los atacantes intentaban rodearlas, separar a Naomi de Monse y alcanzar el pedestal antes que ellas. Naomi usó la barrera para proteger los mecanismos antiguos; Monse apareció y desapareció entre sombras cortas, obligando a los enemigos a mirar en la dirección equivocada.
 
+Uno de los seguidores golpeó el escudo de Naomi con una maza corta. La barrera resistió, pero el impacto la obligó a retroceder contra un yunque. Antes de que pudiera recuperar el aire, otro intentó pasar por su costado hacia el pedestal.
+
+—¡Monse!
+
+La guadaña apareció entre ambos en forma de lanza. Monse no buscó atravesarlo: golpeó su muñeca, le hizo soltar el arma y usó el extremo para derribarlo contra el suelo. Naomi volvió a ponerse de pie y descargó un corte solar contra el metal que protegía al primer atacante. La luz quebró la coraza corrupta sin alcanzar su cuerpo. El seguidor cayó de rodillas, sorprendido de que alguien hubiera podido hacerle frente.
+
 Por primera vez, sus reliquias no fueron piezas separadas.
 
-Naomi impulsó sus botas, planeó sobre una escalera rota y cayó delante de Monse con el escudo listo. Monse dejó un señuelo en un corredor y llevó a dos atacantes hacia un espacio donde Naomi podía contenerlos sin dañarlos de más.
+Naomi impulsó sus botas, planeó sobre una escalera rota y cayó delante de Monse con el escudo listo. Monse dejó un señuelo en un corredor y llevó a dos atacantes hacia un espacio donde Naomi podía contenerlos sin dañarlos de más. Cuando el último quiso huir por una ventana rota, Monse cambió la guadaña a una vara larga y cerró el paso sin romper los muros de la torre.
 
 Cuando el último cayó, ambas estaban sin aliento.
 
@@ -1506,6 +1520,8 @@ Monse leyó la última línea dos veces.
 
 Naomi pensó en quienes habían cruzado los portales de Caelum.
 
+Pensó en la mujer de las noticias que había abrazado a su cuidadora antes de partir. En todas las personas que habían creído que volvían a casa. El registro no decía sus nombres, pero de pronto Naomi entendió que cada número detrás de aquella advertencia era alguien como ellas: alguien que había tenido miedo, esperanza y una familia esperando una respuesta.
+
 Por primera vez, no quiso esperar otra noticia.
 
 ## Capítulo 18 — Los ausentes
@@ -1516,11 +1532,15 @@ Primero fueron mensajes sin contestar. Luego, comunidades enteras que no lograba
 
 No llegaba nada.
 
+Algunas comunidades seguían dejando mensajes aunque ya no esperaran una respuesta inmediata. Las hermanas del convento compartían nombres, fechas y lugares con otros refugios. La gente de Manabí preguntaba por Monse si había visto alguna señal de Noé. Naomi no sabía qué decir cuando oía esas preguntas. Monse tampoco. La ausencia se había convertido en una herida compartida por personas que ni siquiera hablaban la misma lengua.
+
 En las noticias, en cambio, todo parecía avanzar.
 
 El complejo internacional de Buenos Aires crecía detrás de muros y pantallas. Caelum aparecía en discursos breves, hablando de una inauguración cercana y de un futuro que uniría a la humanidad con los mundos mágicos. La gente aplaudía. Los gobiernos agradecían. Las imágenes eran hermosas.
 
 Naomi no podía mirarlas sin sentir frío.
+
+Cada anuncio de Caelum era impecable. Hablaba de cooperación, de hospitales que algún día usarían la nueva energía y de un futuro sin fronteras entre mundos. Nunca mostraba el interior del complejo. Nunca nombraba a quienes habían cruzado los portales. Era como si hubieran dejado de existir en el instante en que confiaron en él.
 
 En una casa de hermanas, lejos de las cámaras, extendieron sobre una mesa el mensaje del rey, los mapas del archivo, los registros de la forja y las notas que habían reunido durante meses.
 
@@ -1534,7 +1554,7 @@ Naomi añadió:
 
 —Y la forja habla de un núcleo que absorbe esencia.
 
-Naomi miró las listas de supervivientes que ya no respondían.
+Naomi miró las listas de supervivientes que ya no respondían. Muchas tenían marcas hechas por las propias comunidades: una fecha de llegada, un lugar donde alguien les dio comida, un intento de llamada que nunca volvió a contestarse.
 
 —No los está llevando a casa.
 
@@ -1554,6 +1574,14 @@ Los medios hablaron de una falla técnica. De una confusión. De un incidente ai
 
 Naomi y Monse no lo creyeron.
 
+Monse repitió el video varias veces. No miraba a las personas; miraba el instante antes de que empezaran a caminar. Una vibración breve recorrió una farola cercana y una sombra rojiza pasó sobre el asfalto, casi invisible para cualquiera que no supiera reconocerla.
+
+—Es la misma magia —dijo.
+
+Naomi apretó el sello del sol.
+
+—Y ya no necesitan que la gente cruce un portal para alcanzarla.
+
 La corrupción ya no estaba oculta detrás de portales y laboratorios. Estaba entrando en la vida humana.
 
 Esa noche, Monse encontró la última señal en el mapa.
@@ -1565,6 +1593,12 @@ Brillaba al sur, en la Patagonia, entre las montañas y el viento.
 Naomi se sentó junto a ella.
 
 —Y después, Buenos Aires.
+
+—¿Y si cuando lleguemos ya no queda nadie que salvar? —preguntó Monse.
+
+Naomi tardó en responder. La frase era demasiado parecida a todo lo que temía sobre Ayla, Elian y Liora.
+
+—Entonces al menos nadie más tendrá que pasar por eso.
 
 Monse apretó el borde del mapa.
 
