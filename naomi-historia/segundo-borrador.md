@@ -2046,6 +2046,8 @@ En su lugar vio una habitación que conocía.
 
 Elian estaba de pie junto a una ventana. Liora sostenía a Ayla en brazos. La bebé reía, más grande de lo que Naomi la recordaba, y extendía las manos hacia ella.
 
+La escena tenía cada detalle que Naomi necesitaba para querer creerla: la forma en que Liora balanceaba a Ayla cuando estaba inquieta, la inclinación de la cabeza de Elian antes de hablar. Y, aun así, algo era incorrecto. No podía saber qué. El dolor no le daba espacio para pensarlo.
+
 Naomi olvidó el corredor. Olvidó la máquina. Olvidó a Monse.
 
 —Ayla.
@@ -2076,6 +2078,10 @@ La voz de Vera llegó a ambas ilusiones, suave y cercana.
 
 —No tienen que seguir. Ya perdieron lo que importaba.
 
+—No sabes eso —quiso decir Naomi, pero su voz no salió.
+
+Vera no necesitaba saberlo. Le bastaba con tomar el miedo que ambas llevaban dentro y devolverlo con la forma que más podía herirlas.
+
 Naomi cayó de rodillas. La imagen de Ayla se alejaba. Monse extendió una mano hacia Noé y él se desvaneció antes de alcanzarla.
 
 Entonces el talismán de Naomi se calentó.
@@ -2083,6 +2089,8 @@ Entonces el talismán de Naomi se calentó.
 No con fuerza. Con insistencia.
 
 Recordó algo real: Monse en el convento, diciendo que no confiaba en todo lo que sabía de su mundo. Recordó la forma en que había sostenido la mano de Noé. Recordó que Vera no podía saber nada que ellas no le hubieran mostrado.
+
+Sobre todo, recordó la respiración de Ayla dormida a su lado. No una imagen perfecta ni una promesa de que estuviera bien; un recuerdo pequeño, verdadero y suyo. Vera podía imitar un rostro. No podía convertir el miedo en un hecho.
 
 Naomi respiró.
 
@@ -2108,6 +2116,8 @@ Monse parpadeó.
 
 Las sombras de la casa desaparecieron de sus ojos.
 
+—Noé no me hablaría así —dijo Monse, más para sí misma que para Naomi—. Estaría enojado. Haría una broma mala. Pero no intentaría hacerme daño.
+
 —No puedo salvarlos a todos —dijo, con la voz rota.
 
 —No. Pero no estás intentando hacerlo sola.
@@ -2124,7 +2134,13 @@ Naomi levantó una barrera que atravesó los reflejos donde Vera se escondía y 
 
 Esta vez, ninguna miró.
 
-Vera cayó al suelo, sin sombras donde esconderse.
+Vera cayó al suelo, sin sombras donde esconderse. Durante un instante, Naomi pensó que podrían detenerla allí.
+
+Pero Vera golpeó el piso con la palma. El cristal de las paredes se cubrió de azul y se quebró hacia adentro. Cuando el resplandor desapareció, ella había abierto una ruta estrecha entre paneles y se había arrastrado fuera de alcance.
+
+—No puede esconderse para siempre —dijo Monse, todavía con la respiración irregular.
+
+—No —respondió Naomi—. Pero ahora Caelum no puede seguir escondiéndose detrás de ella.
 
 La puerta de cristal reapareció.
 
@@ -2166,7 +2182,17 @@ La energía del núcleo respondió a su voz.
 
 Caelum levantó una mano. Luz y oscuridad corruptas giraron a su alrededor. Naomi levantó el escudo justo antes de que el primer golpe atravesara la sala. La barrera se quebró en una docena de líneas, pero resistió.
 
+—Arrodíllense —dijo Caelum.
+
+La orden no fue fuerte, pero intentó entrarles en la cabeza como una mano helada. El talismán de Naomi ardió contra su pecho; el de Monse respondió con un destello rojo. Las dos sintieron el impulso de obedecer y lo vieron romperse antes de llegar a ser una decisión.
+
+Caelum frunció el ceño.
+
+—Por eso los necesito —murmuró, mirando los amuletos—. Poder que no se deja usar por cualquiera.
+
 Monse se movió por una sombra hacia el costado. Su lanza alcanzó el borde de un conducto. Caelum la apartó con una ráfaga que la hizo chocar contra una columna.
+
+Naomi no corrió directamente hacia ella esta vez. Alzó vuelo, cruzó la sala por encima de otra ráfaga y lanzó el escudo como un golpe de barrera contra el suelo frente a Caelum. No lo derribó, pero le cortó la ruta el tiempo suficiente para que Monse recuperara el aire y volviera a ponerse de pie.
 
 —No comprendan mal —dijo él—. Son fuertes. Por eso es una pena que hayan elegido el lado equivocado.
 
@@ -2181,6 +2207,8 @@ Caelum atacó otra vez.
 Esta vez no lanzó una ráfaga. Cambió de dirección en mitad del movimiento, apareció detrás de Naomi y golpeó el escudo con una fuerza que le entumeció los dedos. Luego se volvió hacia Monse antes de que ella pudiera alcanzarlo. No peleaba como Bruno. No cazaba como Mara. No mentía como Vera.
 
 Caelum hacía las tres cosas cuando le convenía.
+
+Un corte de luz golpeó el suelo donde Naomi había estado un segundo antes. Una sombra se cerró sobre Monse desde atrás. Ninguna podía predecir cuál de las dos iba a ser el objetivo siguiente. Lo único que podían hacer era mantenerse visibles la una para la otra.
 
 Naomi entendió que no podían ganar esperando un error.
 
@@ -2208,6 +2236,8 @@ Caelum se detuvo. Por primera vez, la seguridad dejó su rostro.
 
 Monse no respondió. Se lanzó hacia una de las columnas de energía y clavó la guadaña en uno de los conductos principales que la alimentaban. Naomi puso el escudo entre ellas y Caelum. La luz del sello solar se extendió, no para atacar, sino para sostener el espacio que Monse necesitaba.
 
+Caelum golpeó la barrera una vez. Luego otra. En la tercera, Naomi sintió que el hombro iba a ceder. Aun así no retrocedió. No protegía solo a Monse; protegía la oportunidad que Noé les había dejado.
+
 El núcleo perdió un latido.
 
 Caelum gritó y sus alas se abrieron con violencia. La energía robada se arremolinó a su alrededor, intentando volver a él. Naomi sintió miedo. Un miedo tan grande que por un instante quiso cubrirse y esperar a que todo terminara.
@@ -2218,7 +2248,7 @@ No necesitaba estar libre de miedo.
 
 Necesitaba actuar.
 
-Naomi se impulsó con las botas y alzó vuelo sobre el golpe de Caelum. Cruzó la sala bajo las sombras de sus alas, cayó frente a Monse y bloqueó una ráfaga con el escudo. Luego la espada trazó un arco de luz sobre la última línea que protegía el núcleo.
+Naomi se impulsó con las botas y alzó vuelo sobre el golpe de Caelum. Cruzó la sala bajo las sombras de sus alas, cayó frente a Monse y bloqueó una ráfaga con el escudo. Luego la espada trazó un arco de luz sobre el último aro metálico que protegía el núcleo.
 
 Monse terminó el movimiento.
 
@@ -2236,7 +2266,13 @@ Monse lo miró sin bajar el arma.
 
 Caelum intentó levantarse. Naomi vio la energía que todavía reunía en una mano, suficiente para volver a atacar, suficiente para encontrar otro mundo al que vaciar si lograba escapar.
 
+—Todavía no entienden —dijo, y lanzó la energía hacia ellas en un último golpe.
+
+Naomi avanzó primero. El escudo contuvo la mayor parte de la explosión, aunque la fuerza la obligó a bajar una rodilla. Monse apareció a su lado y desvió con la guadaña el resto de la sombra lejos de los conductos y de las personas conectadas.
+
 No podían dejarlo ir.
+
+Naomi se puso de pie. Monse sostuvo la lanza. El último destello del sello solar y la sombra roja del talismán se encontraron sobre Caelum, no como una corrupción, sino como dos voluntades que habían elegido proteger.
 
 Juntas terminaron el combate.
 
