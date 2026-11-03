@@ -2292,6 +2292,8 @@ Las personas controladas comenzaron a detenerse.
 
 En las calles, algunas cayeron de rodillas. Otras miraron a su alrededor con miedo, como si despertaran de un sueño que no recordaban haber tenido. Dentro del complejo, unas pocas personas conectadas volvieron a respirar con fuerza cuando los conductos perdieron luz. Muchas otras no se movieron.
 
+Naomi corrió hacia la cápsula más cercana y apoyó una mano contra el vidrio. No hubo respuesta. Durante un segundo quiso romperlo, aunque sabía que ya no podía salvar a quien estaba dentro. Monse la tomó del brazo con suavidad. Había más pasillos, más personas, y el tiempo seguía corriendo incluso después de la victoria.
+
 Naomi y Monse corrieron hacia la zona de extracción.
 
 Encontraron a Noé junto al panel abierto.
@@ -2328,6 +2330,8 @@ Noé sonrió, tan débilmente que parecía una sombra de la sonrisa que había t
 
 Murió antes de que Monse pudiera responder.
 
+Monse dijo su nombre una vez, muy bajo. Después cerró los ojos y se inclinó sobre su mano, sin soltarla hasta que el silencio dejó de parecer una pausa y se convirtió en despedida.
+
 La máquina se había detenido. La ciudad estaba empezando a despertar. Pero nada de eso llenó el espacio que dejó Noé.
 
 Naomi se quedó junto a Monse sin hablar. No intentó convertir el dolor en una lección. No dijo que todo estaría bien. Solo permaneció allí, porque a veces proteger a alguien no era impedir la pérdida.
@@ -2337,6 +2341,8 @@ Era no dejarla sola después.
 En los días que siguieron, la verdad se volvió imposible de ocultar.
 
 Había unos pocos supervivientes liberados dentro del complejo. Había registros de la máquina. Había personas que recordaban fragmentos de haber sido controladas. Pero la mayoría de los seres alados conectados había sido drenada durante demasiado tiempo. La máquina se detuvo, sí, pero para muchos la ayuda llegó tarde.
+
+Tampoco todos los humanos recuperaron la calma de inmediato. Algunos despertaron sin recordar días enteros. Otros recordaban demasiado. La ciudad necesitó médicos, familias, refugios y personas dispuestas a escuchar antes de poder llamarse libre otra vez.
 
 La historia de Caelum se deshizo frente al mundo, aunque muchas preguntas siguieron sin respuesta.
 
@@ -2394,6 +2400,8 @@ Desde Buenos Aires llegaban noticias cada día. Las personas liberadas empezaban
 
 Las comunidades que habían ayudado a personas aladas también comenzaron a encontrarse entre sí. No tenían todas las respuestas, pero ya no estaban solas ni dispersas del mismo modo.
 
+Durante esos días, Naomi y Monse ayudaron donde pudieron. Cargaron alimentos, acompañaron a sobrevivientes que todavía temían dormir bajo un techo cerrado y tradujeron las pocas palabras de la lengua común que podían aliviar una conversación. No solucionaba lo perdido, pero les recordaba quiénes querían ser cuando la batalla terminaba.
+
 Monse apretó el talismán rojo entre los dedos.
 
 —Noé vio señales de vida en nuestros mundos.
@@ -2411,6 +2419,14 @@ Los libros del archivo y los datos recuperados del complejo hablaban de reliquia
 Esa sería su siguiente búsqueda.
 
 Se levantaron al mismo tiempo.
+
+La hermana mayor salió al jardín con la libreta de direcciones que les había dado antes del viaje a Argentina. Ahora tenía nuevas páginas: nombres de comunidades, rutas seguras y una nota sobre el primer lugar donde los talismanes habían reaccionado. No comprendía todos los símbolos de los mapas, pero había ayudado a convertir una pista imposible en un camino posible.
+
+Naomi tomó la libreta con cuidado.
+
+—Gracias —dijo.
+
+La hermana le respondió con una sonrisa y le indicó el cielo con un gesto sencillo.
 
 Las alas de Naomi se abrieron, claras y enormes, recogiendo la luz de la mañana. Las de Monse desplegaron negro y rojo contra el cielo. No lo hicieron para impresionar a nadie ni para escapar del dolor. Las abrieron porque ya podían sostenerse.
 
