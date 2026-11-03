@@ -1902,9 +1902,13 @@ Naomi alcanzó a levantar el escudo. La barrera apareció, pero el impacto la la
 
 Bruno ni siquiera parecía sorprendido.
 
+Naomi respondió con la espada. El corte solar golpeó el borde de su armadura y dejó una marca de luz, pero Bruno apenas giró la cabeza. No era que la espada no tuviera fuerza. Era que él había convertido su propio cuerpo en una muralla.
+
 Monse atacó desde un costado con la lanza. La punta alcanzó su armadura, pero el ángel apenas se movió. Un giro de su brazo la obligó a retroceder antes de que pudiera quedar atrapada.
 
 No podían vencerlo golpeando más fuerte.
+
+Monse miró las alas pesadas que apenas cabían entre las columnas y el modo en que Bruno necesitaba afirmarse antes de cada golpe. Era lento, pero cada movimiento ocupaba demasiado espacio. Si encontraban dónde hacerlo caer, su fuerza podría volverse contra él.
 
 Naomi miró las columnas. Los conductos. Las plataformas superiores.
 
@@ -1962,6 +1966,12 @@ La lanza de Monse giró. Mara se apartó riendo.
 
 El segundo ataque alcanzó el borde de la capa de Naomi. No la hirió, pero la obligó a retroceder. Mara no estaba intentando derrotarlas de inmediato. Quería cansarlas. Quería que se persiguieran entre sí hasta olvidar hacia dónde iban.
 
+Naomi intentó levantar vuelo para ganar distancia, pero el techo bajo le obligó a recoger las alas antes de chocar contra una viga. Mara se rio al verlo.
+
+—¿Tanto poder para esconderlo en un pasillo? —dijo.
+
+Naomi no respondió. Ya había aprendido que Mara hablaba para ocupar el espacio que necesitaban para pensar.
+
 —No la sigas —dijo Monse.
 
 —No pensaba hacerlo.
@@ -1978,7 +1988,7 @@ Naomi apretó el escudo. Su primer impulso fue correr hacia Monse. Pero cada pas
 
 Monse la miró desde el otro lado.
 
-No gritó. Solo levantó dos dedos y señaló una columna, luego una sombra detrás de Mara.
+No gritó. Solo levantó dos dedos y señaló una columna, luego una sombra detrás de Mara. Era uno de los gestos que habían creado durante el entrenamiento: punto fijo, distracción, espera. Naomi entendió sin necesidad de mirarla una segunda vez.
 
 Naomi entendió.
 
@@ -1997,6 +2007,8 @@ Por primera vez, la sonrisa de Mara desapareció.
 —Nunca dijimos que no pensábamos —respondió Monse.
 
 Mara retrocedió, buscando otra sombra. Naomi y Monse se movieron al mismo tiempo. Naomi alzó vuelo sobre la pasarela y descendió con la espada envuelta en luz, cerrando la única ruta de escape de Mara sin alcanzarla. Monse le quitó el suelo con una onda oscura. Mara cayó contra una pared y quedó aturdida.
+
+Antes de que pudieran inmovilizarla, la demonio golpeó un panel de emergencia con la palma. El corredor se llenó de vapor y luces rojas. Cuando se disiparon unos segundos después, Mara ya no estaba. Había dejado de bloquearles el camino, pero no había sido derrotada para siempre.
 
 No tuvieron tiempo de celebrar.
 
