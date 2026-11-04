@@ -20,9 +20,13 @@ OUTPUT = ROOT / "Alas-de-mundos-rotos.docx"
 ILLUSTRATED_OUTPUT = ROOT / "Alas-de-mundos-rotos-con-portada-ilustrada.docx"
 SYMBOLIC_COVER_ART = ROOT / "arte" / "portada-simbolica-sin-texto-v1.png"
 COMPOSED_SYMBOLIC_COVER = ROOT / "arte" / "portada-alas-de-mundos-rotos-v1.png"
-FIRST_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "01-convento-primer-encuentro-v1.png"
-SECOND_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "02-biblioteca-caida-v1.png"
-THIRD_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "03-talismanes-v1.png"
+FIRST_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "01-convento-primer-encuentro-v2.png"
+SECOND_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "02-biblioteca-caida-v2.png"
+THIRD_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "03-talismanes-v2.png"
+FOURTH_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "04-observatorio-galapagos-v2.png"
+FIFTH_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "05-atalaya-patagonia-v2.png"
+SIXTH_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "06-noe-v2.png"
+SEVENTH_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "07-epilogo-convento-v2.png"
 TITLE_FONT = Path("/System/Library/Fonts/Supplemental/Times New Roman.ttf")
 
 
@@ -373,6 +377,10 @@ if __name__ == "__main__":
                     4: FIRST_INTERIOR_ILLUSTRATION,
                     8: SECOND_INTERIOR_ILLUSTRATION,
                     10: THIRD_INTERIOR_ILLUSTRATION,
+                    16: FOURTH_INTERIOR_ILLUSTRATION,
+                    19: FIFTH_INTERIOR_ILLUSTRATION,
+                    21: SIXTH_INTERIOR_ILLUSTRATION,
+                    27: SEVENTH_INTERIOR_ILLUSTRATION,
                 }
                 if args.with_approved_interiors
                 else None

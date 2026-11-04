@@ -50,6 +50,10 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 - La ilustración interior 1, correspondiente al primer encuentro en el convento, fue aprobada e incorporada después del capítulo 4 en la edición con portada ilustrada.
 - La ilustración interior 2, correspondiente a la biblioteca caída en Argentina, fue aprobada e incorporada después del capítulo 8 en la edición con portada ilustrada.
 - La ilustración interior 3, correspondiente al despertar de los talismanes y a la aparición de las primeras armas, fue aprobada e incorporada después del capítulo 10 en la edición con portada ilustrada.
+- La ilustración interior 4, correspondiente al observatorio de Galápagos, fue aprobada e incorporada después del capítulo 16 en la edición con portada ilustrada.
+- La ilustración interior 5, correspondiente al primer vuelo sobre la atalaya de la Patagonia, fue aprobada e incorporada después del capítulo 19 en la edición con portada ilustrada.
+- La ilustración interior 6, correspondiente al reencuentro de Monse y Noé, fue aprobada e incorporada después del capítulo 21 en la edición con portada ilustrada.
+- La ilustración interior 7, correspondiente al vuelo desde el convento de la Sierra, fue aprobada e incorporada después del epílogo y antes de los agradecimientos en la edición con portada ilustrada.
 
 ## Orden de producción
 
@@ -60,4 +64,4 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 
 ## Dirección visual aprobada
 
-- Ilustración de novela juvenil semi-realista, con acabado pictórico y sin apariencia fotográfica ni estilo anime.
+- Ilustración de novela juvenil 2D, con acabado pictórico, expresivo y de sensibilidad animada; los personajes tendrán rostros originales y no identificables, sin apariencia fotográfica.
