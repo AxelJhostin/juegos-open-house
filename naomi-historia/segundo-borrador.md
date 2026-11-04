@@ -300,9 +300,7 @@ Monse señaló la fotografía.
 
 —Alas —dijo, usando una de las pocas palabras que conocía.
 
-La hermana miró la pantalla, luego a ella. Contestó algo que Monse no entendió. La puerta no se cerró, pero tampoco se abrió más.
-
-Monse respiró hondo.
+La hermana miró la pantalla, luego a ella. Contestó algo que Monse no entendió. La puerta no se cerró, pero tampoco se abrió más. Monse respiró hondo.
 
 Se quitó la chaqueta.
 
@@ -2433,3 +2431,15 @@ Luego alzaron vuelo sobre las montañas, rumbo a la primera pista.
 No sabían qué reliquia les abriría el camino, cuánto tardaría la reconstrucción ni cuántas respuestas hallarían al volver a sus mundos. Pero tenían un rumbo, tenían memoria y se tenían la una a la otra.
 
 Por primera vez desde el destello, el futuro no pareció una caída.
+
+## Agradecimientos
+
+A quienes llegaron hasta aquí: gracias de corazón por abrirle un espacio a Naomi y Monse. Esta historia nació de una idea que fui construyendo con paciencia, ganas de aprender y mucho cariño.
+
+También quiero ser sincero sobre las ilustraciones de esta edición. No soy artista visual: las realicé con apoyo de herramientas digitales y con los recursos que tuve a mano. Si algunas no alcanzan la calidad que merecen los personajes o el mundo que imaginé, ofrezco una disculpa sincera. Aun así, las hice con el deseo de acompañar la lectura y de compartir una pequeña parte de cómo vi esta historia mientras la escribía.
+
+Gracias a las personas que me animaron a seguir creando, a quienes compartieron ideas conmigo y, especialmente, a quienes decidieron leer. Espero de verdad que disfruten el libro, que se queden con algo de sus personajes y que este sea apenas el comienzo del camino.
+
+Con gratitud,
+
+Hernández Axel

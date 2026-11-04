@@ -20,6 +20,9 @@ OUTPUT = ROOT / "Alas-de-mundos-rotos.docx"
 ILLUSTRATED_OUTPUT = ROOT / "Alas-de-mundos-rotos-con-portada-ilustrada.docx"
 SYMBOLIC_COVER_ART = ROOT / "arte" / "portada-simbolica-sin-texto-v1.png"
 COMPOSED_SYMBOLIC_COVER = ROOT / "arte" / "portada-alas-de-mundos-rotos-v1.png"
+FIRST_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "01-convento-primer-encuentro-v1.png"
+SECOND_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "02-biblioteca-caida-v1.png"
+THIRD_INTERIOR_ILLUSTRATION = ROOT / "arte" / "interiores" / "03-talismanes-v1.png"
 TITLE_FONT = Path("/System/Library/Fonts/Supplemental/Times New Roman.ttf")
 
 
@@ -161,10 +164,13 @@ def source_paragraphs(lines: list[str]) -> list[str]:
 def add_body_paragraph(document: Document, text: str, *, first_in_chapter: bool) -> None:
     paragraph = document.add_paragraph(style="Cuerpo de novela")
     # Las frases breves de ritmo narrativo no deben estirarse en algunos lectores.
+    is_short_rhythm_line = len(text) <= 80
     paragraph.alignment = (
-        WD_ALIGN_PARAGRAPH.LEFT if len(text) <= 80 else WD_ALIGN_PARAGRAPH.JUSTIFY
+        WD_ALIGN_PARAGRAPH.LEFT if is_short_rhythm_line else WD_ALIGN_PARAGRAPH.JUSTIFY
     )
-    paragraph.paragraph_format.first_line_indent = Inches(0 if first_in_chapter else 0.25)
+    paragraph.paragraph_format.first_line_indent = Inches(
+        0 if first_in_chapter or is_short_rhythm_line else 0.25
+    )
     run = paragraph.add_run(text)
     set_font(run, "Liberation Serif", 11.5)
 
@@ -215,11 +221,27 @@ def configure_standard_margins(section) -> None:
     section.right_margin = Inches(0.85)
 
 
+def add_full_page_illustration(document: Document, image_path: Path) -> None:
+    if not image_path.exists():
+        raise FileNotFoundError(f"No se encontró la ilustración: {image_path}")
+
+    # La imagen va en línea, centrada y en una página propia para que Word y
+    # LibreOffice conserven la composición sin superponerla al texto.
+    document.add_page_break()
+    illustration = document.add_paragraph()
+    illustration.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    illustration.paragraph_format.space_before = Pt(0)
+    illustration.paragraph_format.space_after = Pt(0)
+    illustration.paragraph_format.line_spacing = 1
+    illustration.add_run().add_picture(str(image_path), width=Inches(6.0))
+
+
 def create_document(
     chapters: list[tuple[str, list[str]]],
     *,
     output: Path = OUTPUT,
     cover_art: Path | None = None,
+    interior_illustrations: dict[int, Path] | None = None,
 ) -> None:
     document = Document()
     section = document.sections[0]
@@ -316,6 +338,9 @@ def create_document(
         for paragraph_index, text in enumerate(paragraphs):
             add_body_paragraph(document, text, first_in_chapter=paragraph_index == 0)
 
+        if interior_illustrations and index + 1 in interior_illustrations:
+            add_full_page_illustration(document, interior_illustrations[index + 1])
+
     properties = document.core_properties
     properties.title = "Alas de mundos rotos"
     properties.subject = "Novela corta de fantasía"
@@ -331,6 +356,11 @@ if __name__ == "__main__":
         action="store_true",
         help="Crea una copia con la portada simbólica ilustrada.",
     )
+    parser.add_argument(
+        "--with-approved-interiors",
+        action="store_true",
+        help="Incluye las ilustraciones interiores que ya fueron aprobadas.",
+    )
     args = parser.parse_args()
 
     if args.with_symbolic_cover:
@@ -338,6 +368,15 @@ if __name__ == "__main__":
             parse_source(SOURCE),
             output=ILLUSTRATED_OUTPUT,
             cover_art=compose_symbolic_cover(),
+            interior_illustrations=(
+                {
+                    4: FIRST_INTERIOR_ILLUSTRATION,
+                    8: SECOND_INTERIOR_ILLUSTRATION,
+                    10: THIRD_INTERIOR_ILLUSTRATION,
+                }
+                if args.with_approved_interiors
+                else None
+            ),
         )
         print(ILLUSTRATED_OUTPUT)
     else:

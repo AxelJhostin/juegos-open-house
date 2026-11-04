@@ -8,6 +8,7 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 
 - La portada será minimalista, misteriosa y elegante: alas y símbolos como elementos centrales, sin personajes ni escenario.
 - La edición interior conservará fantasía juvenil de pintura digital semirrealista: luminosa, expresiva y con un toque cinematográfico, sin apariencia de fotografía.
+- Las ilustraciones interiores usarán una paleta limitada: azul medianoche y gris azulado para el ambiente; marfil y dorado tenue para Naomi; negro carbón y rojo profundo para Monse. El blanco del papel quedará visible como parte del diseño.
 - El mundo humano se ve actual y reconocible. Las ruinas, alas y reliquias introducen lo extraordinario sin convertir las ciudades en escenarios futuristas.
 - Naomi y Monse se ven como jóvenes adultas. Su ropa cambia poco a poco de prendas de viaje sencillas a armaduras ligeras hechas por las reliquias.
 - Naomi usa alas blancas, marca solar en el hombro izquierdo, espada y escudo. Su luz es cálida y dorada.
@@ -43,6 +44,13 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 - Se mantendrá bastante espacio blanco alrededor para que se sienta como una pausa entre capítulos, no como una imagen pegada al texto.
 - La portada se creará en vertical y tendrá una composición clara también cuando se vea pequeña en una tienda digital.
 
+## Estado actual
+
+- La portada simbólica ya está compuesta en la edición con portada ilustrada.
+- La ilustración interior 1, correspondiente al primer encuentro en el convento, fue aprobada e incorporada después del capítulo 4 en la edición con portada ilustrada.
+- La ilustración interior 2, correspondiente a la biblioteca caída en Argentina, fue aprobada e incorporada después del capítulo 8 en la edición con portada ilustrada.
+- La ilustración interior 3, correspondiente al despertar de los talismanes y a la aparición de las primeras armas, fue aprobada e incorporada después del capítulo 10 en la edición con portada ilustrada.
+
 ## Orden de producción
 
 1. Usar los diseños de referencia existentes de Naomi y Monse para mantener sus rasgos, alas, marcas y armas consistentes.
@@ -50,7 +58,6 @@ La edición ilustrada debe acompañar la novela, no resumirla ni interrumpirla. 
 3. Generar las siete ilustraciones interiores en orden narrativo, revisando cada una antes de incorporarla al libro.
 4. Preparar una copia separada de la novela con las imágenes ya aprobadas. El archivo actual sin ilustraciones se conserva como versión de texto limpia.
 
-## Decisiones que validaremos antes de generar arte
+## Dirección visual aprobada
 
-- El nivel exacto de realismo de las ilustraciones interiores: más parecido a una ilustración de novela juvenil o más cercano a animación estilizada.
-- Si las ilustraciones interiores serán a color completo o con una paleta más limitada.
+- Ilustración de novela juvenil semi-realista, con acabado pictórico y sin apariencia fotográfica ni estilo anime.
