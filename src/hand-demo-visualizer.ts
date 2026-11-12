@@ -10,12 +10,16 @@ import { HeartRainEffect } from './heart-rain-art';
 import { RainbowGesture, type RainbowSample, type RainbowState } from './rainbow-gesture';
 import { RainbowArcEffect } from './rainbow-art';
 import type { SoundCue } from './sound';
+import { twoHandHeart } from './two-hand-heart';
+import { drawThankYou } from './thank-you-art';
 
 type EnergyState = 'idle' | 'charging' | 'active';
 const CHARGE_MS = 850;
 const MAGIC_CHARGE_MS = 480;
 const MAGIC_VISUAL_SCALE = 3;
 const LOST_GRACE_MS = 180;
+const THANK_YOU_HOLD_MS = 2000;
+const THANK_YOU_FADE_MS = 250;
 
 type MagicSlot = {
   pose: MagicPose | null;
@@ -71,6 +75,10 @@ export class HandDemoVisualizer {
   private rainbowSample: RainbowSample = { state: 'idle', pose: null, progress: 0 };
   private rainbowWasActive = false;
   private lastRainbowState: RainbowState = 'idle';
+  private thankYouSince = 0;
+  private lastThankYouAt = 0;
+  private thankYouActive = false;
+  private thankYouAlpha = 0;
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
@@ -121,6 +129,10 @@ export class HandDemoVisualizer {
     this.rainbowSample = { state: 'idle', pose: null, progress: 0 };
     this.rainbowWasActive = false;
     this.lastRainbowState = 'idle';
+    this.thankYouSince = 0;
+    this.lastThankYouAt = 0;
+    this.thankYouActive = false;
+    this.thankYouAlpha = 0;
     this.canvas.getContext('2d')?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.onEnergy('idle', 0);
     this.onMagic(0, 0);
@@ -134,6 +146,10 @@ export class HandDemoVisualizer {
     this.hands = hands;
     this.lastLandmarksAt = now;
     const aspectRatio = this.canvas.width / Math.max(1, this.canvas.height);
+    if (twoHandHeart(hands, aspectRatio)) {
+      if (!this.lastThankYouAt || now - this.lastThankYouAt > LOST_GRACE_MS) this.thankYouSince = now;
+      this.lastThankYouAt = now;
+    }
     this.rainbowSample = this.rainbowGesture.sample(hands, aspectRatio, now);
     const heart = heartPoseFromHands(hands, aspectRatio);
     if (heart) {
@@ -301,6 +317,21 @@ export class HandDemoVisualizer {
     }
     if (!heartHolding) this.heartPose = null;
     if (visible && !this.poseMode) drawHandLandmarks(this.canvas, this.hands, false);
+
+    const thankYouHolding = visible && this.lastThankYouAt > 0 && now - this.lastThankYouAt < LOST_GRACE_MS;
+    const thankYouReady = thankYouHolding && now - this.thankYouSince >= 650;
+    if (thankYouReady && !this.thankYouActive) {
+      this.onSound('thankYou');
+      this.thankYouActive = true;
+    }
+    // La última detección marca el plazo incluso si el detector deja de enviar imágenes.
+    const remaining = this.lastThankYouAt + THANK_YOU_HOLD_MS - now;
+    if (this.thankYouActive && remaining <= 0) this.thankYouActive = false;
+    const targetAlpha = this.thankYouActive ? Math.min(1, remaining / THANK_YOU_FADE_MS) : 0;
+    this.thankYouAlpha = targetAlpha < this.thankYouAlpha
+      ? targetAlpha
+      : Math.min(targetAlpha, this.thankYouAlpha + dt / (this.reduceMotion ? 100 : 260));
+    drawThankYou(context, this.thankYouAlpha, now, this.reduceMotion);
 
     const state: EnergyState = active ? 'active' : holding ? 'charging' : 'idle';
     const percent = Math.round(this.charge * 20) * 5;

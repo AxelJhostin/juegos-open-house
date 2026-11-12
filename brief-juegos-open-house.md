@@ -41,6 +41,7 @@ El proyecto también es una oportunidad para aprender desarrollo de juegos. La p
 - Un segundo gesto original, índice y meñique extendidos con medio y anular doblados, activa un sello mágico por mano; puede aparecer en una o en las dos manos a la vez.
 - Un tercer gesto de una mano, inspirado en el corazón formado con pulgar e índice, activa una lluvia animada de corazones rosas que se desvanece al soltar la seña.
 - Un cuarto gesto usa dos manos abiertas en la parte alta de la cámara: se acercan un momento y luego se separan para desplegar un arcoíris animado original entre ellas. El efecto se apaga suavemente al bajar o perder las manos.
+- Un quinto gesto forma un corazón con ambas manos: muestra «¡Gracias por venir!» con una animación y un sonido de despedida.
 - Una experiencia musical adicional, acordada para la fase 4, adapta la interacción de Gesture Synth: la mano izquierda elige un acorde y la derecha controla su armonía, volumen y timbre. Usa el detector de manos y la síntesis local ya presentes; incluye teclado para probar sin cámara y atribuye la referencia original.
 - Fruta dura alrededor de 45 segundos. Plataformas tiene intentos cortos que terminan al chocar, caer o llegar a la meta. Nave termina al primer choque; muestra el tiempo sobrevivido y permite volver a jugar rápidamente.
 - **Modo cámara:** usar hasta dos manos con el mismo detector local. Nave y Plataformas admiten una; Fruta acepta uno o dos índices.
@@ -105,3 +106,5 @@ El juego de Naomi (antes llamado *Guardiana del Alba*) queda fuera del Open Hous
 
 - [Documentación oficial de Phaser](https://docs.phaser.io/): motor 2D para navegadores y desarrollo con JavaScript o TypeScript.
 - [Guía oficial de MediaPipe Hand Landmarker para Web](https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/web_js): puntos de la mano, modo de video, configuración de dos manos y notas de rendimiento.
+
+**Actualización acordada:** reemplazar la experiencia musical por una adaptación local de Soundgo con los modos de acordes a dos manos y melodía más acorde, incluyendo teclado alternativo y crédito al autor.

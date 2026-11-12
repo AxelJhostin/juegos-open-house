@@ -121,3 +121,10 @@
   .hand-demo-rainbow { grid-column: auto; }
   .hand-demo-sidebar .privacy { grid-column: auto; }
 }
+.hand-demo-farewell { background: #4c204b; color: #fff4fa; border-color: #ffb5d5; }
+.hand-demo-farewell .side-kicker { color: #ffd0e5; }
+.hand-demo-farewell strong { color: #ffe5ba; font-size: 17px; letter-spacing: .04em; }
+.hand-demo-farewell p:not(.side-kicker) { margin: 0; font-size: 12px; line-height: 1.45; }
+.farewell-guide { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px; border: 1px dashed #f3a6c9; color: #ffd1e7; font-size: 30px; }
+.farewell-guide span { font-size: 10px; font-weight: 900; letter-spacing: .07em; }
+@media (min-width: 621px) and (max-width: 960px) { .hand-demo-farewell { grid-column: 1 / -1; } }

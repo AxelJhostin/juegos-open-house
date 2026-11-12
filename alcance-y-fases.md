@@ -104,6 +104,7 @@ Trabajar fase por fase. Completar el criterio de salida antes de empezar la sigu
 - Añadir el segundo gesto acordado, con un sello mágico independiente sobre cada mano que lo realice, sin cambiar los controles de los juegos.
 - Añadir el tercer gesto acordado en la pantalla de manos: un corazón con pulgar e índice y los demás dedos doblados activa una lluvia de corazones rosas, que termina suavemente al soltarlo.
 - Añadir el cuarto gesto acordado en la pantalla de manos: dos palmas abiertas y elevadas se juntan y luego se separan para desplegar un arcoíris animado original entre ellas, también en Modo pose.
+- **Despedida acordada:** reconocer un corazón formado con ambas manos y mostrar «¡Gracias por venir!» con animación y sonido local, también en Modo pose.
 - **Ajuste acordado:** añadir una pantalla musical inspirada únicamente en Gesture Synth: una mano elige el acorde y la otra modula armonía, volumen y timbre. Reutiliza el detector y Web Audio locales, ofrece teclado alternativo y cita el proyecto de referencia. No incorpora el piano virtual ni servicios externos.
 - Reemplazar figuras provisionales por un conjunto pequeño de sprites pixel art coherentes.
 - Añadir efectos visuales y sonidos breves, instrucciones visibles y presentación a pantalla completa.
@@ -154,3 +155,5 @@ Si un hito se retrasa, reducir detalle de arte, sonido o extras. No sumar caract
 - Los recursos necesarios están disponibles localmente para la demo.
 - La cámara se enciende con permiso, tiene un estado visible y se detiene al salir del modo cámara.
 - Una breve sesión de juego con varias personas confirma que entienden los controles y encuentran al menos un momento divertido en cada juego.
+
+**Actualización acordada:** reemplazar la experiencia musical por una adaptación local de Soundgo con los modos de acordes a dos manos y melodía más acorde, incluyendo teclado alternativo y crédito al autor.

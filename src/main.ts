@@ -13,9 +13,7 @@ import { SoundEffects } from './sound';
 import { RestartGesture } from './restart-gesture';
 import { PoseTracker } from './pose-tracking';
 import { BodyLandmarkVisualizer } from './body-landmarks';
-import { GestureSynthMapper, chordNotes, type GestureSynthState } from './gesture-synth';
-import { GestureSynthAudio } from './gesture-synth-audio';
-import { GestureSynthVisual } from './gesture-synth-visual';
+import { Soundgo } from './soundgo';
 import './style.css';
 import './game-themes.css';
 import './home.css';
@@ -36,7 +34,6 @@ type GameSession = {
 const root = document.querySelector<HTMLElement>('#app');
 if (!root) throw new Error('Falta el contenedor de la aplicación.');
 const sound = new SoundEffects();
-const synthAudio = new GestureSynthAudio();
 const shell = new AppShell(root, {
   chooseGame: selectGame,
   openHandDemo,
@@ -52,7 +49,7 @@ const shell = new AppShell(root, {
     sound.setEnabled(!sound.isEnabled);
     synthAudio.setEnabled(sound.isEnabled);
     shell.setSoundEnabled(sound.isEnabled);
-    if (synthKeyboardMode) updateKeyboardSynth();
+
     if (sound.isEnabled) void sound.unlock();
   },
   changeControlMode: (mode) => {
@@ -79,6 +76,7 @@ const shell = new AppShell(root, {
   startGestureSynthKeyboard,
   stopGestureSynth,
 });
+const synthAudio = new Soundgo(shell.synthCanvas, root);
 shell.setSoundEnabled(sound.isEnabled);
 const guides = shell.stage.querySelector<HTMLElement>('.play-guides');
 if (guides) {
@@ -125,11 +123,6 @@ let handDemoLaunchId = 0;
 let filterLaunchId = 0;
 let synthLaunchId = 0;
 let synthKeyboardMode = false;
-let keyboardDegree = 1;
-let keyboardQuality = 1;
-let keyboardVolume = 0.55;
-let keyboardMinor = false;
-let keyboardSilent = false;
 let detectedHands = 0;
 const restartGesture = new RestartGesture();
 let cameraReplayReady = false;
@@ -250,15 +243,11 @@ const filterTracker = new PoseTracker(shell.filterVideo, {
   onStats(fps, duration): void { shell.setFilterStats(fps, duration); },
 });
 
-const synthMapper = new GestureSynthMapper();
-const synthVisual = new GestureSynthVisual(shell.synthCanvas);
 const synthTracker = new HandTracker(shell.synthVideo, {
   onState(message, active): void {
     shell.setSynthStatus(message);
     if (!active) {
       synthAudio.silence();
-      synthVisual.stop();
-      synthMapper.reset();
       shell.setSynthActive(false);
       shell.setSynthLaunching(false);
       shell.setSynthState(null);
@@ -266,61 +255,21 @@ const synthTracker = new HandTracker(shell.synthVideo, {
     }
   },
   onPoints(): void {},
-  onLandmarks(hands, labels = []): void {
-    const state = synthMapper.sample(hands, labels, performance.now());
-    synthAudio.update(state);
-    synthVisual.set(hands, state);
-    shell.setSynthState(state);
+  onLandmarks(hands): void {
+    synthAudio.setHands(hands);
   },
   onStats(fps, duration): void { shell.setSynthStats(fps, duration); },
 }, 30);
 
-function keyboardSynthState(): GestureSynthState {
-  const mode = keyboardMinor ? 'menor' : 'mayor';
-  const name = ['DO', 'RE', 'MI', 'FA', 'SOL', 'LA', 'SI'][keyboardDegree - 1];
-  return {
-    degree: keyboardSilent ? 0 : keyboardDegree,
-    name: keyboardSilent ? '—' : `${name} ${mode}`,
-    mode,
-    quality: keyboardSilent ? 0 : keyboardQuality,
-    volume: keyboardSilent ? 0 : keyboardVolume,
-    color: 0,
-    notes: keyboardSilent ? [] : chordNotes(keyboardDegree, mode, keyboardQuality),
-    hands: 0,
-  };
-}
-
-function updateKeyboardSynth(): void {
-  if (!synthKeyboardMode || !shell.isSynthVisible) return;
-  const state = keyboardSynthState();
-  synthAudio.update(state);
-  synthVisual.set([], state);
-  shell.setSynthState(state);
-}
-
 window.addEventListener('keydown', (event) => {
-  if (!synthKeyboardMode || !shell.isSynthVisible || event.target instanceof HTMLInputElement) return;
-  const key = event.key.toLowerCase();
-  if (/^[1-7]$/.test(key)) keyboardDegree = Number(key);
-  else if (['q', 'w', 'e', 'r'].includes(key)) keyboardQuality = ['q', 'w', 'e', 'r'].indexOf(key) + 1;
-  else if (key === 'arrowup') keyboardVolume = Math.min(1, keyboardVolume + 0.08);
-  else if (key === 'arrowdown') keyboardVolume = Math.max(0, keyboardVolume - 0.08);
-  else if (key === 'm' && !event.repeat) keyboardMinor = !keyboardMinor;
-  else if (event.code === 'Space') keyboardSilent = true;
-  else return;
-  event.preventDefault();
-  void synthAudio.unlock().then(updateKeyboardSynth);
+  if (!synthKeyboardMode || !shell.isSynthVisible || event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement) return;
+  if (synthAudio.key(event, true)) event.preventDefault();
 });
 window.addEventListener('keyup', (event) => {
-  if (!synthKeyboardMode || !shell.isSynthVisible || event.code !== 'Space') return;
-  keyboardSilent = false;
-  event.preventDefault();
-  updateKeyboardSynth();
+  if (synthKeyboardMode && shell.isSynthVisible && synthAudio.key(event, false)) event.preventDefault();
 });
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) synthAudio.silence();
-  else if (synthKeyboardMode) updateKeyboardSynth();
-});
+document.addEventListener('visibilitychange', () => { if (document.hidden) synthAudio.releaseKeys(); });
+window.addEventListener('blur', () => { if (synthKeyboardMode) synthAudio.releaseKeys(); });
 
 function openGestureSynth(): void {
   setGameplayKeyboardEnabled(false);
@@ -346,7 +295,7 @@ async function startGestureSynth(): Promise<void> {
   }
   if (synthTracker.isActive) {
     shell.setSynthVideoSize(shell.synthVideo.videoWidth, shell.synthVideo.videoHeight);
-    synthVisual.start();
+    synthAudio.start(false);
     shell.setSynthActive(true);
   }
   shell.setSynthLaunching(false);
@@ -355,21 +304,18 @@ async function startGestureSynth(): Promise<void> {
 function startGestureSynthKeyboard(): void {
   ++synthLaunchId;
   synthTracker.stop();
-  synthMapper.reset();
   synthKeyboardMode = true;
   shell.setSynthVideoSize(640, 480);
   shell.setSynthKeyboardActive();
-  shell.setSynthStatus('Teclado activo · usa 1–7 y Q/W/E/R');
-  synthVisual.start();
-  void synthAudio.unlock().then(updateKeyboardSynth);
+  shell.setSynthStatus('Teclado activo · usa 1–7, Q–I y A–L');
+  synthAudio.start(true);
+  void synthAudio.unlock();
 }
 
 function stopGestureSynth(): void {
   ++synthLaunchId;
   synthKeyboardMode = false;
   synthTracker.stop();
-  synthVisual.stop();
-  synthMapper.reset();
   synthAudio.stop();
   shell.setSynthActive(false);
   shell.setSynthLaunching(false);

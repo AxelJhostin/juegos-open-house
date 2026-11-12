@@ -229,6 +229,12 @@ export class AppShell {
               <div class="rainbow-hand-guide" aria-hidden="true"><span>MANOS JUNTAS</span><i>↖ ◡ ↗</i><span>ABRE A LOS LADOS</span></div>
               <p id="hand-demo-rainbow-status" class="rainbow-status" role="status" aria-live="polite">Junta dos manos abiertas arriba</p>
             </div>
+            <div class="side-panel hand-demo-farewell">
+              <p class="side-kicker">05 / DESPEDIDA</p>
+              <strong>UN CORAZÓN PARA TI</strong>
+              <p>Une las puntas de los dos índices arriba y los dos pulgares abajo, formando un corazón. Mantén la forma un instante para descubrir el mensaje final.</p>
+              <div class="farewell-guide" aria-hidden="true">♡ <span>DOS MANOS · UN CORAZÓN</span></div>
+            </div>
             <p class="privacy">La IA estima posiciones, no identifica personas. El video se procesa aquí; no se guarda ni se transmite.</p>
           </aside>
         </div>
@@ -256,22 +262,30 @@ export class AppShell {
       </section>
       <section id="synth-room" class="synth-room" aria-labelledby="synth-title" hidden>
         <div class="game-topbar"><button id="synth-menu" class="menu-button" type="button">← Menú principal</button><span class="game-brand">P / P <span>OPEN HOUSE // MÚSICA CON GESTOS</span></span><button id="synth-fullscreen" class="sound-toggle" type="button">⛶ Ampliar cámara</button><button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">♪ Sonido: sí</button></div>
-        <header class="synth-header"><p class="eyebrow">PULSO PIXEL // INSTRUMENTO EN VIVO</p><h1 id="synth-title">ESTUDIO GESTUAL</h1><p>Dos manos transforman gestos en acordes. La izquierda elige la nota; la derecha cambia su voz, volumen y color.</p></header>
+        <header class="synth-header"><p class="eyebrow">PULSO PIXEL // INSTRUMENTO EN VIVO</p><h1 id="synth-title">ESTUDIO GESTUAL</h1><p>Tu cámara se convierte en un instrumento. Explora acordes y melodías moviendo las manos.</p></header>
         <div class="synth-layout">
           <div id="synth-board" class="synth-board">
-            <div class="board-topline"><span>♫ CÁMARA Y SONIDO</span><span>GESTURE SYNTH · ADAPTACIÓN EDUCATIVA</span><button id="synth-fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
+            <div class="board-topline"><span>♫ CÁMARA Y SONIDO</span><span>SOUNDGO · ADAPTACIÓN LOCAL</span><button id="synth-fullscreen-exit" class="surface-exit" type="button" hidden>✕ Salir</button></div>
             <div id="synth-stage" class="synth-stage">
               <video id="synth-video" autoplay playsinline muted aria-label="Vista local de las manos para producir música"></video>
               <canvas id="synth-canvas" aria-hidden="true"></canvas>
-              <div class="synth-live-readout"><span>ACORDE ACTUAL</span><strong id="synth-chord">—</strong><small id="synth-quality">Levanta ambas manos</small><small id="synth-notes">Notas: —</small></div>
+              <div class="synth-live-readout"><span>ACORDE ACTUAL</span><strong id="synth-chord">—</strong><small id="synth-quality">Apunta a las ruedas con tus índices</small><small id="synth-notes">Notas: —</small></div>
               <div id="synth-placeholder" class="synth-placeholder"><span aria-hidden="true">♫</span><strong>Tu cámara se convierte en instrumento</strong><p>Activa la cámara o prueba con el teclado.</p></div>
             </div>
             <div class="status-row"><p id="synth-status" role="status" aria-live="polite">Cámara apagada</p><p id="synth-stats">Detección: —</p></div>
           </div>
           <aside class="synth-sidebar" aria-label="Controles del instrumento gestual">
             <div class="side-panel"><p class="side-kicker">01 / ENTRA</p><button id="synth-start" type="button">Activar cámara y sonido</button><button id="synth-keyboard" type="button">Probar con teclado</button><button id="synth-stop" type="button" hidden>Detener cámara</button><p>El video y las notas se procesan aquí; no se guardan ni se transmiten.</p></div>
-            <div class="side-panel"><p class="side-kicker">02 / TOCA</p><strong>Izquierda · nota base</strong><p>Muestra de uno a cinco dedos para elegir DO, RE, MI, FA o SOL. Índice y meñique forman LA; añade pulgar para SI.</p><strong>Derecha · acorde y expresión</strong><p>Pulgar recogido: acorde mayor. Pulgar extendido: menor. Los otros dedos (uno a cuatro) eligen la inversión o séptima. Sube la mano para más volumen; inclínala para cambiar el timbre.</p><div class="synth-meter"><span>VOLUMEN</span><div><i id="synth-volume"></i></div></div></div>
-            <div class="side-panel"><p class="side-kicker">03 / SIN CÁMARA</p><p>Teclas 1–7: acorde · Q/W/E/R: armonía · ↑/↓: volumen · M: mayor/menor · Espacio: silencio.</p><small>Inspirado en <a href="https://github.com/ericwei97-cloud/gesture-synth" target="_blank" rel="noopener noreferrer">Gesture Synth de Eric Wei</a>, usado con crédito para esta demo educativa.</small></div>
+            <div class="side-panel synth-options"><p class="side-kicker">02 / CONFIGURA</p>
+              <label>Modo <select id="synth-mode"><option value="chord">Acordes · dos manos</option><option value="melody">Melodía + acorde</option></select></label>
+              <label><input type="checkbox" id="synth-simple" checked> Notas simples (C–B)</label>
+              <label><input type="checkbox" id="synth-snap" checked> Ajustar melodía a la escala</label>
+              <label>Escala <select id="synth-scale"><option value="major">Mayor</option><option value="pentatonic">Pentatónica</option><option value="minor">Menor</option><option value="blues">Blues</option><option value="chromatic">Cromática</option></select></label>
+              <label>Onda <select id="synth-wave"><option value="sine">Seno</option><option value="triangle">Triangular</option><option value="sawtooth">Sierra</option><option value="square">Cuadrada</option></select></label>
+              <label>Rango <select id="synth-range"><option value="2">2 octavas</option><option value="3" selected>3 octavas</option><option value="4">4 octavas</option></select></label>
+              <div class="synth-meter"><span>VOLUMEN</span><div><i id="synth-volume"></i></div></div>
+            </div>
+            <div class="side-panel"><p class="side-kicker">03 / CÓMO TOCAR</p><p><strong>Dos manos:</strong> apunta con tus índices a las ruedas. La izquierda elige la nota y la derecha el tipo de acorde; saca el índice de la rueda izquierda para silenciar.</p><p><strong>Melodía + acorde:</strong> la izquierda toca el acorde; junta pulgar e índice para hacerlo menor. En la zona derecha, junta los dedos para tocar melodías y sube la mano para aumentar el volumen.</p><p><strong>Teclado:</strong> 1–7 elige nota, Q–I el tipo de acorde, A–L toca melodía, ↑/↓ cambia volumen y Espacio silencia.</p><small>Adaptado de <a href="https://github.com/Gojaehyeon/soundgo" target="_blank" rel="noopener noreferrer">Soundgo de Gojaehyeon</a> · licencia MIT.</small></div>
           </aside>
         </div>
       </section>
@@ -599,7 +613,7 @@ export class AppShell {
     const chord = state?.name ?? '—';
     if (this.synthChord.textContent !== chord) this.synthChord.textContent = chord;
     const labels = ['', 'Posición base', 'Primera inversión', 'Segunda inversión', 'Con séptima'];
-    const quality = state?.quality ? labels[state.quality] : 'Levanta ambas manos';
+    const quality = state?.quality ? labels[state.quality] : 'Apunta a las ruedas con tus índices';
     if (this.synthQuality.textContent !== quality) this.synthQuality.textContent = quality;
     const notes = state?.notes.length ? `Notas: ${chordNoteNames(state.notes).join(' · ')}` : 'Notas: —';
     if (this.synthNotes.textContent !== notes) this.synthNotes.textContent = notes;
